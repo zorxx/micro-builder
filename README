@@ -1,0 +1,7 @@
+Build Environment for Microcontroller Projects
+
+Win32 Build Dependencies:
+- xtensa toolchain
+      http://sysprogs.com/files/gnutoolchains/esp8266/esp8266-gcc5.2.0-r5.exe
+- MinGW, including: make
+- Python, including: pyserial
