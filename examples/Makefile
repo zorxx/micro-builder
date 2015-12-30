@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Top-level makefile for example applications
 
-include ../top.inc
+include ../include/top.inc
 
 SKIP_DIRS := ./ ./ignore/
 SUBDIRS := $(filter-out $(SKIP_DIRS), $(dir $(wildcard ./*/)))
@@ -11,5 +11,5 @@ all:
 clean:
 	@$(foreach dir,$(SUBDIRS), make --no-print-directory -C $(dir) clean;)
 
-include ../bottom.inc
+include ../include/bottom.inc
 

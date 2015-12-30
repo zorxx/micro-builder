@@ -4,6 +4,8 @@
 # This file contains GNU make productions that are useful for a variety of actions, such
 #  as creation of libraries and applications
 
+-include $(TOPDIR)/include/$(TARGET_ARCH)/$(TARGET_ARCH)_bottom.inc
+
 # ----------------------------------------------------------------------------------------
 # Compilation
 
@@ -34,8 +36,8 @@ $(LIB_OUT): $(LIB_BIN_DIR) $(LIB_OBJ)
 $(LIB_BIN_DIR):
 	@$(MKDIR) -p $@
 
-library: $(LIB_OUT)
-library_info: $(LIB_OUT)
+library: $(LIB_OUT) $(TARGET_ARCH)_post_lib
+library_info: library
 	@$(OBJDUMP) -ft $^
 library_clean:
 	@$(ECHO) "CLEAN $(LIB_FILENAME)"
@@ -53,19 +55,14 @@ APP_FILENAME := $(APP_NAME).out
 APP_OUT	:= $(addprefix $(BUILD_TEMP_DIR)/,$(APP_FILENAME))
 $(APP_OUT): $(APP_OBJ)
 	@$(ECHO) "LD $(APP_FILENAME)"
-	@$(LD) -flto $(APP_LIBDIRS) -T$(APP_LD_SCRIPT) $(LDFLAGS) -Wl,--start-group $(APP_LIBS) $^ -Wl,--end-group -o $@
-	@$(ESPTOOL) elf2image $@ -o$(BUILD_TEMP_DIR)/ $(flashimageoptions)
+	@$(LD) -flto $(APP_LIBDIRS) $(LDFLAGS) -Wl,--start-group $(APP_LIBS) $^ -Wl,--end-group -o $@
 
-app: checkboard $(APP_OUT)
-app_info: app
-	@$(OBJDUMP) -h -j .data -j .rodata -j .bss -j .text -j .irom0.text $(APP_OUT)
+app: checkboard $(APP_OUT) $(TARGET_ARCH)_post_app
+app_info: $(TARGET_ARCH)_app_info
+app_flash: app $(TARGET_ARCH)_app_flash
 app_clean:
 	@$(ECHO) "CLEAN $(APP_FILENAME)"
 	@$(RM) -rf $(BUILD_TEMP_DIR)
-
-app_flash: app
-	@$(ECHO) "Flashing at: $(foreach file,$(wildcard $(BUILD_TEMP_DIR)/0x*.bin),$(notdir $(basename $(file))))"
-	@$(ESPTOOL) -p $(TARGET_PORT) -b $(TARGET_BAUD) write_flash $(foreach file,$(wildcard $(BUILD_TEMP_DIR)/0x*.bin),$(notdir $(basename $(file))) $(file))
 
 # ----------------------------------------------------------------------------------------
 # Miscellanous Productions

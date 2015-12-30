@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Top-level makefile for libraries
 
-include ../top.inc
+include ../include/top.inc
 
 SKIP_DIRS := ./bin/ ./ignore/ ./
 SUBDIRS := $(filter-out $(SKIP_DIRS), $(dir $(wildcard ./*/)))
@@ -12,5 +12,5 @@ clean:
 	@$(foreach dir,$(SUBDIRS), make --no-print-directory -C $(dir) clean;)
 	@$(RM) -rf $(LIB_BIN_DIR) 
 
-include ../bottom.inc
+include ../include/bottom.inc
 
