@@ -1,6 +1,6 @@
 # \copyright 2015 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Settings specific to hardware variants
+# \brief Top make include file for ESP8266 architecture
 
 # Target board type
 # Valid options:
@@ -12,26 +12,24 @@ TARGET_BOARD ?= nodemcu
 TARGET_PORT ?= COM14
 TARGET_BAUD ?= 256000
 
-# TODO: Implement SPI flash filesystem support, with configuration
-
 # -------------------------------------------------
 #
 
 include $(TOPDIR)/include/esp8266/variants.inc
-include $(TOPDIR)/include/esp8266/externals.inc
 
-TOOLCHAIN_DIR := C:\SysGCC\esp8266
-TOOLCHAIN_BIN_DIR := $(TOOLCHAIN_DIR)\bin
-TOOLCHAIN_HAL_DIR := $(TOOLCHAIN_DIR)\HAL
-TOOLCHAIN_PREFIX := xtensa-lx106-elf-
-
-INCDIR := $(ESP8266_SDK_DIR)/include $(ESP8266_SDK_DIR)/include/json 
-LIBDIRS := $(ESP8266_SDK_DIR)/lib $(ESP8266_ARDUINO_SDK_DIR)/ld $(TOOLCHAIN_HAL_DIR)
-
-APP_LD_SCRIPT := $(ESP8266_ARDUINO_SDK_DIR)/ld/$(BOARD_LD_SCRIPT_$(TARGET_BOARD))
-LDFLAGS := -T$(APP_LD_SCRIPT)      
+APP_LD_SCRIPT := $(ARCH_INCLUDE_DIR)/ld/$(BOARD_LD_SCRIPT_$(TARGET_BOARD))
+LDFLAGS += -T$(APP_LD_SCRIPT)
+LIBDIRS += $(ARCH_INCLUDE_DIR)/ld
 
 CFLAGS := 
-CPPFLAGS :=
-CDEFS := __ets__ ICACHE_FLASH
+CPPFLAGS := -std=c++11
+CDEFS := __ets__ ICACHE_FLASH ARDUINO_ARCH_ESP8266 ARDUINO=100 
 
+define esp8266_post_lib
+endef
+
+define esp8266_post_app
+	@$(ESPTOOL) elf2image $(APP_OUT) -o$(BUILD_TEMP_DIR)/
+endef
+
+# vim: syntax=make tabstop=4 noexpandtab

@@ -4,12 +4,12 @@
 
 include ../include/top.inc
 
-SKIP_DIRS := ./ ./ignore/
-SUBDIRS := $(filter-out $(SKIP_DIRS), $(dir $(wildcard ./*/)))
+SUBDIRS := common $(TARGET_ARCH)
 all:
-	@$(foreach dir,$(SUBDIRS), make --no-print-directory -C $(dir);)
+	@$(foreach dir,$(SUBDIRS), $(ECHO) "Building subdirectory: $(dir)"; make --no-print-directory -C $(dir);)
 clean:
-	@$(foreach dir,$(SUBDIRS), make --no-print-directory -C $(dir) clean;)
+	@$(foreach dir,$(SUBDIRS), $(ECHO) "Cleaning subdirectory: $(dir)"; make --no-print-directory -C $(dir) clean;)
 
 include ../include/bottom.inc
 
+# vim: tabstop=4 noexpandtab

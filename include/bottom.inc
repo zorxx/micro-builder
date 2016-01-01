@@ -5,45 +5,49 @@
 #  as creation of libraries and applications
 
 -include $(TOPDIR)/include/$(TARGET_ARCH)/$(TARGET_ARCH)_bottom.inc
+include $(TOPDIR)/include/package.inc
+
+# build_clean()
+define build_clean
+	@$(RM) -rf $(BUILD_TEMP_DIR)
+endef
 
 # ----------------------------------------------------------------------------------------
 # Compilation
 
 DEFS := $(foreach def,$(CDEFS),-D$(def))
-C_INC := $(foreach inc,$(INCDIR),-I$(inc))
-$(BUILD_TEMP_DIR)/%.o: $(BUILD_TEMP_DIR) %.c
+C_INC := $(foreach inc,$(INCDIR) $(PACKAGE_INCDIRS),-I$(inc))
+$(BUILD_TEMP_DIR)/%.o: %.c
 	@$(ECHO) "CC $(filter %.c, $^)"
+	@$(MKDIR) -p $(dir $@)
 	@$(CC) $(C_INC) $(CFLAGS) $(DEFS) -c $(filter %.c, $^) -o $@
 
-$(BUILD_TEMP_DIR)/%.o: $(BUILD_TEMP_DIR) %.cpp
+$(BUILD_TEMP_DIR)/%.o: %.cpp
 	@$(ECHO) "CC $(filter %.cpp, $^)"
+	@$(MKDIR) -p $(dir $@)
 	@$(CC) $(C_INC) $(CPPFLAGS) $(DEFS) -c $(filter %.cpp, $^) -o $@
-
-$(BUILD_TEMP_DIR):
-	@$(MKDIR) -p $@
 
 # ----------------------------------------------------------------------------------------
 # Library
 
-LIB_OBJ := $(patsubst %.c, $(BUILD_TEMP_DIR)/%.o, $(SRC)) $(patsubst %.cpp, $(BUILD_TEMP_DIR)/%.o, $(SRC))
-LIB_FILENAME := lib$(LIB_NAME).a
-LIB_OUT := $(LIB_BIN_DIR)/$(LIB_FILENAME)
-$(LIB_OUT): $(LIB_BIN_DIR) $(LIB_OBJ)
-	@$(ECHO) "AR $(LIB_FILENAME)"
+.SECONDEXPANSION:
+$(LIB_BIN_DIR)/%.a: $(BUILD_TEMP_DIR)/$$(%_obj)
+	@$(ECHO) "AR $(notdir $@)"
+	@$(MKDIR) -p $(dir $@)
 	@$(AR) rcs $@ $(filter %.o, $^)
-.PRECIOUS: $(LIB_OBJ)
+	@$(if $(TARGET_ARCH)_post_lib,$(call $(TARGET_ARCH)_post_lib,$@))
+.PRECIOUS: $(BUILD_TEMP_DIR)/%.o
 
-$(LIB_BIN_DIR):
-	@$(MKDIR) -p $@
+# library_info(name)
+define library_info
+	@$(OBJDUMP) -ft $(LIB_BIN_DIR)/$1.a
+endef
 
-library: $(LIB_OUT) $(TARGET_ARCH)_post_lib
-library_info: library
-	@$(OBJDUMP) -ft $^
-library_clean:
-	@$(ECHO) "CLEAN $(LIB_FILENAME)"
-	@$(RM) -f $(LIB_OUT)
-	@$(RM) -rf $(BUILD_TEMP_DIR)
-.PHONY: library_clean
+# library_clean(name)
+define library_clean
+	@$(ECHO) "CLEAN $1.a"
+	@$(RM) -f $(LIB_BIN_DIR)/$1.a
+endef
 
 # ----------------------------------------------------------------------------------------
 # Application
@@ -52,14 +56,20 @@ APP_OBJ := $(patsubst %.c, $(BUILD_TEMP_DIR)/%.o, $(SRC))
 APP_LIBDIRS := $(foreach libdir,$(LIBDIRS),-L$(libdir))
 APP_LIBS := $(foreach lib,$(LIBS),-l$(lib))
 APP_FILENAME := $(APP_NAME).out
-APP_OUT	:= $(addprefix $(BUILD_TEMP_DIR)/,$(APP_FILENAME))
-$(APP_OUT): $(APP_OBJ)
-	@$(ECHO) "LD $(APP_FILENAME)"
-	@$(LD) -flto $(APP_LIBDIRS) $(LDFLAGS) -Wl,--start-group $(APP_LIBS) $^ -Wl,--end-group -o $@
+APP_OUT	:= $(BUILD_TEMP_DIR)/$(APP_FILENAME)
 
-app: checkboard $(APP_OUT) $(TARGET_ARCH)_post_app
-app_info: $(TARGET_ARCH)_app_info
-app_flash: app $(TARGET_ARCH)_app_flash
+.SECONDEXPANSION:
+$(BUILD_TEMP_DIR)/%.out: $(BUILD_TEMP_DIR)/$$(%_obj)
+	@$(ECHO) "LD $(notdir $@)"
+	@$(call $(TARGET_ARCH)_checkboard)
+	@$(LD) -flto $(APP_LIBDIRS) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $^ -Wl,--end-group -o $@
+	@$(if $(TARGET_ARCH)_post_app,$(call $(TARGET_ARCH)_post_app,$@))
+
+app: $(APP_OUT)
+app_info:
+	$(call $(TARGET_ARCH)_app_info)
+app_flash: app
+	$(call $(TARGET_ARCH)_app_flash)
 app_clean:
 	@$(ECHO) "CLEAN $(APP_FILENAME)"
 	@$(RM) -rf $(BUILD_TEMP_DIR)
@@ -68,9 +78,5 @@ app_clean:
 # Miscellanous Productions
 
 rebuild: clean all
-
-checkboard:
-    ifeq ($(BOARD_LD_SCRIPT_$(TARGET_BOARD)),)
-    $(error "Invalid board type specification ($(TARGET_BOARD))")
-    endif
        
+# vim: syntax=make tabstop=4 noexpandtab

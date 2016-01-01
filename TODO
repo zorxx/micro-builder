@@ -1,0 +1,6 @@
+- Change package name to include directory structure common_OneWire
+    - Optimize package includes - parse list of packages rather than directories
+- Add package for ESP8266 toolchain download (from Arduino/ESP8266 installation)
+- Add sentinel file for patch step for packages
+- Build packages in the order they're specified
+- Resolve all TODOs

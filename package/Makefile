@@ -1,6 +1,6 @@
 # \copyright 2015 Zorxx Software, All Rights Reserved.
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Top-level makefile for libraries
+# \brief Top-level makefile for packages
 
 include ../include/top.inc
 

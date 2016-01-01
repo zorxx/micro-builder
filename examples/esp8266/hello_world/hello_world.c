@@ -2,12 +2,13 @@
 	The hello world demo
 */
 
+#include <stdint.h>
 #include <ets_sys.h>
 #include <osapi.h>
 #include <os_type.h>
 #include <gpio.h>
 #include "esp8266_rom.h"
-#include "uart_lite/uart.h"
+#include "esp8266/uart_lite/uart.h"
 
 #define DELAY 1000 /* milliseconds */
 

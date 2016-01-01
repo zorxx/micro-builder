@@ -9,6 +9,7 @@
  * Modification history:
  *     2014/3/12, v1.0 create this file.
 *******************************************************************************/
+#include <stdint.h>
 #include "ets_sys.h"
 #include "uart.h"
 #include "esp8266_rom.h"
