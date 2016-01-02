@@ -4,6 +4,12 @@
 
 ESP8266_ARDUINO_DIR := $(PACKAGE_DIR)/esp8266/esp8266_arduino/source
 
-INCDIR += $(ESP8266_ARDUINO_DIR)/cores/esp8266 $(ESP8266_ARDUINO_DIR)/variants/$(TARGET_BOARD)
+INCDIR += $(ESP8266_ARDUINO_DIR)/cores/esp8266 $(ESP8266_ARDUINO_DIR)/variants/$(TARGET_BOARD) \
+ $(ESP8266_ARDUINO_DIR)/tools/sdk/include
+LIBDIRS += $(ESP8266_ARDUINO_DIR)/tools/sdk/lib
+CDEFS += ARDUINO_ARCH_ESP8266 ARDUINO=100
+CFLAGS +=
+CPPFLAGS +=
+LDFLAGS += -u call_user_start -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy
 
 # vim: syntax=make tabstop=4 noexpandtab

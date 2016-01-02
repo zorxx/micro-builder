@@ -35,8 +35,9 @@ ARCH_INCLUDE_DIR := $(INCLUDE_DIR)/$(TARGET_ARCH)
 
 # Host tools
 CC		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)gcc
+CXX		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
 AR		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)ar
-LD		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)gcc
+LD		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
 OBJCOPY	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objcopy
 OBJDUMP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objdump
                                                                 
@@ -44,10 +45,11 @@ OBJDUMP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objdump
 # Compilation
 
 BUILD_TEMP_DIR := ./build
-COMMON_CFLAGS := -Os -g -O2 -Wpointer-arith -Wundef -Werror -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -mno-serialize-volatile
-CFLAGS += $(COMMON_CFLAGS)
-CPPFLAGS += $(COMMON_CFLAGS)
-CDEFS += 
+#CFLAGS +=
+#CPPFLAGS +=
+#CDEFS +=
+#ASMFLAGS +=
+LDFLAGS += -flto
 INCDIR += . include $(TOPDIR)/lib $(TOPDIR)/include $(ARCH_INCLUDE_DIR)
 
 # ----------------------------------------------------------------------------------------

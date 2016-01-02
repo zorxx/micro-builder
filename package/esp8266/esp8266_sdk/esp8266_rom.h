@@ -9,17 +9,37 @@
 #define __ESP8266_ROM_H__
 
 int ets_delay_us(int);
-int ets_isr_attach(int, void (*)(void *), void *);
-int ets_isr_unmask(int);
-int ets_install_putc1(void *);
-int ets_install_putc2(void *);
+void ets_isr_attach(int, void (*)(void *), void *);
+void ets_isr_unmask(int);
 int ets_timer_arm(void *, int, int, int);
 int ets_timer_arm_new(void *, int, int, int);
 int ets_timer_disarm(void *);
 int ets_timer_setfn(void *, void (*)(void *), void *);
 int ets_uart_printf(const char *fmt, ...);
-int uart_div_modify(int, int);
 int uart_tx_one_char(char);
+
+void *ets_memcpy(void *dest, const void *src, size_t n);
+void *ets_memset(void *s, int c, size_t n);
+int ets_strncmp(const char *s1, const char *s2, int len);
+int ets_strcmp(const char *s1, const char *s2);
+int ets_strlen(const char *s);
+char *ets_strncpy(char *dest, const char *src, size_t n);
+char *ets_strstr(const char *haystack, const char *needle);
+char *ets_strcpy(char *dest, const char *src);
+int ets_printf(const char *format, ...)  __attribute__ ((format (printf, 1, 2)));
+void ets_intr_lock();
+void ets_intr_unlock();
+void ets_isr_mask(int intr);
+void ets_isr_unmask(int intr);
+void uart_div_modify(int no, int freq);
+void ets_install_putc1(void* routine);
+void ets_install_putc2(void* routine);
+
+#if 0
+void ets_timer_arm_new(ETSTimer *a, int b, int c, int isMstimer);
+void ets_timer_disarm(ETSTimer *a);
+void ets_isr_attach(int intr, int_handler_t handler, void *arg);
+#endif
 
 /* ------------------------------------------------------
  * Externals, taken from eagle.rom.addr.v6.ld
@@ -146,14 +166,9 @@ PROVIDE ( ets_get_cpu_frequency = 0x40002f0c );
 PROVIDE ( ets_getc = 0x40002bcc );
 PROVIDE ( ets_install_external_printf = 0x40002450 );
 PROVIDE ( ets_install_uart_printf = 0x40002438 );
-PROVIDE ( ets_intr_lock = 0x40000f74 );
-PROVIDE ( ets_intr_unlock = 0x40000f80 );
 PROVIDE ( ets_isr_mask = 0x40000f98 );
 PROVIDE ( ets_memcmp = 0x400018d4 );
-PROVIDE ( ets_memcpy = 0x400018b4 );
 PROVIDE ( ets_memmove = 0x400018c4 );
-PROVIDE ( ets_memset = 0x400018a4 );
-PROVIDE ( ets_post = 0x40000e24 );
 PROVIDE ( ets_printf = 0x400024cc );
 PROVIDE ( ets_putc = 0x40002be8 );
 PROVIDE ( ets_rtc_int_register = 0x40002a40 );
@@ -161,18 +176,10 @@ PROVIDE ( ets_run = 0x40000e04 );
 PROVIDE ( ets_set_idle_cb = 0x40000dc0 );
 PROVIDE ( ets_set_user_start = 0x40000fbc );
 PROVIDE ( ets_str2macaddr = 0x40002af8 );
-PROVIDE ( ets_strcmp = 0x40002aa8 );
-PROVIDE ( ets_strcpy = 0x40002a88 );
-PROVIDE ( ets_strlen = 0x40002ac8 );
-PROVIDE ( ets_strncmp = 0x40002ab8 );
-PROVIDE ( ets_strncpy = 0x40002a98 );
-PROVIDE ( ets_strstr = 0x40002ad8 );
-PROVIDE ( ets_task = 0x40000dd0 );
 PROVIDE ( ets_timer_done = 0x40002d80 );
 PROVIDE ( ets_timer_handler_isr = 0x40002da8 );
 PROVIDE ( ets_timer_init = 0x40002e68 );
 PROVIDE ( ets_update_cpu_frequency = 0x40002f04 );
-PROVIDE ( ets_vprintf = 0x40001f00 );
 PROVIDE ( ets_wdt_disable = 0x400030f0 );
 PROVIDE ( ets_wdt_enable = 0x40002fa0 );
 PROVIDE ( ets_wdt_get_mode = 0x40002f34 );

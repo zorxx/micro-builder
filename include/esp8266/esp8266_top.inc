@@ -18,12 +18,13 @@ TARGET_BAUD ?= 256000
 include $(TOPDIR)/include/esp8266/variants.inc
 
 APP_LD_SCRIPT := $(ARCH_INCLUDE_DIR)/ld/$(BOARD_LD_SCRIPT_$(TARGET_BOARD))
-LDFLAGS += -T$(APP_LD_SCRIPT)
+LDFLAGS += -g -Os -nostdlib -Wl,--no-check-sections -Wl,-static -Wl,--gc-sections -T$(APP_LD_SCRIPT)
 LIBDIRS += $(ARCH_INCLUDE_DIR)/ld
 
-CFLAGS := 
-CPPFLAGS := -std=c++11
-CDEFS := __ets__ ICACHE_FLASH ARDUINO_ARCH_ESP8266 ARDUINO=100 
+CFLAGS := -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections 
+CPPFLAGS := -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections
+ASMFLAGS := -c -g -x assembler-with-cpp -MMD -mlongcalls
+CDEFS := __ets__ ICACHE_FLASH
 
 define esp8266_post_lib
 endef

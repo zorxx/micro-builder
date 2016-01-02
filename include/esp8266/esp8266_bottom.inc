@@ -7,7 +7,7 @@
 
 # esp8266_app_info(app_file,app_dir)
 define esp8266_app_info
-	@$(OBJDUMP) -h -j .data -j .rodata -j .bss -j .text -j .irom0.text $1
+	@$(OBJDUMP) -h -j .data -j .rodata -j .bss -j .text -j .irom0.text -j .iram.text $2/$1
 endef
 
 # esp8266_app_flash(app_file,app_dir)

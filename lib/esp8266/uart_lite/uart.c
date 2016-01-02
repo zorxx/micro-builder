@@ -9,10 +9,10 @@
  * Modification history:
  *     2014/3/12, v1.0 create this file.
 *******************************************************************************/
+#include <stddef.h>
 #include <stdint.h>
 #include "ets_sys.h"
 #include "uart.h"
-#include "esp8266_rom.h"
 
 #define UART0   0
 #define UART1   1

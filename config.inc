@@ -9,7 +9,10 @@ TARGET_ARCH ?= esp8266
 
 TARGET_BOARD ?= nodemcu
 
-# Note: case-sensitive, downloaded and built in-order
-PACKAGES ?= esp8266_sysgcc_toolchain esp8266_sdk esp8266_esptool esp8266_arduino OneWire
+# ESP8266 Arduino SDK
+PACKAGES ?= esp8266_sysgcc_toolchain esp8266_esptool esp8266_arduino OneWire TemperatureControl
+
+# Raw ESP8266 SDK
+#PACKAGES ?= esp8266_sysgcc_toolchain esp8266_esptool esp8266_sdk
 
 # vim: syntax=make tabstop=4 noexpandtab

@@ -1,16 +1,18 @@
 Comment-out typedefs that conflict with stdint.h
 
 --- source/esp_iot_sdk_v1.5.0/include/c_types.h.original	Fri Nov 27 12:29:02 2015
-+++ source/esp_iot_sdk_v1.5.0/include/c_types.h	Thu Dec 31 21:15:01 2015
-@@ -6,6 +6,7 @@
++++ source/esp_iot_sdk_v1.5.0/include/c_types.h	Fri Jan 01 00:53:30 2016
+@@ -6,6 +6,9 @@
  #ifndef _C_TYPES_H_
  #define _C_TYPES_H_
  
++#include <stdint.h>
++
 +#if 0
  typedef unsigned char       uint8_t;
  typedef signed char         sint8_t;
  typedef signed char         int8_t;
-@@ -20,6 +21,7 @@
+@@ -20,6 +23,7 @@
  typedef unsigned long long  u_int64_t;
  typedef float               real32_t;
  typedef double              real64_t;
@@ -18,7 +20,7 @@ Comment-out typedefs that conflict with stdint.h
  
  typedef unsigned char       uint8;
  typedef unsigned char       u8;
-@@ -44,7 +46,9 @@
+@@ -44,7 +48,9 @@
  
  #define __le16      u16
  
@@ -28,3 +30,27 @@ Comment-out typedefs that conflict with stdint.h
  
  #define __packed        __attribute__((packed))
  
+@@ -82,10 +88,14 @@
+ #define STORE_ATTR __attribute__((aligned(4)))
+ 
+ #ifndef __cplusplus
++#if 0
+ typedef unsigned char   bool;
++#endif
+ #define BOOL            bool
++#if !defined(__cplusplus)
+ #define true            (1)
+ #define false           (0)
++#endif
+ #define TRUE            true
+ #define FALSE           false
+ 
+--- source\esp_iot_sdk_v1.5.0\include\ets_sys.h.original	Fri Aug 07 18:56:56 2015
++++ source\esp_iot_sdk_v1.5.0\include\ets_sys.h	Fri Jan 01 01:37:05 2016
+@@ -90,4 +90,6 @@
+ #define ETS_GPIO_INTR_DISABLE() \
+     ETS_INTR_DISABLE(ETS_GPIO_INUM)
+ 
++#include "esp8266_rom.h"
++
+ #endif /* _ETS_SYS_H */

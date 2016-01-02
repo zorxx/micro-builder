@@ -2,12 +2,12 @@
 	The hello world demo
 */
 
+#include <stddef.h>
 #include <stdint.h>
 #include <ets_sys.h>
 #include <osapi.h>
 #include <os_type.h>
 #include <gpio.h>
-#include "esp8266_rom.h"
 #include "esp8266/uart_lite/uart.h"
 
 #define DELAY 1000 /* milliseconds */
@@ -16,7 +16,7 @@ LOCAL os_timer_t hello_timer;
 
 LOCAL void ICACHE_FLASH_ATTR hello_cb(void *arg)
 {
-	ets_uart_printf("Hello World!\r\n");
+	ets_printf("Hello World!\r\n");
 }
 
 void user_rf_pre_init(void)

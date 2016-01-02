@@ -1,30 +1,24 @@
 # \copyright 2015 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Recipe for ESP8266 Arduino SDK package
+# \brief Recipe for Arduino-Temperature-Control-Library package
 
 include ../../../include/top.inc
 
-PACKAGE_NAME := esp8266_arduino
+PACKAGE_NAME := TemperatureControl
 
 # Download information
-$(PACKAGE_NAME)_SOURCE := "https://github.com/esp8266/Arduino.git"
+$(PACKAGE_NAME)_SOURCE := "https://github.com/milesburton/Arduino-Temperature-Control-Library.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
+$(PACKAGE_NAME)_VERSION := 3.7.5
 
 # Library
 LIB_NAME := lib$(PACKAGE_NAME)
 $(LIB_NAME)_obj := $(foreach file, \
-		$(wildcard source/cores/esp8266/*.c) \
-		$(wildcard source/cores/esp8266/*.cpp) \
-		$(wildcard source/cores/esp8266/*.S), \
+		$(wildcard source/*.c) \
+		$(wildcard source/*.cpp) \
+		$(wildcard source/*.S), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
-# The library doesn't build cleanly
-CFLAGS += -Wno-error -Wno-error=implicit-function-declaration
-CPPFLAGS +=
-
-# Note: the library must be built after the package has been downloaded, and the build_library
-#  operation must recursively call "make" in order to get the list of all source files to
-#  be built/included in the library
 all: .$(PACKAGE_NAME).download
 	@$(call build_library,$(LIB_NAME))
 clean: lib_clean
