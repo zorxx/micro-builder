@@ -18,7 +18,7 @@ TARGET_BAUD ?= 256000
 include $(TOPDIR)/include/esp8266/variants.inc
 
 APP_LD_SCRIPT := $(ARCH_INCLUDE_DIR)/ld/$(BOARD_LD_SCRIPT_$(TARGET_BOARD))
-LDFLAGS += -T$(APP_LD_SCRIPT) -nostdlib -Wl,--no-check-sections -Wl,-static -flto
+LDFLAGS += -T$(APP_LD_SCRIPT) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static -flto
 LIBDIRS += $(ARCH_INCLUDE_DIR)/ld
 
 CFLAGS := -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections 
