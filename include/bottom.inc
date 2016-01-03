@@ -62,14 +62,13 @@ endef
 # ----------------------------------------------------------------------------------------
 # Application
 
-APP_OBJ := $(patsubst %.c, $(BUILD_TEMP_DIR)/%.o, $(SRC))
 APP_LIBDIRS := $(foreach libdir,$(LIBDIRS),-L$(libdir))
 APP_LIBS := $(foreach lib,$(LIBS),-l$(lib))
 APP_FILENAME := $(APP_NAME).out
 APP_OUT	:= $(BUILD_TEMP_DIR)/$(APP_FILENAME)
 
 .SECONDEXPANSION:
-$(BUILD_TEMP_DIR)/%.out: $(BUILD_TEMP_DIR)/$$(%_obj)
+$(BUILD_TEMP_DIR)/%.out: $$(%_obj)
 	@$(ECHO) "LD $(notdir $@)"
 	@$(call $(TARGET_ARCH)_checkboard)
 	@$(LD) $(APP_LIBDIRS) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $^ -Wl,--end-group -o $@
