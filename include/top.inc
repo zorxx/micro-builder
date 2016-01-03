@@ -49,7 +49,6 @@ BUILD_TEMP_DIR := ./build
 #CPPFLAGS +=
 #CDEFS +=
 #ASMFLAGS +=
-LDFLAGS += -flto
 INCDIR += . include $(TOPDIR)/lib $(TOPDIR)/include $(ARCH_INCLUDE_DIR)
 
 # ----------------------------------------------------------------------------------------
@@ -60,7 +59,7 @@ LIB_BIN_DIR := $(LIBRARIES_DIR)/bin
 # ----------------------------------------------------------------------------------------
 # Application
 
-LDFLAGS += -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static
+LDFLAGS +=
 LIBDIRS += $(LIB_BIN_DIR)
 
 # vim: syntax=make tabstop=4 noexpandtab
