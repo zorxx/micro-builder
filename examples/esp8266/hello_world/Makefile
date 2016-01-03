@@ -5,8 +5,13 @@
 include ../../../include/top.inc
 
 APP_NAME = hello_world
-hello_world_obj = $(addsuffix .o, $(basename $(wildcard *.c) $(wildcard *.cpp)))
-hello_world_libs = gcc phy pp net80211 lwip wpa main crypto uart_lite
+$(APP_NAME)_obj := $(foreach file, \
+	           $(wildcard *.c) \
+	           $(wildcard *.cpp) \
+	           $(wildcard *.S), \
+	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
+
+$(APP_NAME)_libs = gcc phy pp net80211 lwip wpa main crypto uart_lite
 
 all: $(BUILD_TEMP_DIR)/$(APP_NAME).out
 clean: app_clean

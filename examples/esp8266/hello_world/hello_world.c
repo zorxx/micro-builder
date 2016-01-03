@@ -1,8 +1,6 @@
 /*
 	The hello world demo
 */
-
-#include <stddef.h>
 #include <stdint.h>
 #include <ets_sys.h>
 #include <osapi.h>
@@ -13,10 +11,12 @@
 #define DELAY 1000 /* milliseconds */
 
 LOCAL os_timer_t hello_timer;
+LOCAL uint32_t counter = 0;
 
 LOCAL void ICACHE_FLASH_ATTR hello_cb(void *arg)
 {
-	ets_printf("Hello World!\r\n");
+	ets_uart_printf("Hello World %lu!\r\n", counter);
+        ++counter;
 }
 
 void user_rf_pre_init(void)
