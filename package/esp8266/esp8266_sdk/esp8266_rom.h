@@ -18,12 +18,12 @@ int ets_timer_setfn(void *, void (*)(void *), void *);
 int ets_uart_printf(const char *fmt, ...);
 int uart_tx_one_char(char);
 
-void *ets_memcpy(void *dest, const void *src, size_t n);
-void *ets_memset(void *s, int c, size_t n);
+void *ets_memcpy(void *dest, const void *src, unsigned int n);
+void *ets_memset(void *s, int c, unsigned int n);
 int ets_strncmp(const char *s1, const char *s2, int len);
 int ets_strcmp(const char *s1, const char *s2);
 int ets_strlen(const char *s);
-char *ets_strncpy(char *dest, const char *src, size_t n);
+char *ets_strncpy(char *dest, const char *src, unsigned int n);
 char *ets_strstr(const char *haystack, const char *needle);
 char *ets_strcpy(char *dest, const char *src);
 int ets_printf(const char *format, ...)  __attribute__ ((format (printf, 1, 2)));
