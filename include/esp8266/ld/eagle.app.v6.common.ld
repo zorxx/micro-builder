@@ -178,11 +178,34 @@ SECTIONS
     *(.entry.text)
     *(.init.literal)
     *(.init)
-    *(.literal .text .literal.* .text.* .stub .gnu.warning .gnu.linkonce.literal.* .gnu.linkonce.t.*.literal .gnu.linkonce.t.*)
-    *.o(.iram.text)
     *(.fini.literal)
     *(.fini)
     *(.gnu.version)
+
+    /* Exception handlers. These must be in the same section as the vector hardware
+     *  entrypoints to prevent a long jump */
+    *app_main.o(.literal* .text*)
+    *user-vector.o(.literal* .text*)
+    *nmi-vector.o(.literal* .text*)
+    *kernel-vector.o(.literal* .text*)
+    *debug-vector.o(.literal* .text*)
+    *double-vector.o(.literal* .text*)
+
+    /* These must be located in internal RAM to prevent far accesses to literal data.
+     *  All of the following libraries are distributed in binary form, so we cannot
+     *  change the compilation options to allow for far accesses to data. */
+    *libgcc.a:(.literal* .text*)
+    *libm.a:(.literal* .text*)
+
+    *libmain.a:(.literal* .text*)
+/*    *libphy.a:(.literal* .text*)
+    *libpp.a:(.literal* .text*)
+    *libnet80211.a:(.literal* .text*)
+    *libwip.a:(.literal* .text*)*/
+
+    /* Any compilation units that request to be located in interal RAM */
+    *.o(.iram.text)
+
     _text_end = ABSOLUTE(.);
     _etext = .;
   } >iram1_0_seg :iram1_0_phdr
@@ -201,6 +224,7 @@ SECTIONS
     _irom0_text_start = ABSOLUTE(.);
     *.o(.literal*, .text*)
     *.a(.literal*, .text*)
+    *(.literal .text .literal.* .text.* .stub .gnu.warning .gnu.linkonce.literal.* .gnu.linkonce.t.*.literal .gnu.linkonce.t.*)
     *(.irom0.literal .irom.literal .irom.text.literal .irom0.text .irom.text .irom.text.*)
     _irom0_text_end = ABSOLUTE(.);
     _flash_code_end = ABSOLUTE(.);

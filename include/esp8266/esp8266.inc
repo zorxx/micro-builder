@@ -60,6 +60,6 @@ define esp8266_checkboard(app_file,app_dir)
 	ifeq ($(BOARD_LD_SCRIPT_$(TARGET_BOARD)),)
 	$(error "Invalid board type specification ($(TARGET_BOARD))")
 	endif
-endef       
+endef
 
 # vim: syntax=make tabstop=4 noexpandtab
