@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for ESP8266 NORTOS SDK package
 
-include ../../../include/top.inc
+include ../../../include/mb.inc
 
 PACKAGE_NAME := esp8266_sdk
 
@@ -14,7 +14,5 @@ $(PACKAGE_NAME)_SOURCE_METHOD := wget
 all: .$(PACKAGE_NAME).download
 clean:
 	$(call package_clean,$(PACKAGE_NAME))
-
-include ../../../include/bottom.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

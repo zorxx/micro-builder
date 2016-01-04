@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Top-level makefile for micro-builder 
 
-include include/top.inc
+include include/mb.inc
 
 # ----------------------------------------------------------------------------------------
 # Top-level productions
@@ -19,7 +19,5 @@ subdirs:
 subdirs_clean:
 	@$(foreach dir,$(SUBDIRS), $(ECHO) "Cleaning subdirectory: $(dir)"; make --no-print-directory -C $(dir) clean;)   	
 .PHONY: subdirs subdirs_clean
-
-include include/bottom.inc
 
 # vim: tabstop=4 noexpandtab

@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for Arduino-Temperature-Control-Library package
 
-include ../../../include/top.inc
+include ../../../include/mb.inc
 
 PACKAGE_NAME := TemperatureControl
 
@@ -26,7 +26,5 @@ clean: lib_clean
 lib_clean:
 	@$(call library_clean,$(LIB_NAME))
 	@$(call build_clean)
-
-include ../../../include/bottom.inc
 
 # vim: syntax=make tabstop=4 noexpandtab
