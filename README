@@ -1,7 +1,61 @@
-Build Environment for Microcontroller Projects
+micro-builder: Build Environment for Microcontroller Projects
 
-Win32 Build Dependencies:
-- xtensa toolchain
-      http://sysprogs.com/files/gnutoolchains/esp8266/esp8266-gcc5.2.0-r5.exe
-- MinGW, including: make
-- Python, including: pyserial
+Goals:
+- Simple, flexible environment for building applications for microcontrollers
+- Make use of existing projects (don't re-invent wheels)
+
+Build Environment:
+- Rely only on GNU make. Never assume any particular shell exists (e.g. bash). This makes
+portability of the build environment among platforms (e.g. Windows and Linux) possible.
+- Never rely on absolute paths. The micro-builder root directory can exist anywhere.
+- "make" can be executed from any directory in the build source tree (e.g. to build individual
+example applications or all example applications)
+
+Packages:
+The packages directory contains recipes for downloading and optionally building packages
+from external projects. Examples of packages are: toolchains, target flashing and debugging
+tools, libraries, applications, etc. The two major components of a package are
+
+- Makefile
+    This contains all of the information for downloading and building the package
+- <package_name>.inc
+    When the package is included by the user in /config.inc, this file is included
+    in the build environment. This allows the package to provide things to the build
+    environment, such as include file directories (for library packages) or toolchain
+    binary locations (for toolchain packages).
+
+Libraries:
+Some libraries exist directly within the micro-builder source tree. Eventually, these
+libraries may be split into separate git projects (and be included as packages in
+micro-builder).
+
+Examples:
+Some example applications exist directly within the micro-builder source tree. Eventually,
+these applications may be split into separate git projects (and be included as packages in
+micro-builder).
+
+Notes:
+Some aspects of micro-builder are similar to Buildroot, however there are some key differences:
+- micro-builder is designed to allow for development of applications.
+- Selected packages determine the build environment. Adding a new package can change the way
+  all applications/libraries are built.
+
+------------------------------------------------------------------------------------
+Quickstart (ESP8266 nodemcu):
+
+1. git clone the micro-builder repository:
+    git clone https://github.com/zorxx/micro-builder.git
+2. Configure desired target architecture and packages by editing /config.inc
+**** 3. Execute "make" in the root of the micro-builder source tree
+Note: It's currently necessary to build desired packages individually. Navigate to each
+desired package directory, execute make.
+
+------------------------------------------------------------------------------------
+Host environment dependencies
+
+Note that this section will eventually be removed, in favor of handling dependency resolution
+in the build system (e.g. a makefile relying on a feature will ensure it exists)
+
+Windows (probably incomplete list):
+- MinGW, including: make, others?
+- Python, including: pyserial (for ESP8266 only)
