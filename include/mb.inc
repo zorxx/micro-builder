@@ -16,6 +16,9 @@ LIB_BIN_DIR := $(LIBRARIES_DIR)/bin
 PACKAGE_DIR := $(TOPDIR)/package
 BUILD_TEMP_DIR := ./build
 
+# Determine host architecture
+include $(TOPDIR)/include/host.inc
+
 # Host tools
 WGET	:= wget
 MKDIR	:= mkdir
