@@ -1,4 +1,4 @@
-# \copyright 2015 Zorxx Software, All Rights Reserved.
+# \copyright 2015-2016 Zorxx Software, All Rights Reserved.
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Arduino Dallas DS18B20 example application
 
@@ -10,10 +10,9 @@ $(APP_NAME)_obj := $(foreach file, \
 	           $(wildcard *.cpp) \
 	           $(wildcard *.S), \
 	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-$(APP_NAME)_libs = m gcc phy pp net80211 lwip wpa main crypto esp8266_arduino OneWire TemperatureControl
+$(APP_NAME)_libs = m gcc phy pp net80211 lwip wpa main crypto esp8266_arduino_core OneWire TemperatureControl
+$(APP_NAME)_package_deps = esp8266/arduino
 
-all: $(BUILD_TEMP_DIR)/$(APP_NAME).out
-clean: $(APP_NAME)_app_clean
-flash: $(APP_NAME)_app_flash
+include ../../../include/app.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

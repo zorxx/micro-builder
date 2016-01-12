@@ -125,6 +125,9 @@ $(BUILD_TEMP_DIR)/%.out: $$(%_obj)
 	@$(LD) $(APP_LIBDIRS) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $^ -Wl,--end-group -o $@
 	@$(if $(TARGET_ARCH)_post_app,$(call $(TARGET_ARCH)_post_app,$@))
 
+%_app_deps:
+	$(if $(filter-out $(PACKAGES),$($*_package_deps)), \
+		$(info Missing dependencies: $(filter-out $(PACKAGES),$($*_package_deps))))
 %_app_info:
 	$(call $(TARGET_ARCH)_app_info,$*.out,$(BUILD_TEMP_DIR))
 %_app_flash: $(BUILD_TEMP_DIR)/%.out

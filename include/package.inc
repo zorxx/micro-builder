@@ -5,10 +5,7 @@
 PKG_SRC_DIR := source
 
 # Package includes
-# TODO: make this more efficient by including only the directories listed in the PACKAGES variable,
-#       and include the directory heirarchy in the package name
-PACKAGE_ROOT_DIRS := $(PACKAGE_DIR)/common $(PACKAGE_DIR)/$(TARGET_ARCH)
--include $(foreach pkg,$(PACKAGES),$(foreach rootdir,$(PACKAGE_ROOT_DIRS),$(rootdir)/$(pkg)/$(pkg).inc))
+-include $(foreach pkg,$(PACKAGES),$(PACKAGE_DIR)/$(pkg)/package.inc)
 
 # ---------------------------------------------------------------------------------------
 # Top-level productions
