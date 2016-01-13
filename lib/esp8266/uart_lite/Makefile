@@ -1,4 +1,4 @@
-# \copyright 2015 Zorxx Software, All Rights Reserved.
+# \copyright 2015-2016 Zorxx Software, All Rights Reserved.
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Lean and mean UART library for ESP8266
 
@@ -10,10 +10,8 @@ $(LIB_NAME)_obj := $(foreach file, \
 		$(wildcard *.cpp) \
 		$(wildcard *.S), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
+$(LIB_NAME)_package_deps = esp8266/esp8266_sdk
 
-all: $(LIB_BIN_DIR)/$(LIB_NAME).a
-clean:
-	@$(call library_clean,$(LIB_NAME))
-	@$(call build_clean)
+include ../../../include/lib.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

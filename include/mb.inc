@@ -57,7 +57,7 @@ LDFLAGS :=
 LIBDIRS := $(LIB_BIN_DIR)
 
 # ----------------------------------------------------------------------------------------
-# Application
+# Includes
 
 # Include any archiecture-specific configuration
 -include $(TOPDIR)/include/$(TARGET_ARCH)/$(TARGET_ARCH).inc
@@ -84,57 +84,6 @@ $(BUILD_TEMP_DIR)/%.o: %.S
 	@$(ECHO) "ASM $^"
 	@$(MKDIR) -p $(dir $@)
 	@$(CC) $(C_INC) $(ASMFLAGS) $(DEFS) -c $^ -o $@
-
-# ----------------------------------------------------------------------------------------
-# Library
-
-.SECONDEXPANSION:
-$(LIB_BIN_DIR)/%.a: $$($$*_obj)
-	@$(ECHO) "AR $(notdir $@)"
-	@$(MKDIR) -p $(dir $@)
-	@$(AR) rcs $@ $(filter %.o, $^)
-	@$(if $(TARGET_ARCH)_post_lib,$(call $(TARGET_ARCH)_post_lib,$@))
-.PRECIOUS: $(BUILD_TEMP_DIR)/%.o
-
-# library_info(name)
-define library_info
-	$(OBJDUMP) -ft $(LIB_BIN_DIR)/$1.a
-endef
-
-# library_clean(name)
-define library_clean
-	$(ECHO) "CLEAN $1.a"
-	$(RM) -f $(LIB_BIN_DIR)/$1.a
-endef
-
-# build_library(name)
-define build_library
-	$(MAKE) --no-print-directory $(LIB_BIN_DIR)/$1.a
-endef
-
-# ----------------------------------------------------------------------------------------
-# Application
-
-APP_LIBDIRS := $(foreach libdir,$(LIBDIRS),-L$(libdir))
-APP_LIBS := $(foreach lib,$(LIBS),-l$(lib))
-
-.SECONDEXPANSION:
-$(BUILD_TEMP_DIR)/%.out: $$(%_obj)
-	@$(ECHO) "LD $(notdir $@)"
-	@$(call $(TARGET_ARCH)_checkboard)
-	@$(LD) $(APP_LIBDIRS) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $^ -Wl,--end-group -o $@
-	@$(if $(TARGET_ARCH)_post_app,$(call $(TARGET_ARCH)_post_app,$@))
-
-%_app_deps:
-	$(if $(filter-out $(PACKAGES),$($*_package_deps)), \
-		$(info Missing dependencies: $(filter-out $(PACKAGES),$($*_package_deps))))
-%_app_info:
-	$(call $(TARGET_ARCH)_app_info,$*.out,$(BUILD_TEMP_DIR))
-%_app_flash: $(BUILD_TEMP_DIR)/%.out
-	$(call $(TARGET_ARCH)_app_flash,$*.out,$(BUILD_TEMP_DIR))
-%_app_clean:
-	@$(ECHO) "CLEAN $*.out"
-	@$(RM) -rf $(BUILD_TEMP_DIR)
 
 # ----------------------------------------------------------------------------------------
 # Miscellanous Productions and Functions
