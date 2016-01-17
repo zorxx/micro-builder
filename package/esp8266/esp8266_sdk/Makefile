@@ -1,4 +1,4 @@
-# \copyright 2015 Zorxx Software, All Rights Reserved
+# \copyright 2015-2016 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for ESP8266 NORTOS SDK package
 
@@ -11,8 +11,9 @@ $(PACKAGE_NAME)_FILENAME := sdk.zip
 $(PACKAGE_NAME)_SOURCE := "http://bbs.espressif.com/download/file.php?id=989"
 $(PACKAGE_NAME)_SOURCE_METHOD := wget
 
-all: .$(PACKAGE_NAME).download
-clean:
-	$(call package_clean,$(PACKAGE_NAME))
+EXTERNAL_TARGETS += $(PACKAGE_NAME)
+
+include $(INCLUDE_DIR)/ext.inc
+include $(INCLUDE_DIR)/dir.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

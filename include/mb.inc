@@ -1,4 +1,4 @@
-# \copyright 2015 Zorxx Software, All Rights Reserved
+# \copyright 2015-2016 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief file to be included at the top of each GNU makefile
 # This file contains a wide variety of definitions (directories, tools, compiler/linker
@@ -53,7 +53,7 @@ CFLAGS :=
 CPPFLAGS :=
 CDEFS :=
 ASMFLAGS :=
-INCDIR := . include $(TOPDIR) $(TOPDIR)/lib $(TOPDIR)/include $(ARCH_INCLUDE_DIR)
+INCDIR := $(TOPDIR) $(ARCH_INCLUDE_DIR)
 LDFLAGS :=
 LIBDIRS := $(LIB_BIN_DIR)
 
@@ -61,81 +61,52 @@ LIBDIRS := $(LIB_BIN_DIR)
 # Includes
 
 # Include any archiecture-specific configuration
--include $(TOPDIR)/include/$(TARGET_ARCH)/$(TARGET_ARCH).inc
+-include $(INCLUDE_DIR)/$(TARGET_ARCH)/$(TARGET_ARCH).inc
 
-# Rules for handling packages (downloading, etc.)
-include $(TOPDIR)/include/package.inc
+# Prerequisite includes
+-include $(foreach prereq,$(PREREQS),$(TOPDIR)/$(prereq)/package.inc)    
+
+include $(INCLUDE_DIR)/external_helpers.inc
+include $(INCLUDE_DIR)/library_helpers.inc
+include $(INCLUDE_DIR)/application_helpers.inc
 
 # ----------------------------------------------------------------------------------------
 # Compilation/Assembly
 
-DEFS := $(foreach def,$(CDEFS),-D$(def))
-C_INC := $(foreach inc,$(INCDIR) $(PACKAGE_INCDIRS),-I$(inc))
+# Macro for reversing a list of strings. This is used to reverse the list of include directories
+#  because it's defined in order of least-specific to most-specific, but we want the opposite order
+#  to allow multiple header files to be named the same thing, and the most-specific include
+#  directory (e.g. the application's local include directory) to take precedence (be listed
+#  first in the compliation step).
+reverse_list = $(if $(1),$(call reverse_list,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
+
 $(BUILD_TEMP_DIR)/%.o: %.c
 	@$(ECHO) "CC $^"
 	@$(MKDIR) -p $(dir $@)
-	@$(CC) $(C_INC) $(CFLAGS) $(DEFS) -c $^ -o $@
+	@$(CC) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(CFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
 
 $(BUILD_TEMP_DIR)/%.o: %.cpp
 	@$(ECHO) "CPP $^"
 	@$(MKDIR) -p $(dir $@)
-	@$(CXX) $(C_INC) $(CPPFLAGS) $(DEFS) -c $^ -o $@
+	@$(CXX) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(CPPFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
 
 $(BUILD_TEMP_DIR)/%.o: %.S
 	@$(ECHO) "ASM $^"
 	@$(MKDIR) -p $(dir $@)
-	@$(CC) $(C_INC) $(ASMFLAGS) $(DEFS) -c $^ -o $@
+	@$(CC) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(ASMFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
 
 # ----------------------------------------------------------------------------------------
-# Library
+# Dependency
 
-.SECONDEXPANSION:
-$(LIB_BIN_DIR)/%.a: $$($$*_obj)
-	@$(ECHO) "AR $(notdir $@)"
-	@$(MKDIR) -p $(dir $@)
-	@$(AR) rcs $@ $(filter %.o, $^)
-	@$(if $(TARGET_ARCH)_post_lib,$(call $(TARGET_ARCH)_post_lib,$@))
-.PRECIOUS: $(BUILD_TEMP_DIR)/%.o
+%/.done :
+	@$(ECHO) "Building dependency: $*"
+	@$(MAKE) --no-print-directory -C $*
+	@$(TOUCH) $@
+.PHONY: %.done
 
-# library_info(name)
-define library_info
-	$(OBJDUMP) -ft $(LIB_BIN_DIR)/$1.a
-endef
-
-# library_clean(name)
-define library_clean
-	$(ECHO) "CLEAN $1.a"
-	$(RM) -f $(LIB_BIN_DIR)/$1.a
-endef
-
-# build_library(name)
-define build_library
-	$(MAKE) --no-print-directory $(LIB_BIN_DIR)/$1.a
-endef
-
-# ----------------------------------------------------------------------------------------
-# Application
-
-APP_LIBDIRS := $(foreach libdir,$(LIBDIRS),-L$(libdir))
-APP_LIBS := $(foreach lib,$(LIBS),-l$(lib))
-
-.SECONDEXPANSION:
-$(BUILD_TEMP_DIR)/%.elf: $$(%_obj)
-	@$(ECHO) "LD $(notdir $@)"
-	@$(call $(TARGET_ARCH)_checkboard)
-	@$(LD) $(APP_LIBDIRS) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $^ -Wl,--end-group -o $@
-	@$(if $(TARGET_ARCH)_post_app,$(call $(TARGET_ARCH)_post_app,$@))
-
-%_app_deps:
-	@$(if $(filter-out $(PACKAGES),$($*_package_deps)), \
-		$(info Missing dependencies: $(filter-out $(PACKAGES),$($*_package_deps))))
-%_app_info:
-	@$(call $(TARGET_ARCH)_app_info,$*.elf,$(BUILD_TEMP_DIR))
-%_app_flash: $(BUILD_TEMP_DIR)/%.elf
-	@$(call $(TARGET_ARCH)_app_flash,$*.elf,$(BUILD_TEMP_DIR))
-%_app_clean:
-	@$(ECHO) "CLEAN $*.elf"
-	@$(RM) -rf $(BUILD_TEMP_DIR)
+# Build prerequisite dependencies. Since this build target is defined first, the prerequisites
+#  will be built, in-order, before any build target starts
+all:: $(filter-out $(CURDIR)/.done,$(foreach prereq,$(PREREQS),$(realpath $(TOPDIR)/$(prereq)/.done)))
 
 # ----------------------------------------------------------------------------------------
 # Miscellanous Productions and Functions
@@ -146,5 +117,6 @@ define build_clean
 endef
 
 rebuild: clean all
+.PHONY: all clean
 
 # vim: syntax=make tabstop=4 noexpandtab

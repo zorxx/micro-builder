@@ -1,4 +1,4 @@
-# \copyright 2015 Zorxx Software, All Rights Reserved
+# \copyright 2015-2016 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for OneWire bus library package
 
@@ -14,17 +14,15 @@ $(PACKAGE_NAME)_VERSION := v2.3.1
 # Library
 LIB_NAME := lib$(PACKAGE_NAME)
 $(LIB_NAME)_obj := $(foreach file, \
-		$(wildcard source/*.c) \
-		$(wildcard source/*.cpp) \
-		$(wildcard source/*.S), \
+		$(wildcard OneWire_source/*.cpp), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
-all: .$(PACKAGE_NAME).download
-	@$(call build_library,$(LIB_NAME))
-clean: lib_clean
-	@$(call package_clean,$(PACKAGE_NAME))
-lib_clean:
-	@$(call library_clean,$(LIB_NAME))
-	@$(call build_clean)
+EXTERNAL_TARGETS += $(PACKAGE_NAME)
+LIBRARY_TARGETS += $(LIB_NAME)
+LIBRARY_SUBMAKE := true # Call "make" recursively when building the library to get the source files
+
+include $(INCLUDE_DIR)/ext.inc
+include $(INCLUDE_DIR)/lib.inc
+include $(INCLUDE_DIR)/dir.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

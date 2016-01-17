@@ -7,9 +7,11 @@ include ../../include/mb.inc
 SKIP_DIRS := ignore/ ./
 SUBDIRS := $(patsubst %/,%,$(filter-out $(SKIP_DIRS), $(dir $(wildcard */))))
 
-all:
-	@$(foreach subdir,$(SUBDIRS),$(if $(findstring $(realpath $(subdir)),$(foreach dir,$(PACKAGES),$(realpath $(PACKAGE_DIR)/$(dir)))),$(ECHO) "Building directory $(subdir)";$(MAKE) --no-print-directory -C $(subdir);,$(ECHO) "Not building directory $(subdir)";))
-clean:
-	@$(foreach subdir,$(SUBDIRS),$(if $(findstring $(realpath $(subdir)),$(foreach dir,$(PACKAGES),$(realpath $(PACKAGE_DIR)/$(dir)))),$(MAKE) --no-print-directory -C $(subdir) clean;,$(ECHO) "Not cleaning directory $(subdir)";))
+PREREQ_DIRS := $(foreach subdir,$(SUBDIRS),$(if $(findstring $(realpath $(subdir)),$(foreach prereq,$(PREREQS),$(realpath $(TOPDIR)/$(prereq)))),$(subdir)))
+
+all::
+	@$(foreach subdir,$(PREREQ_DIRS),$(ECHO) "Building prerequisite $(subdir)";$(MAKE) --no-print-directory -C $(subdir);)
+clean::
+	@$(foreach subdir,$(PREREQ_DIRS),$(ECHO) "Cleaning prerequisite $(subdir)";$(MAKE) --no-print-directory -C $(subdir) clean;)
 
 # vim: tabstop=4 noexpandtab

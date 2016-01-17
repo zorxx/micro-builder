@@ -4,6 +4,8 @@
 
 include ../../../include/mb.inc
 
+dependencies = package/esp8266/esp8266_sdk
+
 APP_NAME = hello_world
 $(APP_NAME)_obj := $(foreach file, \
 	           $(wildcard *.c) \
@@ -12,8 +14,9 @@ $(APP_NAME)_obj := $(foreach file, \
 	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 $(APP_NAME)_libs = gcc phy pp net80211 lwip wpa main crypto uart_lite
-$(APP_NAME)_package_deps = esp8266/esp8266_sdk
 
-include ../../../include/app.inc
+APP_TARGETS := $(APP_NAME)
+
+include $(INCLUDE_DIR)/app.inc
 
 # vim: syntax=make tabstop=4 noexpandtab
