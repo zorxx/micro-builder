@@ -2,6 +2,12 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Rules for building libraries
 
+# Dependency includes
+-include $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/package.inc)
+
+# First, make sure all dependencies have been built
+all:: $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/.done)
+
 # If the LIBRARY_SUBMAKE variable is defined (can be set to anything), spawn a new make
 #  process before building the LIBRARY_TARGETS. This is done to allow a single makefile
 #  define an arbitrary set of files to be used for building the library (e.g. using the

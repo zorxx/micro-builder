@@ -18,6 +18,8 @@ TARGET_FLASH_MODE ?= qio
 TARGET_FLASH_SIZE ?= 4M
 # 40|26|20|80
 TARGET_FLASH_SPEED ?= 40
+# none|ck|wifio|nodemcu
+TARGET_RESET_METHOD ?= nodemcu
 
 # -------------------------------------------------
 #
@@ -56,8 +58,8 @@ endef
 
 # esp8266_app_flash(app_file,app_dir)
 define esp8266_app_flash
-	$(ECHO) "Flashing at: $(foreach file,$(wildcard $2/*.bin),$(notdir $(basename $(file))))"
-	$(ESPTOOL) -cp $(TARGET_PORT) -cd none -cb $(TARGET_BAUD) $(foreach file,$(wildcard $2/*.bin),-ca $(notdir $(basename $(file))) -cf $(file))
+	$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
+	$(ESPTOOL) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) $(foreach file,$(wildcard $2/*.bin),-ca $(notdir $(basename $(file))) -cf $(file))
 endef
 
 # ----------------------------------------------------------------------------------------

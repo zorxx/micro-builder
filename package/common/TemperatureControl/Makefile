@@ -4,6 +4,8 @@
 
 include ../../../include/mb.inc
 
+dependencies = package/common/OneWire
+
 PACKAGE_NAME := TemperatureControl
 
 # Download information

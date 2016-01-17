@@ -70,6 +70,8 @@ include $(INCLUDE_DIR)/external_helpers.inc
 include $(INCLUDE_DIR)/library_helpers.inc
 include $(INCLUDE_DIR)/application_helpers.inc
 
+-include ./package.inc
+
 # ----------------------------------------------------------------------------------------
 # Compilation/Assembly
 
