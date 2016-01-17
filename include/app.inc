@@ -3,7 +3,7 @@
 # \brief Rules for building applications
 
 ifeq ($(filter-out $(PACKAGES),$($(APP_NAME)_package_deps)),)
-all: $(BUILD_TEMP_DIR)/$(APP_NAME).out
+all: $(BUILD_TEMP_DIR)/$(APP_NAME).elf
 else
 all:
 	$(info $(APP_NAME) package dependencies not enabled: $(filter-out $(PACKAGES),$($(APP_NAME)_package_deps)))

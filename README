@@ -57,5 +57,5 @@ Note that this section will eventually be removed, in favor of handling dependen
 in the build system (e.g. a makefile relying on a feature will ensure it exists)
 
 Windows (probably incomplete list):
-- MinGW, including: make, others?
-- Python, including: pyserial (for ESP8266 only)
+- MinGW, including: make, 
+- mingw-get install msys-wget-bin

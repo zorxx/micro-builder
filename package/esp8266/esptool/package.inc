@@ -3,6 +3,6 @@
 # \brief Build environment for ESP8266 esptool package
 
 ESPTOOL_DIR := $(PACKAGE_DIR)/esp8266/esptool/source
-ESPTOOL := python $(ESPTOOL_DIR)/esptool.py
+ESPTOOL := $(ESPTOOL_DIR)/esptool
 
 # vim: syntax=make tabstop=4 noexpandtab

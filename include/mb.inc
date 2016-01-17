@@ -24,6 +24,7 @@ WGET	:= wget
 MKDIR	:= mkdir
 RM		:= rm
 CD		:= cd
+MV		:= mv
 UNZIP	:= unzip
 TAR		:= tar
 GIT		:= git
@@ -119,21 +120,21 @@ APP_LIBDIRS := $(foreach libdir,$(LIBDIRS),-L$(libdir))
 APP_LIBS := $(foreach lib,$(LIBS),-l$(lib))
 
 .SECONDEXPANSION:
-$(BUILD_TEMP_DIR)/%.out: $$(%_obj)
+$(BUILD_TEMP_DIR)/%.elf: $$(%_obj)
 	@$(ECHO) "LD $(notdir $@)"
 	@$(call $(TARGET_ARCH)_checkboard)
 	@$(LD) $(APP_LIBDIRS) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $^ -Wl,--end-group -o $@
 	@$(if $(TARGET_ARCH)_post_app,$(call $(TARGET_ARCH)_post_app,$@))
 
 %_app_deps:
-	$(if $(filter-out $(PACKAGES),$($*_package_deps)), \
+	@$(if $(filter-out $(PACKAGES),$($*_package_deps)), \
 		$(info Missing dependencies: $(filter-out $(PACKAGES),$($*_package_deps))))
 %_app_info:
-	$(call $(TARGET_ARCH)_app_info,$*.out,$(BUILD_TEMP_DIR))
-%_app_flash: $(BUILD_TEMP_DIR)/%.out
-	$(call $(TARGET_ARCH)_app_flash,$*.out,$(BUILD_TEMP_DIR))
+	@$(call $(TARGET_ARCH)_app_info,$*.elf,$(BUILD_TEMP_DIR))
+%_app_flash: $(BUILD_TEMP_DIR)/%.elf
+	@$(call $(TARGET_ARCH)_app_flash,$*.elf,$(BUILD_TEMP_DIR))
 %_app_clean:
-	@$(ECHO) "CLEAN $*.out"
+	@$(ECHO) "CLEAN $*.elf"
 	@$(RM) -rf $(BUILD_TEMP_DIR)
 
 # ----------------------------------------------------------------------------------------

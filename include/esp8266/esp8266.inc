@@ -9,8 +9,15 @@
 TARGET_BOARD ?= nodemcu
 
 # Serial port and baud rate for programming (flashing)
-TARGET_PORT ?= COM14
-TARGET_BAUD ?= 256000
+TARGET_PORT ?= COM3
+TARGET_BAUD ?= 230400
+
+# qio|qout|dio|dout
+TARGET_FLASH_MODE ?= qio
+# 512K|256K|1M|2M|4M|8M|16M|32M
+TARGET_FLASH_SIZE ?= 4M
+# 40|26|20|80
+TARGET_FLASH_SPEED ?= 40
 
 # -------------------------------------------------
 #
@@ -37,19 +44,20 @@ endef
 # Architecture-specific Application Steps
 
 # esp8266_post_app(app_out_file)
+# Note: this step assumes the linker definition file places all flash code (.irom0.text section) at flash address 0x10000
 define esp8266_post_app
-	@$(ESPTOOL) elf2image $1 -o$(BUILD_TEMP_DIR)/
+	$(ESPTOOL) -bz $(TARGET_FLASH_SIZE) -bf $(TARGET_FLASH_SPEED) -bm $(TARGET_FLASH_MODE) -eo $1 -bo $(dir $1)0x00000.bin -bs .text -bs .data -bs .rodata -bc -ec -eo $1 -es .irom0.text $(dir $1)0x10000.bin -ec
 endef
 
 # esp8266_app_info(app_file,app_dir)
 define esp8266_app_info
-	@$(OBJDUMP) -h -j .data -j .rodata -j .bss -j .text -j .irom0.text -j .iram.text $2/$1
+	$(OBJDUMP) -h -j .data -j .rodata -j .bss -j .text -j .irom0.text -j .iram.text $2/$1
 endef
 
 # esp8266_app_flash(app_file,app_dir)
 define esp8266_app_flash
-	@$(ECHO) "Flashing at: $(foreach file,$(wildcard $2/0x*.bin),$(notdir $(basename $(file))))"
-	@$(ESPTOOL) -p $(TARGET_PORT) -b $(TARGET_BAUD) write_flash $(foreach file,$(wildcard $2/0x*.bin),$(notdir $(basename $(file))) $(file))
+	$(ECHO) "Flashing at: $(foreach file,$(wildcard $2/*.bin),$(notdir $(basename $(file))))"
+	$(ESPTOOL) -cp $(TARGET_PORT) -cd none -cb $(TARGET_BAUD) $(foreach file,$(wildcard $2/*.bin),-ca $(notdir $(basename $(file))) -cf $(file))
 endef
 
 # ----------------------------------------------------------------------------------------
