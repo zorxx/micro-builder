@@ -28,6 +28,7 @@ MV		:= mv
 UNZIP	:= unzip
 TAR		:= tar
 GIT		:= git
+HG		:= hg
 PYTHON	:= python
 ECHO	:= echo
 TOUCH	:= touch

@@ -1,0 +1,8 @@
+*_source/
+build/
+.done
+.*.external
+.*.external_download
+.*.external_patch
+.*.external_postaction
+.*.external_preaction

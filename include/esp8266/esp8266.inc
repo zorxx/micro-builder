@@ -34,7 +34,7 @@ LIBDIRS += $(ARCH_INCLUDE_DIR)/ld
 CFLAGS += -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections 
 CPPFLAGS += -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections
 ASMFLAGS += -c -g -x assembler-with-cpp -MMD -mlongcalls -mtext-section-literals
-CDEFS += __ets__ ICACHE_FLASH
+CDEFS += __esp8266__ __ets__ ICACHE_FLASH
 
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Library Steps

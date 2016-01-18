@@ -29,6 +29,13 @@ define package_download_git
 	$(if $($1_VERSION),$(ECHO) "Version: $($1_VERSION)";$(CD) $1_$(PKG_SRC_DIR);$(GIT) checkout -q "$($1_VERSION)",$(ECHO) "Default version")
 endef
 
+# package_download_hg(package_name)
+define package_download_hg
+	$(ECHO) "Download (hg): $1"
+	$(HG) clone $($1_SOURCE) $1_$(PKG_SRC_DIR)
+	$(if $($1_VERSION),$(ECHO) "Version: $($1_VERSION)";$(CD) $1_$(PKG_SRC_DIR);$(HG) checkout -q "$($1_VERSION)",$(ECHO) "Default version")
+endef
+
 # package_download_wget(package_name)
 define package_download_wget
 	$(ECHO) "Download (wget): $1"

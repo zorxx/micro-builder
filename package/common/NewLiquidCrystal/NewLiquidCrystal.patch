@@ -1,0 +1,11 @@
+--- NewLiquidCrystal_source/FastIO.h.old	2016-01-17 17:59:53.133709360 -0600
++++ NewLiquidCrystal_source/FastIO.h	2016-01-17 18:00:16.264671469 -0600
+@@ -47,7 +47,7 @@
+ typedef volatile uint8_t *fio_register;
+ 
+ 
+-#elif defined(__PIC32MX__)
++#elif defined(__PIC32MX__) || defined(__esp8266__)
+ typedef uint32_t fio_bit;
+ typedef volatile uint32_t *fio_register;
+ 
