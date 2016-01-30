@@ -9,7 +9,7 @@ $(PACKAGE_NAME)_SOURCE_METHOD := wget
 
 $(PACKAGE_NAME)_FILENAME := $(strip \
 	$(if $(findstring Linux_64,$(HOST_ARCH)),linux64-xtensa-lx106-elf-gb404fb9.tar.gz, \
-		$(if $(findstring Linux_32,$(HOST_ARCH)),linux32-xtensa-lx106-elf-gb404fb9.tar.gz, \
+		$(if $(findstring Linux_32,$(HOST_ARCH)),linux32-xtensa-lx106-elf.tar.gz, \
 			$(if $(findstring WIN,$(HOST_ARCH)),win32-xtensa-lx106-elf-gb404fb9-2.tar.gz, \
 				$(if $(findstring OSX,$(HOST_ARCH)),osx-xtensa-lx106-elf-gb404fb9-2.tar.gz, \
 					unknown)))))
