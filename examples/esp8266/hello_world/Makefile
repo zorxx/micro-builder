@@ -4,7 +4,7 @@
 
 include ../../../include/mb.inc
 
-dependencies = package/esp8266/esp8266_sdk
+dependencies = package/esp8266/esp8266_sdk lib/esp8266/uart_lite
 
 APP_NAME = hello_world
 $(APP_NAME)_obj := $(foreach file, \
@@ -16,6 +16,7 @@ $(APP_NAME)_obj := $(foreach file, \
 $(APP_NAME)_libs = gcc phy pp net80211 lwip wpa main crypto uart_lite
 
 APP_TARGETS := $(APP_NAME)
+INCDIR += .
 
 include $(INCLUDE_DIR)/app.inc
 

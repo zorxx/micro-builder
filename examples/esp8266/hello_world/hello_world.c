@@ -6,7 +6,7 @@
 #include <osapi.h>
 #include <os_type.h>
 #include <gpio.h>
-#include "esp8266/uart_lite/uart.h"
+#include "lib/esp8266/uart_lite/uart.h"
 
 #define DELAY 1000 /* milliseconds */
 

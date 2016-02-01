@@ -11,7 +11,9 @@ $(LIB_NAME)_obj := $(foreach file, \
 		$(wildcard *.S), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 $(LIB_NAME)_package_deps = esp8266/esp8266_sdk
+LIBRARY_TARGETS += $(LIB_NAME)
 
-include ../../../include/lib.inc
+include $(INCLUDE_DIR)/lib.inc
+include $(INCLUDE_DIR)/dir.inc
 
 # vim: syntax=make tabstop=4 noexpandtab
