@@ -1,7 +1,7 @@
 Comment-out typedefs that conflict with stdint.h
 
---- source/esp_iot_sdk_v1.5.1/include/c_types.h.original	Fri Nov 27 12:29:02 2015
-+++ source/esp_iot_sdk_v1.5.1/include/c_types.h	Fri Jan 01 00:53:30 2016
+--- source/esp_iot_sdk_v1.5.2/include/c_types.h.original
++++ source/esp_iot_sdk_v1.5.2/include/c_types.h
 @@ -6,6 +6,9 @@
  #ifndef _C_TYPES_H_
  #define _C_TYPES_H_
@@ -30,12 +30,13 @@ Comment-out typedefs that conflict with stdint.h
  
  #define __packed        __attribute__((packed))
  
---- source/esp_iot_sdk_v1.5.1/include/ets_sys.h.original	Fri Aug 07 18:56:56 2015
-+++ source/esp_iot_sdk_v1.5.1/include/ets_sys.h	Fri Jan 01 01:37:05 2016
-@@ -90,4 +90,6 @@
- #define ETS_GPIO_INTR_DISABLE() \
-     ETS_INTR_DISABLE(ETS_GPIO_INUM)
- 
+--- esp8266_sdk_source/esp_iot_sdk_v1.5.2/include/ets_sys.h.orig
++++ esp8266_sdk_source/esp_iot_sdk_v1.5.2/include/ets_sys.h
+@@ -102,4 +102,7 @@
+
+ #define ETS_SDIO_INTR_DISABLE() \
+     ETS_INTR_DISABLE(ETS_SDIO_INUM)
++
 +#include "esp8266_rom.h"
 +
  #endif /* _ETS_SYS_H */
