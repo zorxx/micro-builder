@@ -1,5 +1,5 @@
 *_source/
-build/
+build_*/
 .done
 .*.external
 .*.external_download

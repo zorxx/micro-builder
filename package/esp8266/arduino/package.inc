@@ -35,5 +35,6 @@ CDEFS += ARDUINO_ARCH_ESP8266 ARDUINO=100 ESP8266
 CFLAGS += -U__STRICT_ANSI__
 CPPFLAGS += -U__STRICT_ANSI__ -fno-use-cxa-atexit
 LDFLAGS += -u call_user_start -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy
+LIBS += gcc phy pp net80211 lwip wpa main crypto
 
 # vim: syntax=make tabstop=4 noexpandtab

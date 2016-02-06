@@ -12,9 +12,7 @@ TOPDIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/..
 EXAMPLES_DIR := $(TOPDIR)/examples
 INCLUDE_DIR := $(TOPDIR)/include
 LIBRARIES_DIR := $(TOPDIR)/lib
-LIB_BIN_DIR := $(LIBRARIES_DIR)/bin
 PACKAGE_DIR := $(TOPDIR)/package
-BUILD_TEMP_DIR := ./build
 
 # Determine host architecture
 include $(TOPDIR)/include/host.inc
@@ -37,7 +35,10 @@ PATCH	:= patch
 
 # Top-level configuration, needed first in order to determine TARGET_ARCH
 include $(TOPDIR)/config.inc
+
 ARCH_INCLUDE_DIR := $(INCLUDE_DIR)/$(TARGET_ARCH)
+LIB_BIN_DIR := $(LIBRARIES_DIR)/bin_$(TARGET_ARCH)
+BUILD_TEMP_DIR := ./build_$(TARGET_ARCH)
 
 # ----------------------------------------------------------------------------------------
 # Defaults
@@ -62,7 +63,7 @@ LIBDIRS := $(LIB_BIN_DIR)
 # Includes
 
 # Include any archiecture-specific configuration
--include $(INCLUDE_DIR)/$(TARGET_ARCH)/$(TARGET_ARCH).inc
+-include $(ARCH_INCLUDE_DIR)/$(TARGET_ARCH).inc
 
 # Prerequisite includes
 -include $(foreach prereq,$(PREREQS),$(TOPDIR)/$(prereq)/package.inc)    

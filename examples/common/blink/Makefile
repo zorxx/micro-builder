@@ -4,7 +4,7 @@
 
 include ../../../include/mb.inc
 
-dependencies = package/esp8266/arduino
+dependencies =
 
 APP_NAME = blink
 $(APP_NAME)_obj := $(foreach file, \
@@ -12,7 +12,7 @@ $(APP_NAME)_obj := $(foreach file, \
 	           $(wildcard *.cpp) \
 	           $(wildcard *.S), \
 	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-$(APP_NAME)_libs = stdc++ gcc phy pp net80211 lwip wpa main crypto arduino_core
+$(APP_NAME)_libs = m arduino_core
 
 CPPFLAGS += -include Arduino.h
 

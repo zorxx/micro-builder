@@ -1,25 +1,6 @@
-# \copyright 2015 Zorxx Software, All Rights Reserved
+# \copyright 2015-2016 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Top make include file for ESP8266 architecture
-
-# Target board type
-# Valid options:
-#   adafruit
-#   nodemcu
-TARGET_BOARD ?= nodemcu
-
-# Serial port and baud rate for programming (flashing)
-TARGET_PORT ?= COM3
-TARGET_BAUD ?= 230400
-
-# qio|qout|dio|dout
-TARGET_FLASH_MODE ?= qio
-# 512K|256K|1M|2M|4M|8M|16M|32M
-TARGET_FLASH_SIZE ?= 4M
-# 40|26|20|80
-TARGET_FLASH_SPEED ?= 40
-# none|ck|wifio|nodemcu
-TARGET_RESET_METHOD ?= nodemcu
 
 # -------------------------------------------------
 #
@@ -34,7 +15,7 @@ LIBDIRS += $(ARCH_INCLUDE_DIR)/ld
 CFLAGS += -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections 
 CPPFLAGS += -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections
 ASMFLAGS += -c -g -x assembler-with-cpp -MMD -mlongcalls -mtext-section-literals
-CDEFS += __esp8266__ __ets__ ICACHE_FLASH
+CDEFS += __esp8266__ __ets__ ICACHE_FLASH ESP8266
 
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Library Steps

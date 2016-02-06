@@ -1,6 +1,6 @@
-# \copyright 2015-2016 Zorxx Software, All Rights Reserved.
+# \copyright 2016 Zorxx Software, All Rights Reserved.
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Top-level makefile for ESP8266 packages
+# \brief Top-level makefile for AVR packages
 
 include ../../include/mb.inc
 
