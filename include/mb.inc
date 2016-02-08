@@ -111,7 +111,9 @@ $(BUILD_TEMP_DIR)/%.o: %.S
 	@$(CC) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(ASMFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
 
 # ----------------------------------------------------------------------------------------
-# Dependency
+# Dependencies and prerequisites
+
+dependencies += $(PREREQS)
 
 %/.done_$(TARGET_ARCH) :
 	@$(ECHO) "Building dependency: $*"
@@ -121,7 +123,12 @@ $(BUILD_TEMP_DIR)/%.o: %.S
 
 # Build prerequisite dependencies. Since this build target is defined first, the prerequisites
 #  will be built, in-order, before any build target starts
-all:: config_info $(filter-out $(CURDIR)/.done_$(TARGET_ARCH),$(foreach prereq,$(PREREQS),$(realpath $(TOPDIR)/$(prereq)/.done_$(TARGET_ARCH))))
+all:: config_info required_prereqs $(filter-out $(CURDIR)/.done_$(TARGET_ARCH),$(foreach prereq,$(PREREQS),$(realpath $(TOPDIR)/$(prereq)/.done_$(TARGET_ARCH))))
+
+required_prereqs:
+	$(eval missing_prereqs:=$(foreach req,$(required_prereqs),$(filter-out $(PREREQS),$(req))))
+	$(if $(missing_prereqs),$(error Missing prerequisite(s): $(missing_prereqs)))
+.PHONY: required_prereqs
 
 # ----------------------------------------------------------------------------------------
 # Miscellanous Productions and Functions

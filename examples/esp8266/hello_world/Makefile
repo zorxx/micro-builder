@@ -4,7 +4,8 @@
 
 include ../../../include/mb.inc
 
-dependencies = package/esp8266/esp8266_sdk lib/esp8266/uart_lite
+required_prereqs = package/esp8266/esp8266_sdk
+dependencies = lib/esp8266/uart_lite
 
 APP_NAME = hello_world
 $(APP_NAME)_obj := $(foreach file, \
