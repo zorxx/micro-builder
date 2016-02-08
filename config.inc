@@ -6,7 +6,7 @@
 # Valid options:
 #   esp8266
 #   avr
-TARGET_ARCH ?= avr
+TARGET_ARCH ?= esp8266
 
 # -----------------------------------------------------------------------------------------------
 # ESP8266 Examples
@@ -47,7 +47,6 @@ ifeq ($(TARGET_ARCH),avr)
 
 TARGET_CPU ?= ATmega328
 TARGET_MCU ?= atmega328p
-TARGET_BOARD ?= mega
 TARGET_CPU_SPEED ?= 16000000
 
 TARGET_PORT ?= /dev/ttyUSB0

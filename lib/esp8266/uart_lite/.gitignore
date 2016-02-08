@@ -1,2 +1,2 @@
-build/
-.done
+build_*/
+.done_*

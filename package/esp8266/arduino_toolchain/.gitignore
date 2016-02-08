@@ -1,6 +1,6 @@
 *_source/
-build/
-.done
+build_*/
+.done_*
 .*.external
 .*.external_download
 .*.external_patch

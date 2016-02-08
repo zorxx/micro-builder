@@ -25,14 +25,14 @@ PKG_SRC_DIR := source
 # package_download_git(package_name)
 define package_download_git
 	$(ECHO) "Download (git): $1"
-	$(GIT) clone $($1_SOURCE) $1_$(PKG_SRC_DIR)
+	$(GIT) clone $(strip $($1_SOURCE)) $1_$(PKG_SRC_DIR)
 	$(if $($1_VERSION),$(ECHO) "Version: $($1_VERSION)";$(CD) $1_$(PKG_SRC_DIR);$(GIT) checkout -q "$($1_VERSION)",$(ECHO) "Default version")
 endef
 
 # package_download_hg(package_name)
 define package_download_hg
 	$(ECHO) "Download (hg): $1"
-	$(HG) clone $($1_SOURCE) $1_$(PKG_SRC_DIR)
+	$(HG) clone $(strip $($1_SOURCE)) $1_$(PKG_SRC_DIR)
 	$(if $($1_VERSION),$(ECHO) "Version: $($1_VERSION)";$(CD) $1_$(PKG_SRC_DIR);$(HG) checkout -q "$($1_VERSION)",$(ECHO) "Default version")
 endef
 
@@ -40,8 +40,8 @@ endef
 define package_download_wget
 	$(ECHO) "Download (wget): $1"
 	$(MKDIR) -p $1_$(PKG_SRC_DIR)
-	$(CD) $1_$(PKG_SRC_DIR);$(WGET) --no-check-certificate -nc $($1_SOURCE) -O $($1_FILENAME)
-	$(call package_extract,$($1_FILENAME),$1_$(PKG_SRC_DIR))
+	$(CD) $1_$(PKG_SRC_DIR);$(WGET) --no-check-certificate -nc $(strip $($1_SOURCE)) -O $(strip $($1_FILENAME))
+	$(call package_extract,$(strip $($1_FILENAME)),$1_$(PKG_SRC_DIR))
 endef
 
 define package_extract

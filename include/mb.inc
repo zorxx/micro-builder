@@ -34,7 +34,18 @@ DATE	:= date
 PATCH	:= patch
 
 # Top-level configuration, needed first in order to determine TARGET_ARCH
+ifeq ($(MB_OVERRIDE_CONFIG),)
 include $(TOPDIR)/config.inc
+config_info:
+else
+include $(MB_OVERRIDE_CONFIG)
+config_info:
+ifeq ($(MAKELEVEL),0)
+	$(info Using override config: $(MB_OVERRIDE_CONFIG))
+endif
+endif
+.PHONY: config_info
+TARGET_ARCH := $(strip $(TARGET_ARCH))
 
 ARCH_INCLUDE_DIR := $(INCLUDE_DIR)/$(TARGET_ARCH)
 LIB_BIN_DIR := $(LIBRARIES_DIR)/bin_$(TARGET_ARCH)
@@ -102,15 +113,15 @@ $(BUILD_TEMP_DIR)/%.o: %.S
 # ----------------------------------------------------------------------------------------
 # Dependency
 
-%/.done :
+%/.done_$(TARGET_ARCH) :
 	@$(ECHO) "Building dependency: $*"
 	@$(MAKE) --no-print-directory -C $*
 	@$(TOUCH) $@
-.PHONY: %.done
+.PHONY: %.done_$(TARGET_ARCH)
 
 # Build prerequisite dependencies. Since this build target is defined first, the prerequisites
 #  will be built, in-order, before any build target starts
-all:: $(filter-out $(CURDIR)/.done,$(foreach prereq,$(PREREQS),$(realpath $(TOPDIR)/$(prereq)/.done)))
+all:: config_info $(filter-out $(CURDIR)/.done_$(TARGET_ARCH),$(foreach prereq,$(PREREQS),$(realpath $(TOPDIR)/$(prereq)/.done_$(TARGET_ARCH))))
 
 # ----------------------------------------------------------------------------------------
 # Miscellanous Productions and Functions

@@ -5,7 +5,6 @@
 # -------------------------------------------------
 #
 
-APP_LD_SCRIPT := $(ARCH_INCLUDE_DIR)/ld/$(BOARD_LD_SCRIPT_$(TARGET_BOARD))
 LDFLAGS += -Os -Wl,--gc-sections -mmcu=$(TARGET_MCU)
 
 LIBDIRS += $(ARCH_INCLUDE_DIR)/ld

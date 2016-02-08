@@ -41,14 +41,24 @@ Some aspects of micro-builder are similar to Buildroot, however there are some k
   all applications/libraries are built.
 
 ------------------------------------------------------------------------------------
-Quickstart (ESP8266 nodemcu):
+Quickstart:
 
 1. git clone the micro-builder repository:
     git clone https://github.com/zorxx/micro-builder.git
-2. Configure desired target architecture and packages by editing /config.inc
-**** 3. Execute "make" in the root of the micro-builder source tree
-Note: It's currently necessary to build desired packages individually. Navigate to each
-desired package directory, execute make.
+2. Configure desired target architecture (and base packages, if desired) by editing /config.inc
+3. Execute "make" in the root of the micro-builder source tree. This will build the base
+   prerequisites for the selected architecture.
+4. Navigate to the examples directory to build an application. Each application should
+   automatically build their required dependencies (i.e. libraries).
+4a. Create your own application by creating a directory under the "user" directory and
+    follow the Makefile pattern shown by the example applications.
+
+------------------------------------------------------------------------------------
+Configuration
+
+The environment variable MB_OVERRIDE_CONFIG can be used to specify a custom config.inc file;
+this overrides the default config.inc that exists in the root of the micro-builder
+source tree.
 
 ------------------------------------------------------------------------------------
 Host environment dependencies

@@ -19,5 +19,6 @@ CPPFLAGS += -include Arduino.h
 APP_TARGETS := $(APP_NAME)
 
 include $(INCLUDE_DIR)/app.inc
+include $(INCLUDE_DIR)/dir.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

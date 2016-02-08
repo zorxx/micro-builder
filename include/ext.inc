@@ -2,6 +2,8 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Rules for building external packages
 
+EXTERNAL_TARGETS:=$(strip $(EXTERNAL_TARGETS))
+
 all:: $(foreach target,$(EXTERNAL_TARGETS),.$(target).external)
 clean:: $(foreach target,$(EXTERNAL_TARGETS),$(target).external_clean)
 

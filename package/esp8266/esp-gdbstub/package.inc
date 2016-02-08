@@ -1,10 +1,9 @@
 # \copyright 2016 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Rules for building a directory
+# \brief ESP8266 gdbstub package build environment
 
-all::
-	@$(ECHO) "$(shell $(DATE))" > .done_$(TARGET_ARCH)
-clean::
-	@$(RM) -f .done_$(TARGET_ARCH)
+ESP8266_GDBSTUB_DIR := $(PACKAGE_DIR)/esp8266/esp-gdbstub/esp-gdbstub_source
+
+INCDIR += $(ESP8266_GDBSTUB_DIR)
 
 # vim: syntax=make tabstop=4 noexpandtab
