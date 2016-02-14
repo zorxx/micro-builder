@@ -123,12 +123,9 @@ dependencies += $(PREREQS)
 
 # Build prerequisite dependencies. Since this build target is defined first, the prerequisites
 #  will be built, in-order, before any build target starts
-all:: config_info required_prereqs $(filter-out $(CURDIR)/.done_$(TARGET_ARCH),$(foreach prereq,$(PREREQS),$(realpath $(TOPDIR)/$(prereq)/.done_$(TARGET_ARCH))))
+all:: config_info $(filter-out $(CURDIR)/.done_$(TARGET_ARCH),$(foreach prereq,$(PREREQS),$(realpath $(TOPDIR)/$(prereq)/.done_$(TARGET_ARCH))))
 
-required_prereqs:
-	$(eval missing_prereqs:=$(foreach req,$(required_prereqs),$(filter-out $(PREREQS),$(req))))
-	$(if $(missing_prereqs),$(error Missing prerequisite(s): $(missing_prereqs)))
-.PHONY: required_prereqs
+MISSING_PREREQS = $(foreach req,$(required_prereqs),$(filter-out $(PREREQS),$(req)))
 
 # ----------------------------------------------------------------------------------------
 # Miscellanous Productions and Functions

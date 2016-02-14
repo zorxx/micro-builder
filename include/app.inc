@@ -2,6 +2,8 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Rules for building applications
 
+ifeq ($(MISSING_PREREQS),)
+
 # Dependency includes
 -include $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/package.inc)
 
@@ -13,5 +15,12 @@ clean:: $(foreach app,$(APP_TARGETS),$(app)_app_clean)
 
 # If the user just runs "make flash", flash the first application listed in the makefile
 flash: $(firstword $(APP_TARGETS))_flash
+
+else
+
+all::
+	$(info Missing prerequisite(s): $(MISSING_PREREQS))
+
+endif
 
 # vim: syntax=make tabstop=4 noexpandtab

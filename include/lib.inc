@@ -2,6 +2,8 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Rules for building libraries
 
+ifeq ($(MISSING_PREREQS),)
+
 # Dependency includes
 -include $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/package.inc)
 
@@ -28,5 +30,12 @@ lib_info: $(foreach lib,$(LIBRARY_TARGETS),$(lib).library_info)
 
 all:: lib 
 clean:: lib_clean 
+
+else
+
+all::
+	$(info Missing prerequisite(s): $(MISSING_PREREQS))
+
+endif
 
 # vim: syntax=make tabstop=4 noexpandtab
