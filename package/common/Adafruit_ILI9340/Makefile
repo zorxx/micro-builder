@@ -2,11 +2,11 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for Adafruit_ILI9340 2.2" SPI LCD display library package
 
+dependencies = package/common/Adafruit_GFX
+
 include ../../../include/mb.inc
 
 PACKAGE_NAME := Adafruit_ILI9340
-
-dependencies = package/common/Adafruit_GFX
 
 # Download information
 $(PACKAGE_NAME)_SOURCE := "https://github.com/zorxx/Adafruit_ILI9340.git"

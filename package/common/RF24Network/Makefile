@@ -2,10 +2,11 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for nRF24L01 Network library package
 
+dependencies = package/common/RF24
+
 include ../../../include/mb.inc
 
 PACKAGE_NAME := RF24Network
-dependencies = package/common/RF24
 
 # Download information
 $(PACKAGE_NAME)_SOURCE := "https://github.com/TMRh20/RF24Network.git"

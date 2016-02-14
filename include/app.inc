@@ -8,7 +8,6 @@ ifeq ($(MISSING_PREREQS),)
 -include $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/package.inc)
 
 # First, make sure all dependencies have been built
-all:: $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/.done_$(TARGET_ARCH))
 all:: $(foreach app,$(APP_TARGETS),$(BUILD_TEMP_DIR)/$(app).elf)
 
 clean:: $(foreach app,$(APP_TARGETS),$(app)_app_clean)

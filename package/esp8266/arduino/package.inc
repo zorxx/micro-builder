@@ -35,6 +35,11 @@ CDEFS += ARDUINO_ARCH_ESP8266 ARDUINO=100 ESP8266
 CFLAGS += -U__STRICT_ANSI__
 CPPFLAGS += -U__STRICT_ANSI__ -fno-use-cxa-atexit
 LDFLAGS += -u call_user_start -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy
-LIBS += gcc phy pp net80211 lwip wpa main crypto
+
+LIBS += m gcc hal phy net80211 lwip wpa main pp smartconfig wps crypto axtls
+LIBS += arduino_ArduinoOTA arduino_Ethernet arduino_HTTPUpdateServer arduino_SSDP arduino_Wire
+LIBS += arduino_AVRISP arduino_GDBStub arduino_mDNS arduino_TFT arduino_core arduino_Hash arduino_OneWire
+LIBS += arduino_Ticker arduino_DNSServer arduino_HTTPClient arduino_SD arduino_wifi arduino_eeprom
+LIBS += arduino_HTTPUpdate arduino_SPI arduino_WiFiMesh
 
 # vim: syntax=make tabstop=4 noexpandtab

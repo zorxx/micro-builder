@@ -2,10 +2,10 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief MQTT example application for ESP8266
 
-include ../../../include/mb.inc
-
 required_prereqs = package/esp8266/arduino
 dependencies = package/common/MQTT
+
+include ../../../include/mb.inc
 
 APP_NAME = mqtt
 $(APP_NAME)_PREACTION = \

@@ -196,7 +196,7 @@ SECTIONS
      *  change the compilation options to allow for far accesses to data. */
     *libgcc.a:(.literal* .text*)
     *libm.a:(.literal* .text*)
-
+    *libc.a:(.literal* .text*)
     *libmain.a:(.literal* .text*)
 /*    *libphy.a:(.literal* .text*)
     *libpp.a:(.literal* .text*)

@@ -7,9 +7,6 @@ ifeq ($(MISSING_PREREQS),)
 # Dependency includes
 -include $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/package.inc)
 
-# First, make sure all dependencies have been built
-all:: $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/.done_$(TARGET_ARCH))
-
 # If the LIBRARY_SUBMAKE variable is defined (can be set to anything), spawn a new make
 #  process before building the LIBRARY_TARGETS. This is done to allow a single makefile
 #  define an arbitrary set of files to be used for building the library (e.g. using the

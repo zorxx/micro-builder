@@ -113,19 +113,24 @@ $(BUILD_TEMP_DIR)/%.o: %.S
 # ----------------------------------------------------------------------------------------
 # Dependencies and prerequisites
 
-dependencies += $(PREREQS)
+MISSING_PREREQS = $(foreach req,$(required_prereqs),$(filter-out $(PREREQS),$(req)))
 
 %/.done_$(TARGET_ARCH) :
 	@$(ECHO) "Building dependency: $*"
 	@$(MAKE) --no-print-directory -C $*
 	@$(TOUCH) $@
-.PHONY: %.done_$(TARGET_ARCH)
+.PHONY: %/.done_$(TARGET_ARCH)
 
-# Build prerequisite dependencies. Since this build target is defined first, the prerequisites
-#  will be built, in-order, before any build target starts
-all:: config_info $(filter-out $(CURDIR)/.done_$(TARGET_ARCH),$(foreach prereq,$(PREREQS),$(realpath $(TOPDIR)/$(prereq)/.done_$(TARGET_ARCH))))
+all:: config_info
 
-MISSING_PREREQS = $(foreach req,$(required_prereqs),$(filter-out $(PREREQS),$(req)))
+# Determine if we're currently building a prerequisite. If so, don't attempt to build any other
+#  dependencies (prerequisites), otherwise undesirable recursion will result.
+CURRENT_IS_PREREQ = $(filter $(abspath $(CURDIR)),$(foreach prereq,$(PREREQS),$(abspath $(TOPDIR)/$(prereq))))
+ifeq ($(CURRENT_IS_PREREQ),)
+
+all:: $(filter-out $(abspath $(CURDIR)/.done_$(TARGET_ARCH)),$(foreach dep,$(PREREQS) $(dependencies),$(abspath $(TOPDIR)/$(dep)/.done_$(TARGET_ARCH))))
+
+endif
 
 # ----------------------------------------------------------------------------------------
 # Miscellanous Productions and Functions

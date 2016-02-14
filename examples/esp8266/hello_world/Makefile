@@ -2,10 +2,10 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Hello World application for ESP8266
 
-include ../../../include/mb.inc
-
 required_prereqs = package/esp8266/esp8266_sdk
 dependencies = lib/esp8266/uart_lite
+
+include ../../../include/mb.inc
 
 APP_NAME = hello_world
 $(APP_NAME)_obj := $(foreach file, \

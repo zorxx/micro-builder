@@ -32,6 +32,8 @@ TARGET_FLASH_SPEED ?= 40
 # none|ck|wifio|nodemcu
 TARGET_RESET_METHOD ?= none
 
+TARGET_CPU_SPEED ?= 80000000
+
 # Toolchain and SDK from ESP8266/Arduino Project
 PREREQS ?= package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/arduino
 

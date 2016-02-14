@@ -12,10 +12,10 @@ LDFLAGS += -T$(APP_LD_SCRIPT) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-
 
 LIBDIRS += $(ARCH_INCLUDE_DIR)/ld
 
-CFLAGS += -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections 
+CFLAGS += -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections
 CPPFLAGS += -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections
 ASMFLAGS += -c -g -x assembler-with-cpp -MMD -mlongcalls -mtext-section-literals
-CDEFS += __esp8266__ __ets__ ICACHE_FLASH ESP8266
+CDEFS += __esp8266__ __ets__ ICACHE_FLASH ESP8266 F_CPU=$(TARGET_CPU_SPEED)
 
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Library Steps

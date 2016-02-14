@@ -9,6 +9,7 @@ PACKAGE_NAME := arduino
 # External package download information
 $(PACKAGE_NAME)_SOURCE := "https://github.com/esp8266/Arduino.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
+$(PACKAGE_NAME)_VERSION := 2.1.0-rc2
 
 SRCDIR := $(PACKAGE_NAME)_source
 
@@ -144,10 +145,6 @@ LIB_NAME_WIRE := lib$(PACKAGE_NAME)_Wire
 $(LIB_NAME_WIRE)_obj := $(foreach file, \
 		$(wildcard $(SRCDIR)/libraries/Wire/*.cpp), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-
-# Libraries don't build cleanly
-CFLAGS += -Wno-error -Wno-error=implicit-function-declaration
-CPPFLAGS +=
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)
 

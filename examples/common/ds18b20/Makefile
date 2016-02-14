@@ -2,9 +2,9 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Arduino Dallas DS18B20 example application
 
-include ../../../include/mb.inc
-
 dependencies := package/common/OneWire package/common/TemperatureControl
+
+include ../../../include/mb.inc
 
 APP_NAME = ds18b20
 $(APP_NAME)_obj := $(foreach file, \
@@ -12,7 +12,7 @@ $(APP_NAME)_obj := $(foreach file, \
 	           $(wildcard *.cpp) \
 	           $(wildcard *.S), \
 	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-$(APP_NAME)_libs := m arduino_core OneWire TemperatureControl
+$(APP_NAME)_libs := arduino_core OneWire TemperatureControl
 
 APP_TARGETS := $(APP_NAME)
 

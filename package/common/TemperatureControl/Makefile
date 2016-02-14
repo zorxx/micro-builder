@@ -2,9 +2,9 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for Arduino-Temperature-Control-Library package
 
-include ../../../include/mb.inc
-
 dependencies = package/common/OneWire
+
+include ../../../include/mb.inc
 
 PACKAGE_NAME := TemperatureControl
 
