@@ -4,8 +4,6 @@
 
 include ../../../include/mb.inc
 
-dependencies =
-
 APP_NAME = blink
 $(APP_NAME)_obj := $(foreach file, \
 	           $(wildcard *.c) \

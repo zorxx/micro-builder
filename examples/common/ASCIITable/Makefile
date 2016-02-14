@@ -4,8 +4,6 @@
 
 include ../../../include/mb.inc
 
-dependencies = package/esp8266/arduino
-
 APP_NAME = ASCIITable
 $(APP_NAME)_obj := $(foreach file, \
 	           $(wildcard *.c) \

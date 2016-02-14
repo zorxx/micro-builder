@@ -1,3 +1,12 @@
 externals/
 user/
 *.swp
+*.app_preaction
+*_source/
+build_*/
+.done_*
+.*.external
+.*.external_download
+.*.external_patch
+.*.external_postaction
+.*.external_preaction
