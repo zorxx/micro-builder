@@ -3,7 +3,7 @@
 # \brief MQTT example application for ESP8266
 
 required_prereqs = package/esp8266/arduino
-dependencies = package/common/MQTT
+dependencies = package/common/MQTT lib/esp8266/os_stubs
 
 include ../../../include/mb.inc
 
@@ -14,7 +14,7 @@ $(APP_NAME)_obj := $(foreach file, \
 	           $(wildcard *.cpp), \
 	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
-$(APP_NAME)_libs = m MQTT arduino_wifi arduino_Ethernet arduino_core
+$(APP_NAME)_libs = os_stubs c MQTT arduino_wifi arduino_Ethernet arduino_core os_stubs
 
 APP_TARGETS := $(APP_NAME)
 INCDIR += .
