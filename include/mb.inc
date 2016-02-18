@@ -8,7 +8,7 @@
 .DEFAULT_GOAL := all
 
 # Directories
-TOPDIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/..
+TOPDIR:=$(abspath $(lastword $(MAKEFILE_LIST))/../..)
 EXAMPLES_DIR := $(TOPDIR)/examples
 INCLUDE_DIR := $(TOPDIR)/include
 LIBRARIES_DIR := $(TOPDIR)/lib
