@@ -41,7 +41,8 @@ $(LIB_NAME_SPI)_obj := $(foreach file, \
 # Wire Library
 LIB_NAME_WIRE := lib$(PACKAGE_NAME)_Wire
 $(LIB_NAME_WIRE)_obj := $(foreach file, \
-                $(wildcard $(SRCDIR)/libraries/Wire/*.cpp), \
+                $(wildcard $(SRCDIR)/libraries/Wire/*.cpp) \
+                $(wildcard $(SRCDIR)/libraries/Wire/utility/*.c), \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)
