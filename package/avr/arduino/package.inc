@@ -2,8 +2,10 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Build environment configuration for AVR Arduino package
 
-AVR_HARDWARE_DIR := $(PACKAGE_DIR)/avr/arduino/arduino_source/arduino-nightly/hardware
+ARDUINO_DIR := $(PACKAGE_DIR)/avr/arduino/arduino_source/arduino-nightly
+AVR_HARDWARE_DIR := $(ARDUINO_DIR)/hardware
 AVR_LIBRARIES_DIR := $(AVR_HARDWARE_DIR)/arduino/avr/libraries
+ARDUINO_COMMON_LIBRARIES_DIR := $(ARDUINO_DIR)/libraries
 TOOLCHAIN_DIR := $(AVR_HARDWARE_DIR)/tools/avr
 TOOLCHAIN_BIN_DIR := $(TOOLCHAIN_DIR)/bin
 TOOLCHAIN_PREFIX := avr-
@@ -20,9 +22,21 @@ AVRDUDE	:= $(TOOLCHAIN_BIN_DIR)/avrdude
 export PATH := $(PATH):$(TOOLCHAIN_BIN_DIR)
 INCDIR += $(TOOLCHAIN_DIR) $(AVR_HARDWARE_DIR)/arduino/avr/variants/standard \
  $(AVR_HARDWARE_DIR)/arduino/avr/cores/arduino
-INCDIR += $(AVR_LIBRARIES_DIR)/SoftwareSerial
-INCDIR += $(AVR_LIBRARIES_DIR)/SPI
-INCDIR += $(AVR_LIBRARIES_DIR)/Wire $(AVR_LIBRARIES_DIR)/Wire/utility
+INCDIR += $(AVR_LIBRARIES_DIR)/SoftwareSerial/src
+INCDIR += $(AVR_LIBRARIES_DIR)/SPI/src
+INCDIR += $(AVR_LIBRARIES_DIR)/Wire/src $(AVR_LIBRARIES_DIR)/Wire/utility
+INCDIR += $(AVR_LIBRARIES_DIR)/HID/src
+INCDIR += $(AVR_LIBRARIES_DIR)/EEPROM/src
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/Bridge/src
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/Ethernet/src $(ARDUINO_COMMON_LIBRARIES_DIR)/Ethernet/src/utility
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/Keyboard/src
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/LiquidCrystal/src
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/SD/src
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/TFT/src $(ARDUINO_COMMON_LIBRARIES_DIR)/TFT/src/utility
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/Robot_Control/src
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/Servo/src
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/Stepper/src
+INCDIR += $(ARDUINO_COMMON_LIBRARIES_DIR)/WiFi/src
 
 CDEFS += ARDUINO_ARCH_AVR ARDUINO=10607
 
