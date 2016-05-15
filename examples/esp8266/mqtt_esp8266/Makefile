@@ -14,7 +14,7 @@ $(APP_NAME)_obj := $(foreach file, \
 	           $(wildcard *.cpp), \
 	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
-$(APP_NAME)_libs = os_stubs c MQTT arduino_wifi arduino_Ethernet arduino_core os_stubs
+$(APP_NAME)_libs = c MQTT arduino_wifi arduino_Ethernet arduino_core
 
 APP_TARGETS := $(APP_NAME)
 INCDIR += .

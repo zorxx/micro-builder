@@ -2,10 +2,19 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Rules for building libraries
 
-ifeq ($(MISSING_PREREQS),)
-
 # Dependency includes
+ifeq ($(MISSING_PREREQS),)
 -include $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/package.inc)
+endif
+
+# ----------------------------------------------------------------------------------------
+
+$(LIB_BIN_DIR)/%.a: $$($$*_obj)
+	@$(ECHO) "AR $(notdir $@)"
+	@$(MKDIR) -p $(dir $@)
+	@$(AR) rcs $@ $(filter %.o, $^)
+	@$(if $(TARGET_ARCH)_post_lib,$(call $(TARGET_ARCH)_post_lib,$@))
+.PRECIOUS: $(BUILD_TEMP_DIR)/%.o
 
 # If the LIBRARY_SUBMAKE variable is defined (can be set to anything), spawn a new make
 #  process before building the LIBRARY_TARGETS. This is done to allow a single makefile
@@ -21,18 +30,34 @@ lib:
 else
 lib: $(foreach lib,$(LIBRARY_TARGETS),$(LIB_BIN_DIR)/$(lib).a)
 endif
-lib_clean: $(foreach lib,$(LIBRARY_TARGETS),$(lib).library_clean)
-	@$(RM) -rf $(BUILD_TEMP_DIR)
+
+# ----------------------------------------------------------------------------------------
+
+%.library_info:
+	@$(OBJDUMP) -ft $(LIB_BIN_DIR)/$*.a
+
 lib_info: $(foreach lib,$(LIBRARY_TARGETS),$(lib).library_info)
 
+# ----------------------------------------------------------------------------------------
+
+# library_clean(name)
+%.library_clean:
+	@$(ECHO) "CLEAN $*.a"
+	@$(RM) -f $(LIB_BIN_DIR)/$*.a
+.PHONY: %.library_clean
+
+lib_clean: $(foreach lib,$(LIBRARY_TARGETS),$(lib).library_clean)
+	@$(RM) -rf $(BUILD_TEMP_DIR)
+
+# ----------------------------------------------------------------------------------------
+
+ifeq ($(MISSING_PREREQS),)
 all:: lib 
-clean:: lib_clean 
-
 else
-
 all::
 	$(info Missing prerequisite(s): $(MISSING_PREREQS))
-
 endif
+
+clean:: lib_clean 
 
 # vim: syntax=make tabstop=4 noexpandtab

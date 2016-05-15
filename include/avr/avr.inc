@@ -11,7 +11,7 @@ LIBDIRS += $(ARCH_INCLUDE_DIR)/ld
 
 CFLAGS += -Os -g -Wall -MMD -std=gnu11 -ffunction-sections -fdata-sections -mmcu=$(TARGET_MCU) 
 CPPFLAGS += -Os -g -Wall -fno-exceptions -std=gnu++11 -MMD -ffunction-sections -fdata-sections -fno-threadsafe-statics -mmcu=$(TARGET_MCU)
-ASMFLAGS += -c -g -x assembler-with-cpp -MMD -mlongcalls -mtext-section-literals -mmcu=$(TARGET_MCU)
+ASMFLAGS += -c -g -x assembler-with-cpp -MMD -mmcu=$(TARGET_MCU)
 CDEFS += __AVR_$(TARGET_CPU)__ F_CPU=$(TARGET_CPU_SPEED)
 
 # ----------------------------------------------------------------------------------------

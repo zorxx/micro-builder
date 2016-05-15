@@ -1,9 +1,9 @@
-# \copyright 2015 Zorxx Software, All Rights Reserved
+# \copyright 2015-2016 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Build environment for ESP8266 SDK package
 
-ESP8266_SDK_VERSION := 1.5.2
-ESP8266_SDK_DIR := $(PACKAGE_DIR)/esp8266/esp8266_sdk/esp8266_sdk_source/esp_iot_sdk_v$(ESP8266_SDK_VERSION)
+ESP8266_SDK_VERSION := 1.5.3
+ESP8266_SDK_DIR := "$(PACKAGE_DIR)/esp8266/esp8266_sdk/esp8266_sdk_source/ESP8266_NONOS_SDK_V1.5.3_16_04_18/ESP8266_NONOS_SDK"
 
 INCDIR += $(ESP8266_SDK_DIR)/include $(ESP8266_SDK_DIR)/include/json \
  $(PACKAGE_DIR)/esp8266/esp8266_sdk $(PACKAGE_DIR)/esp8266/esp8266_sdk/include

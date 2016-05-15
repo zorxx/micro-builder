@@ -8,7 +8,7 @@ PACKAGE_NAME := esp8266_sdk
 
 # Download information
 $(PACKAGE_NAME)_FILENAME := sdk.zip
-$(PACKAGE_NAME)_SOURCE := "http://bbs.espressif.com/download/file.php?id=1079"
+$(PACKAGE_NAME)_SOURCE := "https://espressif.com/en/file/731/download?token=jDRz7CKm"
 $(PACKAGE_NAME)_SOURCE_METHOD := wget
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)
