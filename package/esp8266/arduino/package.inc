@@ -6,7 +6,7 @@ ESP8266_ARDUINO_DIR := $(PACKAGE_DIR)/esp8266/arduino/arduino_source
 
 # Core includes
 INCDIR += $(ESP8266_ARDUINO_DIR)/cores/esp8266 $(ESP8266_ARDUINO_DIR)/variants/$(TARGET_BOARD) \
- $(ESP8266_ARDUINO_DIR)/tools/sdk/include
+ $(ESP8266_ARDUINO_DIR)/tools/sdk/include $(ESP8266_ARDUINO_DIR)/tools/sdk/lwip/include
 INCDIR += $(ESP8266_ARDUINO_DIR)/libraries/ArduinoOTA
 INCDIR += $(ESP8266_ARDUINO_DIR)/libraries/DNSServer/src
 INCDIR += $(ESP8266_ARDUINO_DIR)/libraries/EEPROM
