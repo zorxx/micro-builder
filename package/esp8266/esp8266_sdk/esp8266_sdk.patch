@@ -1,7 +1,7 @@
 Comment-out typedefs that conflict with stdint.h
 
---- esp8266_sdk_source/ESP8266_NONOS_SDK_V1.5.3_16_04_18/ESP8266_NONOS_SDK/include/c_types.h.original
-+++ esp8266_sdk_source/ESP8266_NONOS_SDK_V1.5.3_16_04_18/ESP8266_NONOS_SDK/include/c_types.h
+--- esp8266_sdk_source/ESP8266_NONOS_SDK/include/c_types.h.original
++++ esp8266_sdk_source/ESP8266_NONOS_SDK/include/c_types.h
 @@ -6,6 +6,9 @@
  #ifndef _C_TYPES_H_
  #define _C_TYPES_H_
@@ -30,8 +30,8 @@ Comment-out typedefs that conflict with stdint.h
  
  #define __packed        __attribute__((packed))
  
---- esp8266_sdk_source/ESP8266_NONOS_SDK_V1.5.3_16_04_18/ESP8266_NONOS_SDK/include/ets_sys.h.orig
-+++ esp8266_sdk_source/ESP8266_NONOS_SDK_V1.5.3_16_04_18/ESP8266_NONOS_SDK/include/ets_sys.h
+--- esp8266_sdk_source/ESP8266_NONOS_SDK/include/ets_sys.h.orig
++++ esp8266_sdk_source/ESP8266_NONOS_SDK/include/ets_sys.h
 @@ -102,4 +102,7 @@
 
  #define ETS_SDIO_INTR_DISABLE() \
