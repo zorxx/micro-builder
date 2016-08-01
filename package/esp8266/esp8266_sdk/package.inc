@@ -2,8 +2,8 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Build environment for ESP8266 SDK package
 
-ESP8266_SDK_VERSION := 1.5.4
-ESP8266_SDK_DIR := "$(PACKAGE_DIR)/esp8266/esp8266_sdk/esp8266_sdk_source/ESP8266_NONOS_SDK"
+ESP8266_SDK_VERSION := 2.0.0
+ESP8266_SDK_DIR := $(PACKAGE_DIR)/esp8266/esp8266_sdk/esp8266_sdk_source/ESP8266_NONOS_SDK
 
 INCDIR += $(ESP8266_SDK_DIR)/include $(ESP8266_SDK_DIR)/include/json \
  $(PACKAGE_DIR)/esp8266/esp8266_sdk $(PACKAGE_DIR)/esp8266/esp8266_sdk/include
