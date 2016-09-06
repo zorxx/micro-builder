@@ -16,6 +16,7 @@ CFLAGS += -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno
 CPPFLAGS += -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections
 ASMFLAGS += -c -g -x assembler-with-cpp -MMD -mlongcalls -mtext-section-literals
 CDEFS += __esp8266__ __ets__ ICACHE_FLASH ESP8266 F_CPU=$(TARGET_CPU_SPEED)
+OBJCOPYDEFS += -O elf32-xtensa-le -B xtensa --rename-section .data=.irom0.other
 
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Library Steps
@@ -29,7 +30,9 @@ endef
 # esp8266_post_app(app_out_file)
 # Note: this step assumes the linker definition file places all flash code (.irom0.text section) at flash address 0x10000
 define esp8266_post_app
-	$(ESPTOOL) -bz $(TARGET_FLASH_SIZE) -bf $(TARGET_FLASH_SPEED) -bm $(TARGET_FLASH_MODE) -eo $1 -bo $(dir $1)0x00000.bin -bs .text -bs .data -bs .rodata -bc -ec -eo $1 -es .irom0.text $(dir $1)0x10000.bin -ec
+	$(ESPTOOL) -bz $(TARGET_FLASH_SIZE) -bf $(TARGET_FLASH_SPEED) -bm $(TARGET_FLASH_MODE) -eo $1 -bo $(dir $1)0x00000.bin -bs .text -bs .data -bs .rodata -bc -ec -eo $1 -es .irom0.text $(dir $1)0x10000.bin -ec -eo $1 -es .irom0.other $(dir $1)other.bin -ec
+	cat $(dir $1)other.bin >> $(dir $1)0x10000.bin
+	rm -rf $(dir $1)other.bin
 endef
 
 # esp8266_app_info(app_file,app_dir)
