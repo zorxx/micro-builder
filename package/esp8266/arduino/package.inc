@@ -36,7 +36,7 @@ CFLAGS += -U__STRICT_ANSI__
 CPPFLAGS += -U__STRICT_ANSI__ -fno-use-cxa-atexit
 LDFLAGS += -u call_user_start -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy
 
-LIBS += m gcc hal phy net80211 lwip wpa main pp smartconfig wps crypto axtls
+LIBS += m gcc hal phy stdc++ net80211 lwip wpa main pp smartconfig wps crypto axtls
 LIBS += arduino_ArduinoOTA arduino_Ethernet arduino_HTTPUpdateServer arduino_SSDP arduino_Wire
 LIBS += arduino_AVRISP arduino_GDBStub arduino_mDNS arduino_TFT arduino_core arduino_Hash arduino_OneWire
 LIBS += arduino_Ticker arduino_DNSServer arduino_HTTPClient arduino_SD arduino_wifi arduino_eeprom

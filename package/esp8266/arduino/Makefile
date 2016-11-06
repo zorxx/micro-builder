@@ -64,6 +64,12 @@ $(LIB_NAME_EEPROM)_obj := $(foreach file, \
 		$(wildcard $(SRCDIR)/libraries/EEPROM/*.cpp), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
+# WebServer Library 
+LIB_NAME_ESP8266_WEBSERVER := lib$(PACKAGE_NAME)_WebServer
+$(LIB_NAME_ESP8266_WEBSERVER)_obj := $(foreach file, \
+		$(wildcard $(SRCDIR)/libraries/ESP8266WebServer/src/*.cpp), \
+		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
+
 # Ethernet Library
 LIB_NAME_ETHERNET := lib$(PACKAGE_NAME)_Ethernet
 $(LIB_NAME_ETHERNET)_obj := $(foreach file, \
@@ -154,7 +160,7 @@ LIBRARY_TARGETS += $(LIB_NAME_CORE) $(LIB_NAME_AVRISP) \
   $(LIB_NAME_HASH) $(LIB_NAME_HTTP_CLIENT) $(LIB_NAME_HTTP_UPDATE) $(LIB_NAME_HTTP_UPDATE_SERVER) \
   $(LIB_NAME_ONEWIRE) $(LIB_NAME_SD) $(LIB_NAME_SPI) \
   $(LIB_NAME_TICKER) $(LIB_NAME_TFT) $(LIB_NAME_WIFI) $(LIB_NAME_WIFI_MESH) $(LIB_NAME_WIRE) \
-  $(LIB_NAME_ARDUINO_OTA) $(LIB_NAME_MDNS) $(LIB_NAME_SSDP)
+  $(LIB_NAME_ARDUINO_OTA) $(LIB_NAME_MDNS) $(LIB_NAME_SSDP) $(LIB_NAME_ESP8266_WEBSERVER)
 LIBRARY_SUBMAKE := true
 
 include $(INCLUDE_DIR)/ext.inc
