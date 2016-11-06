@@ -104,6 +104,11 @@ $(BUILD_TEMP_DIR)/%.o: %.cpp
 	@$(MKDIR) -p $(dir $@)
 	@$(CXX) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(CPPFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
 
+$(BUILD_TEMP_DIR)/%.o: %.ino
+	@$(ECHO) "INO $^"
+	@$(MKDIR) -p $(dir $@)
+	@$(CXX) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(CPPFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
+
 $(BUILD_TEMP_DIR)/%.o: %.S
 	@$(ECHO) "ASM $^"
 	@$(MKDIR) -p $(dir $@)
