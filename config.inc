@@ -6,7 +6,25 @@
 # Valid options:
 #   esp8266
 #   avr
+#   ameba
 TARGET_ARCH ?= esp8266
+
+TARGET_ARCH := $(strip $(TARGET_ARCH))
+
+# -----------------------------------------------------------------------------------------------
+# Ameba Examples
+
+ifeq ($(TARGET_ARCH),ameba)
+
+TARGET_CPU ?= corex_m0
+TARGET_CPU_SPEED ?= 16000000
+
+TARGET_PORT ?= /dev/ttyUSB0
+TARGET_BAUD ?= 57600
+
+PREREQS ?= package/ameba/toolchain package/ameba/sdk
+
+endif # ameba
 
 # -----------------------------------------------------------------------------------------------
 # ESP8266 Examples
