@@ -13,6 +13,7 @@ EXAMPLES_DIR := $(TOPDIR)/examples
 INCLUDE_DIR := $(TOPDIR)/include
 LIBRARIES_DIR := $(TOPDIR)/lib
 PACKAGE_DIR := $(TOPDIR)/package
+USER_DIR := $(TOPDIR)/user
 
 # Determine host architecture
 include $(TOPDIR)/include/host.inc
@@ -115,6 +116,16 @@ $(BUILD_TEMP_DIR)/%.bin.o : %.html
 	@$(OBJCOPY) -I binary $(OBJCOPYDEFS) $^ $@
 
 $(BUILD_TEMP_DIR)/%.bin.o : %.js
+	@$(ECHO) "BIN $^"
+	@$(MKDIR) -p $(dir $@)
+	@$(OBJCOPY) -I binary $(OBJCOPYDEFS) $^ $@
+
+$(BUILD_TEMP_DIR)/%.bin.o : %.css
+	@$(ECHO) "BIN $^"
+	@$(MKDIR) -p $(dir $@)
+	@$(OBJCOPY) -I binary $(OBJCOPYDEFS) $^ $@
+
+$(BUILD_TEMP_DIR)/%.bin.o : %.png
 	@$(ECHO) "BIN $^"
 	@$(MKDIR) -p $(dir $@)
 	@$(OBJCOPY) -I binary $(OBJCOPYDEFS) $^ $@
