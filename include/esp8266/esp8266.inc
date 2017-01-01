@@ -31,8 +31,7 @@ endef
 # Note: this step assumes the linker definition file places all flash code (.irom0.text section) at flash address 0x10000
 define esp8266_post_app
 	$(ESPTOOL) -bz $(TARGET_FLASH_SIZE) -bf $(TARGET_FLASH_SPEED) -bm $(TARGET_FLASH_MODE) -eo $1 -bo $(dir $1)0x00000.bin -bs .text -bs .data -bs .rodata -bc -ec -eo $1 -es .irom0.text $(dir $1)0x10000.bin -ec -eo $1 -es .irom0.other $(dir $1)other.bin -ec
-	cat $(dir $1)other.bin >> $(dir $1)0x10000.bin
-	rm -rf $(dir $1)other.bin
+	bash -c "if [ -f $(dir $1)other.bin ]; then cat $(dir $1)other.bin >> $(dir $1)0x10000.bin; rm -f $(dir $1)other.bin; fi"
 endef
 
 # esp8266_app_info(app_file,app_dir)

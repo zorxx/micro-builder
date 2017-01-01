@@ -13,6 +13,7 @@ EXAMPLES_DIR := $(TOPDIR)/examples
 INCLUDE_DIR := $(TOPDIR)/include
 LIBRARIES_DIR := $(TOPDIR)/lib
 PACKAGE_DIR := $(TOPDIR)/package
+USER_DIR := $(TOPDIR)/user
 
 # Determine host architecture
 include $(TOPDIR)/include/host.inc
@@ -62,8 +63,8 @@ LD		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
 OBJCOPY	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objcopy
 OBJDUMP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objdump
 
-CFLAGS :=
-CPPFLAGS :=
+CFLAGS := -Wall
+CPPFLAGS := -Wall
 CDEFS :=
 ASMFLAGS :=
 INCDIR := $(TOPDIR) $(ARCH_INCLUDE_DIR)
@@ -120,6 +121,16 @@ $(BUILD_TEMP_DIR)/%.bin.o : %.html
 	@$(OBJCOPY) -I binary $(OBJCOPYDEFS) $^ $@
 
 $(BUILD_TEMP_DIR)/%.bin.o : %.js
+	@$(ECHO) "BIN $^"
+	@$(MKDIR) -p $(dir $@)
+	@$(OBJCOPY) -I binary $(OBJCOPYDEFS) $^ $@
+
+$(BUILD_TEMP_DIR)/%.bin.o : %.css
+	@$(ECHO) "BIN $^"
+	@$(MKDIR) -p $(dir $@)
+	@$(OBJCOPY) -I binary $(OBJCOPYDEFS) $^ $@
+
+$(BUILD_TEMP_DIR)/%.bin.o : %.png
 	@$(ECHO) "BIN $^"
 	@$(MKDIR) -p $(dir $@)
 	@$(OBJCOPY) -I binary $(OBJCOPYDEFS) $^ $@
