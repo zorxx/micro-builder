@@ -18,6 +18,7 @@ LIB_NAME_CORE := lib$(PACKAGE_NAME)_core
 $(LIB_NAME_CORE)_obj := $(foreach file, \
 		$(wildcard $(SRCDIR)/cores/esp8266/*.c) \
 		$(wildcard $(SRCDIR)/cores/esp8266/umm_malloc/*.c) \
+		$(wildcard $(SRCDIR)/cores/esp8266/spiffs/*.c) \
 		$(wildcard $(SRCDIR)/cores/esp8266/*.cpp) \
 		$(wildcard $(SRCDIR)/cores/esp8266/*.S), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
