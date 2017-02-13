@@ -44,7 +44,7 @@ $(LIB_NAME_SPI)_obj := $(foreach file, \
 LIB_NAME_WIRE := lib$(PACKAGE_NAME)_Wire
 $(LIB_NAME_WIRE)_obj := $(foreach file, \
                 $(wildcard $(AVR_SRCDIR)/libraries/Wire/src/*.cpp) \
-                $(wildcard $(AVR_SRCDIR)/libraries/Wire/utility/*.c), \
+                $(wildcard $(AVR_SRCDIR)/libraries/Wire/src/utility/*.c), \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 # HID Library
