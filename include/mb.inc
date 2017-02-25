@@ -9,7 +9,7 @@
 
 # Directories
 TOPDIR:=$(abspath $(lastword $(MAKEFILE_LIST))/../..)
-EXAMPLES_DIR := $(TOPDIR)/examples
+APP_DIR := $(TOPDIR)/app
 INCLUDE_DIR := $(TOPDIR)/include
 LIBRARIES_DIR := $(TOPDIR)/lib
 PACKAGE_DIR := $(TOPDIR)/package
@@ -87,6 +87,9 @@ include $(INCLUDE_DIR)/application_helpers.inc
 
 # ----------------------------------------------------------------------------------------
 # Compilation/Assembly
+
+# Save intermediate files in the build directory
+.SECONDARY:
 
 # Macro for reversing a list of strings. This is used to reverse the list of include directories
 #  because it's defined in order of least-specific to most-specific, but we want the opposite order
