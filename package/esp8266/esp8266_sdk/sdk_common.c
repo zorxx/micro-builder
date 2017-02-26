@@ -1,6 +1,8 @@
 #include "esp_common.h"
 
-uint32 user_rf_cal_sector_set(void)
+#define WEAK __attribute__((weak))
+
+WEAK uint32 user_rf_cal_sector_set(void)
 {
     flash_size_map size_map = system_get_flash_size_map();
     uint32 rf_cal_sec = 0;
@@ -32,6 +34,6 @@ uint32 user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
-void user_rf_pre_init(void)
+WEAK void user_rf_pre_init(void)
 {
 }
