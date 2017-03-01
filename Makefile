@@ -8,11 +8,13 @@ include include/mb.inc
 # Top-level productions: build any directory that might contain a prerequisite. Sub-makefiles
 #  will filter-out directories that aren't included in the list of enabled prerequisites.
 
-ALL_DIRS := package lib app
+SUBDIRS := package lib app
 
-all::
-	@$(foreach subdir,$(ALL_DIRS),$(ECHO) "Building subdirectory: $(subdir)";$(MAKE) --no-print-directory -C $(subdir);)
-clean::
-	@$(foreach subdir,$(ALL_DIRS),$(ECHO) "Cleaning subdirectory: $(subdir)";$(MAKE) --no-print-directory -C $(subdir) clean;)
+default: all
+
+$(SUBDIRS)::
+	@$(MAKE) -C $@ $(MAKECMDGOALS)
+	
+all clean :: $(SUBDIRS)
 
 # vim: tabstop=4 noexpandtab
