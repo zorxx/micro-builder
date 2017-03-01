@@ -79,6 +79,7 @@ LIBDIRS := $(LIB_BIN_DIR)
 
 # Prerequisite includes
 -include $(foreach prereq,$(PREREQS),$(TOPDIR)/$(prereq)/package.inc)    
+-include $(foreach prereq,$(required_prereqs),$(TOPDIR)/$(prereq)/package.inc)
 
 include $(INCLUDE_DIR)/external_helpers.inc
 include $(INCLUDE_DIR)/application_helpers.inc

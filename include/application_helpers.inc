@@ -15,7 +15,7 @@
 # Pre-action: things to be done before downloading an external package
 
 .SECONDEXPANSION:
-$(BUILD_TEMP_DIR)/%.elf: .%.app_preaction $$(%_obj)
+$(BUILD_TEMP_DIR)/%.elf: .%.app_preaction $$($$*_obj)
 	@$(ECHO) "LD $(notdir $@)"
 	@$(call $(TARGET_ARCH)_checkboard)
 	@$(LD) $(foreach libdir,$(LIBDIRS),-L$(libdir)) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$(LIBS),-l$(lib)) $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $(filter %.o,$^) -Wl,--end-group -o $@

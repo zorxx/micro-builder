@@ -123,6 +123,13 @@ SECTIONS
     _rodata_end = ABSOLUTE(.);
   } >dram0_0_seg :dram0_0_phdr
 
+  .UserExceptionVector.literal : AT(LOADADDR(.rodata) + (ADDR(.UserExceptionVector.literal) - ADDR(.rodata))) ALIGN(4)
+  {
+  	_UserExceptionVector_literal_start = ABSOLUTE(.);
+  	*(.UserExceptionVector.literal)
+  	_UserExceptionVector_literal_end = ABSOLUTE(.);
+  } >dram0_0_seg :dram0_0_phdr
+
   .bss ALIGN(8) (NOLOAD) : ALIGN(4)
   {
     . = ALIGN (8);
@@ -182,15 +189,6 @@ SECTIONS
     *(.fini)
     *(.gnu.version)
 
-    /* Exception handlers. These must be in the same section as the vector hardware
-     *  entrypoints to prevent a long jump */
-    *app_main.o(.literal* .text*)
-    *user-vector.o(.literal* .text*)
-    *nmi-vector.o(.literal* .text*)
-    *kernel-vector.o(.literal* .text*)
-    *debug-vector.o(.literal* .text*)
-    *double-vector.o(.literal* .text*)
-
     /* These must be located in internal RAM to prevent far accesses to literal data.
      *  All of the following libraries are distributed in binary form, so we cannot
      *  change the compilation options to allow for far accesses to data. */
@@ -198,10 +196,7 @@ SECTIONS
     *libm.a:(.literal* .text*)
     *libc.a:(.literal* .text*)
     *libmain.a:(.literal* .text*)
-/*    *libphy.a:(.literal* .text*)
-    *libpp.a:(.literal* .text*)
-    *libnet80211.a:(.literal* .text*)
-    *libwip.a:(.literal* .text*)*/
+    *libphy.a:(.literal* .text*)
 
     /* Any compilation units that request to be located in interal RAM */
     *.o(.iram.text)

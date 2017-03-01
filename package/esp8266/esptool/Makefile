@@ -6,7 +6,7 @@ include ../../../include/mb.inc
 
 PACKAGE_NAME := esptool
 $(PACKAGE_NAME)_SOURCE_METHOD := wget
-ESPTOOL_VERSION := 0.4.6
+ESPTOOL_VERSION := 0.4.11
 
 # Default file extension
 ESPTOOL_FILE_EXTENSION := $(if $(findstring WIN,$(HOST_ARCH)),zip,tar.gz)

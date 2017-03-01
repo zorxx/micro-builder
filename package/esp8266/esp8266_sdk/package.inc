@@ -23,7 +23,8 @@ INCDIR += \
 LIBDIRS += $(ESP8266_SDK_DIR)/lib
 LIBS += m gcc stdc++
 LIBS += cirom crypto espconn espnow freertos json lwip main mesh \
-        mirom net80211 nopoll phy pp pwm smartconfig spiffs ssl wpa wps
+        mirom net80211 nopoll phy pp pwm smartconfig spiffs ssl wpa wps \
+        driver
 LIBS += esp8266_sdk_common
 
 CDEFS += MEMLEAK_DEBUG
