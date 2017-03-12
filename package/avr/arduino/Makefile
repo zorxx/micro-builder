@@ -93,13 +93,6 @@ $(LIB_NAME_SD)_obj := $(foreach file, \
                 $(wildcard $(COMMON_LIBDIR)/SD/src/*.cpp), \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
-# TFT Library
-LIB_NAME_TFT := lib$(PACKAGE_NAME)_TFT
-$(LIB_NAME_TFT)_obj := $(foreach file, \
-                $(wildcard $(COMMON_LIBDIR)/TFT/src/*.cpp) \
-                $(wildcard $(COMMON_LIBDIR)/TFT/src/utility/*.cpp), \
-                $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-
 # Servo Library
 LIB_NAME_SERVO := lib$(PACKAGE_NAME)_Servo
 $(LIB_NAME_SERVO)_obj := $(foreach file, \
@@ -122,7 +115,7 @@ EXTERNAL_TARGETS += $(PACKAGE_NAME)
 
 LIBRARY_TARGETS += $(LIB_NAME_CORE) $(LIB_NAME_SOFTWARE_SERIAL) $(LIB_NAME_SPI) $(LIB_NAME_WIRE)
 LIBRARY_TARGETS += $(LIB_NAME_HID) $(LIB_NAME_BRIDGE) $(LIB_NAME_ETHERNET) $(LIB_NAME_KEYBOARD)
-LIBRARY_TARGETS += $(LIB_NAME_LIQUIDCRYSTAL) $(LIB_NAME_MOUSE) $(LIB_NAME_SD) $(LIB_NAME_TFT)
+LIBRARY_TARGETS += $(LIB_NAME_LIQUIDCRYSTAL) $(LIB_NAME_MOUSE) $(LIB_NAME_SD)
 LIBRARY_TARGETS += $(LIB_NAME_WIFI) $(LIB_NAME_SERVO) $(LIB_NAME_STEPPER)
 LIBRARY_SUBMAKE := true
 
