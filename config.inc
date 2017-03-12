@@ -53,10 +53,10 @@ TARGET_RESET_METHOD ?= none
 TARGET_CPU_SPEED ?= 80000000
 
 # Toolchain and SDK from ESP8266/Arduino Project
-#PREREQS ?= package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/arduino
+PREREQS ?= package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/arduino
 
 # Toolchain from ESP8266/Arduino project, Raw ESP8266 SDK
-PREREQS ?= package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/esp8266_sdk \
+#PREREQS ?= package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/esp8266_sdk \
            package/esp8266/esp8266_sdk_extras
 
 endif # esp8266

@@ -10,3 +10,4 @@ build_*/
 .*.external_patch
 .*.external_postaction
 .*.external_preaction
+.*_build.generic
