@@ -2,6 +2,8 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for Adafruit_GFX library package
 
+dependencies = package/$(TARGET_ARCH)/arduino
+
 include ../../../include/mb.inc
 
 PACKAGE_NAME := Adafruit_GFX
