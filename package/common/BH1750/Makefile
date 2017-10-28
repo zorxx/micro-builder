@@ -1,21 +1,21 @@
-# \copyright 2016 Zorxx Software, All Rights Reserved
+# \copyright 2017 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Recipe for Adafruit_ILI9340 2.2" SPI LCD display library package
+# \brief Arduino BH1750 Light Intensity Sensor Library package
 
-dependencies = package/common/Adafruit_GFX package/$(TARGET_ARCH)/arduino
+dependencies =
 
 include ../../../include/mb.inc
 
-PACKAGE_NAME := Adafruit_ILI9340
+PACKAGE_NAME := BH1750
 
 # Download information
-$(PACKAGE_NAME)_SOURCE := "https://github.com/zorxx/Adafruit_ILI9340.git"
+$(PACKAGE_NAME)_SOURCE := "https://github.com/claws/BH1750.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
 
 # Library
 LIB_NAME := lib$(PACKAGE_NAME)
 $(LIB_NAME)_obj := $(foreach file, \
-		$(wildcard Adafruit_ILI9340_source/*.cpp), \
+		$(wildcard $(PACKAGE_NAME)_source/*.cpp), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)

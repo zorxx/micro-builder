@@ -197,6 +197,12 @@ SECTIONS
     *libc.a:(.literal* .text*)
     *libmain.a:(.literal* .text*)
     *libphy.a:(.literal* .text*)
+    *liblwip.a:(.literal* .text*)
+    *libpp.a:(.literal* .text*)
+    *libwps.a:(.literal* .text*)
+    *libwpa.a:(.literal* .text*)
+    *libnet80211.a:(.literal* .text*)
+    *libcrypto.a:(.literal* .text*)
 
     /* Any compilation units that request to be located in interal RAM */
     *.o(.iram.text)

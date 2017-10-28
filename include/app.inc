@@ -14,6 +14,9 @@ clean:: $(foreach app,$(APP_TARGETS),$(app)_app_clean)
 # If the user just runs "make flash", flash the first application listed in the makefile
 flash: $(firstword $(APP_TARGETS))_flash
 
+# If the user just runs "make info", show info for the first application listed in the makefile
+info: $(firstword $(APP_TARGETS))_app_info
+
 else
 
 all::
