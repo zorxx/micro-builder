@@ -66,6 +66,24 @@ Host environment dependencies
 Note that this section will eventually be removed, in favor of handling dependency resolution
 in the build system (e.g. a makefile relying on a feature will ensure it exists)
 
-Windows (probably incomplete list):
-- MinGW, including: make, 
-- mingw-get install msys-wget-bin
+Windows (64-bit systems):
+1. MinGW
+   a. Download and run installer
+      http://www.mingw.org/download/installer
+   b. Install all necessary packages
+      mingw-get install msys-bzip2 msys-gzip msys-make msys-patch msys-sed msys-tar msys-unzip msys-wget msys-xz
+   c. Add packages to the windows system path
+      setx path "%PATH%;C:\MinGW\msys\1.0\bin" /M
+2. Git
+   a. Download and run installer
+      https://git-scm.com/download/win
+3. Mercurial
+   a. Download and run installer
+      https://www.mercurial-scm.org/wiki/Download
+   b. Add Mercurial to the windows system path
+      setx path "%PATH%;C:\Program Files\TortoiseHg" /M
+4. Python
+   a. Download and run installer
+      https://www.python.org/ftp/python/2.7.14/python-2.7.14.amd64.msi
+   b. Add Python to the windows system path
+      setx path "%PATH%;C:\Python27" /M

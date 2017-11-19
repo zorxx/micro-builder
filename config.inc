@@ -1,4 +1,4 @@
-# \copyright 2015-2016 Zorxx Software, All Rights Reserved
+# \copyright 2015-2017 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Top-level configuration, including target architecture, and selected packages
 
@@ -11,6 +11,12 @@ TARGET_ARCH ?= esp8266
 
 TARGET_ARCH := $(strip $(TARGET_ARCH))
 
+ifeq ($(OS),Windows_NT)
+TARGET_PORT ?= COM1
+else
+TARGET_PORT ?= /dev/ttyUSB0
+endif
+
 # -----------------------------------------------------------------------------------------------
 # Ameba Examples
 
@@ -19,7 +25,6 @@ ifeq ($(TARGET_ARCH),ameba)
 TARGET_CPU ?= corex_m0
 TARGET_CPU_SPEED ?= 16000000
 
-TARGET_PORT ?= /dev/ttyUSB0
 TARGET_BAUD ?= 57600
 
 PREREQS ?= package/ameba/toolchain package/ameba/sdk
@@ -38,7 +43,6 @@ ifeq ($(TARGET_ARCH),esp8266)
 TARGET_BOARD ?= nodemcu
 
 # Serial port and baud rate for programming (flashing)
-TARGET_PORT ?= /dev/ttyUSB0
 TARGET_BAUD ?= 230400
 
 # qio|qout|dio|dout
@@ -70,7 +74,6 @@ TARGET_CPU ?= ATmega328
 TARGET_MCU ?= atmega328p
 TARGET_CPU_SPEED ?= 16000000
 
-TARGET_PORT ?= /dev/ttyUSB0
 TARGET_BAUD ?= 57600
 
 # AVR/Arduino
