@@ -16,6 +16,10 @@ $(LIB_NAME)_obj := $(foreach file, \
 		$(wildcard $(PACKAGE_NAME)_source/*.c), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
+ifeq ($(TARGET_ARCH),avr)
+CDEFS += SAXML_NO_MALLOC SAXML_MAX_STRING_LENGTH=256
+endif
+
 EXTERNAL_TARGETS += $(PACKAGE_NAME)
 LIBRARY_TARGETS += $(LIB_NAME)
 LIBRARY_SUBMAKE := true # Call "make" recursively when building the library to get the source files
