@@ -17,24 +17,24 @@ CDEFS += __AVR_$(TARGET_CPU)__ F_CPU=$(TARGET_CPU_SPEED)
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Library Steps
 
-define avr_post_lib
+define $(MB_TARGET)_post_lib
 endef
 
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Application Steps
 
 # avr_post_app(app_out_file)
-define avr_post_app
+define $(MB_TARGET)_post_app
 	$(OBJCOPY) -O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0 $1 $(basename $1).eep
 	$(OBJCOPY) -O ihex -R .eeprom $1 $(basename $1).hex
 endef
 
 # avr_app_info(app_file,app_dir)
-define avr_app_info
+define $(MB_TARGET)_app_info
 endef
 
 # avr_app_flash(app_file,app_dir)
-define avr_app_flash
+define $(MB_TARGET)_app_flash
 $(AVRDUDE) -C$(ARCH_INCLUDE_DIR)/avrdude.conf -v -p$(TARGET_MCU) -carduino -P$(TARGET_PORT) -b$(TARGET_BAUD) -D -Uflash:w:$2/$(basename $1).hex:i
 endef
 
@@ -42,7 +42,7 @@ endef
 # Other
 
 # avr_checkboard(app_file,app_dir)
-define avr_checkboard(app_file,app_dir)
+define $(MB_TARGET)_checkboard(app_file,app_dir)
 endef
 
 # vim: syntax=make tabstop=4 noexpandtab

@@ -16,7 +16,7 @@ OBJCOPYDEFS += -O elf32-xtensa-le -B xtensa --rename-section .data=.irom0.other
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Library Steps
 
-define esp8266_post_lib
+define $(MB_TARGET)_post_lib
 endef
 
 # ----------------------------------------------------------------------------------------
@@ -24,23 +24,24 @@ endef
 
 # esp8266_post_app(app_out_file)
 # Note: this step assumes the linker definition file places all flash code (.irom0.text section) at flash address 0x10000
-define esp8266_post_app
+define $(MB_TARGET)_post_app
 	$(ESPTOOL) -bz $(TARGET_FLASH_SIZE) -bf $(TARGET_FLASH_SPEED) -bm $(TARGET_FLASH_MODE) -eo $1 -bo $(dir $1)0x00000.bin -bs .text -bs .data -bs .rodata -bc -ec
 	$(OBJCOPY) --only-section .irom0.text -O binary $1 $(dir $1)irom0.bin
 	$(OBJCOPY) --only-section .irom0.other -O binary $1 $(dir $1)other.bin
-	python $(ARCH_INCLUDE_DIR)/append.py $(dir $1)irom0.bin $(dir $1)other.bin $(dir $1)0x10000.bin
-	python $(ARCH_INCLUDE_DIR)/pad.py $(dir $1)0x00000.bin $(dir $1)a.bin 65536
-	python $(ARCH_INCLUDE_DIR)/append.py $(dir $1)a.bin $(dir $1)0x10000.bin $(dir $1)user1.bin
+
+	python $(ARCH_INCLUDE_DIR)/esp8266/append.py $(dir $1)irom0.bin $(dir $1)other.bin $(dir $1)0x10000.bin
+	python $(ARCH_INCLUDE_DIR)/esp8266/pad.py $(dir $1)0x00000.bin $(dir $1)a.bin 65536
+	python $(ARCH_INCLUDE_DIR)/esp8266/append.py $(dir $1)a.bin $(dir $1)0x10000.bin $(dir $1)user1.bin
 	rm -f $(dir $1)a.bin
 endef
 
 # esp8266_app_info(app_file,app_dir)
-define esp8266_app_info
+define $(MB_TARGET)_app_info
 	$(OBJDUMP) -h -j .data -j .rodata -j .bss -j .text -j .irom0.text -j .iram.text $2/$1
 endef
 
 # esp8266_app_flash(app_file,app_dir)
-define esp8266_app_flash
+define $(MB_TARGET)_app_flash
 	$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
 	$(ESPTOOL) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) $(foreach file,$(wildcard $2/0x*.bin),-ca $(notdir $(basename $(file))) -cf $(file))
 endef
@@ -49,7 +50,7 @@ endef
 # Other
 
 # esp8266_checkboard(app_file,app_dir)
-define esp8266_checkboard(app_file,app_dir)
+define $(MB_TARGET)_checkboard(app_file,app_dir)
 	ifeq ($(BOARD_LD_SCRIPT_$(TARGET_BOARD)),)
 	$(error "Invalid board type specification ($(TARGET_BOARD))")
 	endif

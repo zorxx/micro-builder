@@ -17,6 +17,7 @@ PACKAGE_DIR := $(TOPDIR)/package
 USER_DIR := $(TOPDIR)/user
 
 # Determine host architecture
+include $(TOPDIR)/config.inc
 include $(TOPDIR)/include/host.inc
 
 # Host tools

@@ -4,5 +4,6 @@
 
 DFPLAYER_LIB_DIR := $(LIBRARIES_DIR)/common/dfplayer/dfplayer_source/src
 INCDIR += $(DFPLAYER_LIB_DIR)
+LIBS += dfplayer
 
 # vim: syntax=make tabstop=4 noexpandtab

@@ -20,23 +20,23 @@ OBJCOPYDEFS += -O elf32-le -B arm
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Library Steps
 
-define stm32_post_lib
+define $(MB_TARGET)_post_lib
 endef
 
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Application Steps
 
 # stm32_post_app(app_out_file)
-define stm32_post_app
+define $(MB_TARGET)_post_app
 endef
 
 # stm32_app_info(app_file,app_dir)
-define stm32_app_info
+define $(MB_TARGET)_app_info
 	$(OBJDUMP) -h -j .data -j .rodata -j .bss -j .text -j .irom0.text -j .iram.text $2/$1
 endef
 
 # stm32_app_flash(app_file,app_dir)
-define stm32_app_flash
+define $(MB_TARGET)_app_flash
 	$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
 endef
 
@@ -44,7 +44,7 @@ endef
 # Other
 
 # stm32_checkboard(app_file,app_dir)
-define stm32_checkboard(app_file,app_dir)
+define $(MB_TARGET)_checkboard(app_file,app_dir)
 	ifeq ($(BOARD_LD_SCRIPT_$(TARGET_BOARD)),)
 	$(error "Invalid board type specification ($(TARGET_BOARD))")
 	endif

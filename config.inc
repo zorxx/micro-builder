@@ -8,4 +8,6 @@ else
 TARGET_PORT ?= /dev/ttyUSB0
 endif
 
+TARGET_BAUD=230400
+
 # vim: syntax=make tabstop=4 noexpandtab
