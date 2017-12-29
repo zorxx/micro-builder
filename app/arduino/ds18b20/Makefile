@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Arduino Dallas DS18B20 example application
 
-dependencies := package/common/OneWire package/common/TemperatureControl
+dependencies := lib/arduino/OneWire lib/arduino/TemperatureControl
 
 include ../../../include/mb.inc
 
