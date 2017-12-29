@@ -17,14 +17,14 @@
 .SECONDEXPANSION:
 $(BUILD_TEMP_DIR)/%.elf: .%.app_preaction $$($$*_obj)
 	@$(ECHO) "LD $(notdir $@)"
-	@$(call $(TARGET_ARCH)_checkboard)
+	@$(call $(MB_TARGET)_checkboard)
 	@$(LD) $(foreach libdir,$(LIBDIRS),-L$(libdir)) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$(LIBS),-l$(lib)) $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $(filter %.o,$^) -Wl,--end-group -o $@
-	@$(if $(TARGET_ARCH)_post_app,$(call $(TARGET_ARCH)_post_app,$@))
+	@$(if $(MB_TARGET)_post_app,$(call $(MB_TARGET)_post_app,$@))
 
 %_app_info:
-	@$(call $(TARGET_ARCH)_app_info,$*.elf,$(BUILD_TEMP_DIR))
+	@$(call $(MB_TARGET)_app_info,$*.elf,$(BUILD_TEMP_DIR))
 %_flash: $(BUILD_TEMP_DIR)/%.elf
-	@$(call $(TARGET_ARCH)_app_flash,$*.elf,$(BUILD_TEMP_DIR))
+	@$(call $(MB_TARGET)_app_flash,$*.elf,$(BUILD_TEMP_DIR))
 %_app_clean:
 	@$(ECHO) "CLEAN $*.elf"
 	@$(RM) -rf $(BUILD_TEMP_DIR)

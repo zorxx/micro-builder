@@ -1,4 +1,4 @@
-# \copyright 2015-2016 Zorxx Software, All Rights Reserved
+# \copyright 2015-2017 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief file to be included at the top of each GNU makefile
 # This file contains a wide variety of definitions (directories, tools, compiler/linker
@@ -10,6 +10,7 @@
 # Directories
 TOPDIR:=$(abspath $(lastword $(MAKEFILE_LIST))/../..)
 APP_DIR := $(TOPDIR)/app
+BIN_DIR := $(TOPDIR)/bin
 INCLUDE_DIR := $(TOPDIR)/include
 LIBRARIES_DIR := $(TOPDIR)/lib
 PACKAGE_DIR := $(TOPDIR)/package
@@ -21,61 +22,68 @@ include $(TOPDIR)/include/host.inc
 # Host tools
 WGET	:= wget
 MKDIR	:= mkdir
-RM		:= rm
-CD		:= cd
-MV		:= mv
+RM	:= rm
+CD	:= cd
+MV	:= mv
 UNZIP	:= unzip
-TAR		:= tar
-GIT		:= git
-HG		:= hg
+TAR	:= tar
+GIT	:= git
+HG	:= hg
 PYTHON	:= python
 ECHO	:= echo
 TOUCH	:= touch
 DATE	:= date
 PATCH	:= patch
 
-# Top-level configuration, needed first in order to determine TARGET_ARCH
-ifeq ($(MB_OVERRIDE_CONFIG),)
-include $(TOPDIR)/config.inc
+# ----------------------------------------------------------------------------------------
+# Top-level configuration, needed first in order to determine
+#  TARGET_ARCH and TARGET_VARIANT
+
+ifndef MB_TARGET
+$(error "Need to specify MB_TARGET")
+endif
+MB_TARGET := $(strip $(MB_TARGET))
+
+TARGET_ARCH := $(firstword $(subst _, ,$(MB_TARGET)))
+TARGET_VARIANT := $(subst $(TARGET_ARCH)_,,$(MB_TARGET))
+ARCH_INCLUDE_DIR := $(INCLUDE_DIR)/$(TARGET_ARCH)
 config_info:
+ifeq ($(wildcard $(ARCH_INCLUDE_DIR)/.),)
+	$(error "Invalid target architecture $(TARGET_ARCH)")
 else
-include $(MB_OVERRIDE_CONFIG)
-config_info:
-ifeq ($(MAKELEVEL),0)
-	$(info Using override config: $(MB_OVERRIDE_CONFIG))
+ifeq ($(wildcard $(ARCH_INCLUDE_DIR)/variants/$(TARGET_VARIANT).inc),)
+	$(error "Invalid variant $(TARGET_VARIANT) for arch $(TARGET_ARCH)")
 endif
 endif
 .PHONY: config_info
-TARGET_ARCH := $(strip $(TARGET_ARCH))
 
-ARCH_INCLUDE_DIR := $(INCLUDE_DIR)/$(TARGET_ARCH)
-LIB_BIN_DIR := $(LIBRARIES_DIR)/bin_$(TARGET_ARCH)
-BUILD_TEMP_DIR := ./build_$(TARGET_ARCH)
+-include $(ARCH_INCLUDE_DIR)/variants/$(TARGET_VARIANT).inc
+
+TARGET_BIN_DIR := $(BIN_DIR)/$(MB_TARGET)
+LIB_BIN_DIR := $(TARGET_BIN_DIR)
+BUILD_TEMP_DIR := ./.build_$(MB_TARGET)
 
 # ----------------------------------------------------------------------------------------
 # Defaults
 
 # Host tools
-CC		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)gcc
-CXX		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
-AR		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)ar
-LD		:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
+CC	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)gcc
+CXX	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
+AR	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)ar
+LD	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
 OBJCOPY	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objcopy
 OBJDUMP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objdump
 
-CFLAGS := -Wall
-CPPFLAGS := -Wall
-CDEFS :=
-ASMFLAGS :=
-INCDIR := $(TOPDIR) $(ARCH_INCLUDE_DIR)
-LDFLAGS :=
-LIBDIRS := $(LIB_BIN_DIR)
+CFLAGS += -Wall
+CPPFLAGS += -Wall
+CDEFS +=
+ASMFLAGS +=
+INCDIR += $(TOPDIR) $(ARCH_INCLUDE_DIR)
+LDFLAGS +=
+LIBDIRS += $(LIB_BIN_DIR)
 
 # ----------------------------------------------------------------------------------------
 # Includes
-
-# Include any archiecture-specific configuration
--include $(ARCH_INCLUDE_DIR)/$(TARGET_ARCH).inc
 
 # Prerequisite includes
 -include $(foreach prereq,$(PREREQS),$(TOPDIR)/$(prereq)/package.inc)    
@@ -117,7 +125,7 @@ $(BUILD_TEMP_DIR)/%.o: %.ino
 $(BUILD_TEMP_DIR)/%.o: %.S
 	@$(ECHO) "ASM $^"
 	@$(MKDIR) -p $(dir $@)
-	@$(CC) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(ASMFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
+	$(CC) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(ASMFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
 
 $(BUILD_TEMP_DIR)/%.bin.o : %.html
 	@$(ECHO) "BIN $^"
@@ -143,12 +151,13 @@ $(BUILD_TEMP_DIR)/%.bin.o : %.png
 # Dependencies and prerequisites
 
 MISSING_PREREQS = $(foreach req,$(required_prereqs),$(filter-out $(PREREQS),$(req)))
+DEPENDENCY_DIRS = $(foreach dep,$(PREREQS) $(dependencies),$(abspath $(TOPDIR)/$(dep)))
 
-%/.done_$(TARGET_ARCH) :
+%/.done_$(MB_TARGET) :
 	@$(ECHO) "Building dependency: $*"
 	@$(MAKE) --no-print-directory -C $*
 	@$(TOUCH) $@
-.PHONY: %/.done_$(TARGET_ARCH)
+.PHONY: %/.done_$(MB_TARGET)
 
 all:: config_info
 
@@ -157,7 +166,7 @@ all:: config_info
 CURRENT_IS_PREREQ = $(filter $(abspath $(CURDIR)),$(foreach prereq,$(PREREQS),$(abspath $(TOPDIR)/$(prereq))))
 ifeq ($(CURRENT_IS_PREREQ),)
 
-all:: $(filter-out $(abspath $(CURDIR)/.done_$(TARGET_ARCH)),$(foreach dep,$(PREREQS) $(dependencies),$(abspath $(TOPDIR)/$(dep)/.done_$(TARGET_ARCH))))
+all:: $(filter-out $(abspath $(CURDIR)/.done_$(MB_TARGET)),$(foreach dep,$(PREREQS) $(dependencies),$(abspath $(TOPDIR)/$(dep)/.done_$(MB_TARGET))))
 
 endif
 

@@ -10,7 +10,7 @@ $(APP_NAME)_obj := $(foreach file, \
 	           $(wildcard *.cpp) \
 	           $(wildcard *.S), \
 	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-$(APP_NAME)_libs = m arduino_core
+$(APP_NAME)_libs = arduino_core
 
 CPPFLAGS += -include Arduino.h
 

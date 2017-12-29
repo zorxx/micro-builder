@@ -45,7 +45,9 @@ Quickstart:
 
 1. git clone the micro-builder repository:
     git clone https://github.com/zorxx/micro-builder.git
-2. Configure desired target architecture (and base packages, if desired) by editing /config.inc
+2. Configure desired target architecture/board/variant/sdk by setting the environment
+   variable MB_TARGET. Run "make variants" at the top level to see a list of all
+   supported architectures and variants.
 3. Execute "make" in the root of the micro-builder source tree. This will build the base
    prerequisites for the selected architecture.
 4. Navigate to the examples directory to build an application. Each application should

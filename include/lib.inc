@@ -13,7 +13,7 @@ $(LIB_BIN_DIR)/%.a: $$($$*_obj)
 	@$(ECHO) "AR $(notdir $@)"
 	@$(MKDIR) -p $(dir $@)
 	@$(AR) rcs $@ $(filter %.o, $^)
-	@$(if $(TARGET_ARCH)_post_lib,$(call $(TARGET_ARCH)_post_lib,$@))
+	@$(if $(MB_TARGET)_post_lib,$(call $(MB_TARGET)_post_lib,$@))
 .PRECIOUS: $(BUILD_TEMP_DIR)/%.o
 
 # If the LIBRARY_SUBMAKE variable is defined (can be set to anything), spawn a new make

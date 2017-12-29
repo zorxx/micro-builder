@@ -3,8 +3,8 @@
 # \brief Rules for building a directory
 
 all::
-	@$(ECHO) "$(shell $(DATE))" > .done_$(TARGET_ARCH)
+	@$(ECHO) "$(shell $(DATE))" > .done_$(MB_TARGET)
 clean::
-	@$(RM) -f .done_$(TARGET_ARCH)
+	@$(RM) -f .done_*
 
 # vim: syntax=make tabstop=4 noexpandtab

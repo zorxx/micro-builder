@@ -3,7 +3,7 @@ user/
 *.swp
 *.app_preaction
 *_source/
-build_*/
+.build_*/
 .done_*
 .*.external
 .*.external_download
