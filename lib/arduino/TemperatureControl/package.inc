@@ -4,5 +4,6 @@
 
 TEMPERATURE_CONTROL_LIB_DIR := $(LIBRARIES_DIR)/arduino/TemperatureControl/TemperatureControl_source
 INCDIR += $(TEMPERATURE_CONTROL_LIB_DIR)
+LIBS += TemperatureControl
 
 # vim: syntax=make tabstop=4 noexpandtab

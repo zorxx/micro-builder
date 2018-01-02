@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief ESP8266 SSD1306 0.96" OLED Display build environment
 
-ESP8266_OLED_SSD1306_LIB_DIR := $(PACKAGE_DIR)/esp8266/esp8266-oled-ssd1306/esp8266_oled_ssd1306_source
+ESP8266_OLED_SSD1306_LIB_DIR := $(LIBRARIES_DIR)/esp8266/oled-ssd1306/esp8266_oled_ssd1306_source
 INCDIR += $(ESP8266_OLED_SSD1306_LIB_DIR)
 LIBS += esp8266_oled_ssd1306 
 
