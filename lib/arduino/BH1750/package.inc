@@ -2,7 +2,8 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Arduino BH1750 Light Intensity Sensor Library package build environment
 
-BH1750_LIB_DIR := $(LIBRARIES_DIR)/arduino/BH1750/BH1750_source
+BH1750_LIB_DIR := $(LIBRARIES_DIR)/arduino/BH1750/BH1750_source/src
 INCDIR += $(BH1750_LIB_DIR)
+LIBS += BH1750
 
 # vim: syntax=make tabstop=4 noexpandtab

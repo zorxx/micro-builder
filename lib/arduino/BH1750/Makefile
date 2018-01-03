@@ -7,13 +7,13 @@ include ../../../include/mb.inc
 PACKAGE_NAME := BH1750
 
 # Download information
-$(PACKAGE_NAME)_SOURCE := "https://github.com/claws/BH1750.git"
+$(PACKAGE_NAME)_SOURCE := "https://github.com/zorxx/BH1750.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
 
 # Library
 LIB_NAME := lib$(PACKAGE_NAME)
 $(LIB_NAME)_obj := $(foreach file, \
-		$(wildcard $(PACKAGE_NAME)_source/*.cpp), \
+		$(wildcard $(PACKAGE_NAME)_source/src/*.cpp), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)

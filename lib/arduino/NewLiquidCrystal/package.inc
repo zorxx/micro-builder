@@ -4,5 +4,6 @@
 
 NEWLIQUIDCRYSTAL_LIB_DIR := $(LIBRARIES_DIR)/arduino/NewLiquidCrystal/NewLiquidCrystal_source
 INCDIR += $(NEWLIQUIDCRYSTAL_LIB_DIR)
+LIBS += NewLiquidCrystal
 
 # vim: syntax=make tabstop=4 noexpandtab
