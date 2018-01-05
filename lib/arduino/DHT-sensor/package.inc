@@ -4,5 +4,6 @@
 
 DHT_SENSOR_LIB_DIR := $(LIBRARIES_DIR)/arduino/DHT-sensor/DHT-sensor_source
 INCDIR += $(DHT_SENSOR_LIB_DIR)
+LIBS += DHT-sensor
 
 # vim: syntax=make tabstop=4 noexpandtab
