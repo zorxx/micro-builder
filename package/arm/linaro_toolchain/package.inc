@@ -1,8 +1,8 @@
-# \copyright 2017 Zorxx Software, All Rights Reserved
+# \copyright 2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Build environment configuration for Linaro ARM toolchain
 
-TOOLCHAIN_DIR := $(PACKAGE_DIR)/arm/toolchain/toolchain_source/toolchain
+TOOLCHAIN_DIR := $(PACKAGE_DIR)/arm/linaro_toolchain/toolchain_source/toolchain
 TOOLCHAIN_BIN_DIR := $(TOOLCHAIN_DIR)/bin
 TOOLCHAIN_PREFIX := arm-eabi-
 

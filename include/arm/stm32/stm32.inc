@@ -5,16 +5,16 @@
 # -------------------------------------------------
 #
 
-LDFLAGS += -L$(APP_LD_DIR) -T$(APP_LD_SCRIPT) -mthumb -flto -specs=nosys.specs -Wl,--check-sections -Wl,--cref -Wl,--gc-sections -Wl,--unresolved-symbols=report-all
+LDFLAGS += -L$(APP_LD_DIR) -T$(APP_LD_SCRIPT) -mthumb -mcpu=$(TARGET_CPU) -flto -specs=nosys.specs -Wl,--check-sections -Wl,--cref -Wl,--gc-sections -Wl,--unresolved-symbols=report-all
 
 LIBDIRS += $(ARCH_INCLUDE_DIR)/ld
 
-COMMON_CFLAGS = -Os -g -mthumb -mcpu=cortex-m4 -nostdlib -Wpointer-arith -Wundef -Wno-write-strings -Wl,-EL --param max-inline-insns-single=500 -MMD -ffunction-sections -fdata-sections
+COMMON_CFLAGS = -Os -g -mthumb -mcpu=$(TARGET_CPU) -nostdlib -Wpointer-arith -Wundef -Wno-write-strings -Wl,-EL --param max-inline-insns-single=500 -MMD -ffunction-sections -fdata-sections
 CFLAGS += $(COMMON_CFLAGS) -Wstrict-prototypes -std=gnu11
 CPPFLAGS += $(COMMON_CFLAGS) -std=gnu++11 -fno-rtti -fno-exceptions 
 
-ASMFLAGS += -mcpu=cortex-m4 -mthumb -c -g -x assembler-with-cpp -MMD
-CDEFS += F_CPU=$(TARGET_CPU_SPEED)
+ASMFLAGS += -mcpu=$(TARGET_CPU) -mthumb -c -g -x assembler-with-cpp -MMD
+CDEFS += F_CPU=$(TARGET_CPU_SPEED)L
 OBJCOPYDEFS += -O elf32-le -B arm
 
 # ----------------------------------------------------------------------------------------
@@ -28,6 +28,7 @@ endef
 
 # stm32_post_app(app_out_file)
 define $(MB_TARGET)_post_app
+	$(OBJCOPY) -O binary $1 $(basename $1).bin
 endef
 
 # stm32_app_info(app_file,app_dir)
@@ -37,7 +38,8 @@ endef
 
 # stm32_app_flash(app_file,app_dir)
 define $(MB_TARGET)_app_flash
-	$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
+	$(ECHO) "Flashing $(basename $1).bin"
+	cd $2;$(STFLASH) write $(basename $1).bin 0x8000000
 endef
 
 # ----------------------------------------------------------------------------------------

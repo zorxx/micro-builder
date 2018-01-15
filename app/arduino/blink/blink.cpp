@@ -13,7 +13,11 @@
   by Scott Fitzgerald
  */
 
+#if !defined(LED_BUILTIN)
 #define GPIO_PIN 13
+#else
+#define GPIO_PIN LED_BUILTIN 
+#endif
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -24,8 +28,8 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   digitalWrite(GPIO_PIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100);              // wait for a second
+  delay(1000);              // wait for a second
   digitalWrite(GPIO_PIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);              // wait for a second
+  delay(1000);              // wait for a second
 }
 
