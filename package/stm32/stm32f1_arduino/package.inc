@@ -12,12 +12,14 @@ APP_LD_DIR := $(ARDUINO_TARGET_CPU_DIR)/variants/$(STM32_VARIANT)/ld
 
 STM32_CFLAGS += $($(STM32_BOARD).build.cpu_flags)
 STM32_CFLAGS += $($(STM32_BOARD).build.extra_flags)
+STM32_CFLAGS += -DRAMEND=0
 ifneq ($($(STM32_VARIANT).build.vect_flags),)
 STM32_CFLAGS += "$($(STM32_VARIANT).build.vect_flags)"
 endif
 
 CFLAGS += $(STM32_CFLAGS)
 CPPFLAGS += $(STM32_CFLAGS)
+LDFLAGS += -Wl,--undefined=end
 
 INCDIR += $(ARDUINO_TARGET_CPU_DIR)/cores/maple
 INCDIR += $(ARDUINO_TARGET_CPU_DIR)/system/libmaple
@@ -29,8 +31,8 @@ INCDIR += $(ARDUINO_TARGET_CPU_DIR)/variants/$(STM32_VARIANT)
 INCDIR += $(ARDUINO_LIB_DIR)/EEPROM/src
 INCDIR += $(ARDUINO_LIB_DIR)/RTClock/src
 INCDIR += $(ARDUINO_LIB_DIR)/SPI/src
-INCDIR += $(ARDUINO_LIB_DIR)/Wire/src
-INCDIR += $(ARDUINO_LIB_DIR)/Wire/utility/src
+INCDIR += $(ARDUINO_LIB_DIR)/Wire
+INCDIR += $(ARDUINO_LIB_DIR)/Wire/utility
 
 LIBS += arduino_core arduino_Wire arduino_EEPROM arduino_SPI arduino_RTClock
 

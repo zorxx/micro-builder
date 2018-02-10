@@ -33,7 +33,8 @@ $(LIB_NAME_CORE)_obj := $(foreach file, \
                 $(wildcard $(VARIANT_SRCDIR)/*.S) \
                 $(wildcard $(VARIANT_SRCDIR)/wirish/*.c) \
                 $(wildcard $(VARIANT_SRCDIR)/wirish/*.cpp) \
-                $(wildcard $(VARIANT_SRCDIR)/wirish/*.S), \
+                $(wildcard $(VARIANT_SRCDIR)/wirish/*.S) \
+                $(ARDUINO_DIR)/../gccfix.cpp, \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 LIBRARY_TARGETS += $(LIB_NAME_CORE)
@@ -44,7 +45,8 @@ LIBRARY_TARGETS += $(LIB_NAME_CORE)
 # Wire Library
 LIB_NAME_WIRE := lib$(PACKAGE_NAME)_Wire
 $(LIB_NAME_WIRE)_obj := $(foreach file, \
-                $(wildcard $(ARDUINO_LIB_DIR)/Wire/*.cpp), \
+                $(wildcard $(ARDUINO_LIB_DIR)/Wire/*.cpp) \
+                $(wildcard $(ARDUINO_LIB_DIR)/Wire/utility/*.cpp), \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 # EEPROM Library

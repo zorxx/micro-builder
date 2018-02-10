@@ -126,7 +126,7 @@ $(BUILD_TEMP_DIR)/%.o: %.ino
 $(BUILD_TEMP_DIR)/%.o: %.S
 	@$(ECHO) "ASM $^"
 	@$(MKDIR) -p $(dir $@)
-	$(CC) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(ASMFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
+	@$(CC) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(ASMFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
 
 $(BUILD_TEMP_DIR)/%.bin.o : %.html
 	@$(ECHO) "BIN $^"
