@@ -11,11 +11,17 @@
 .PHONY: .%.app_preaction
 .PRECIOUS: .%.app_preaction
 
+.$(MB_TARGET).app_preaction:
+	@$(call $(MB_TARGET)_APP_PREACTION)
+	@$(ECHO) "$(shell $(DATE))" > $@
+.PHONY: .$(MB_TARGET).app_preaction
+.PRECIOUS: .$(MB_TARGET).app_preaction
+
 # ---------------------------------------------------------------------------------------
 # Pre-action: things to be done before downloading an external package
 
 .SECONDEXPANSION:
-$(BUILD_TEMP_DIR)/%.elf: .%.app_preaction $$($$*_obj)
+$(BUILD_TEMP_DIR)/%.elf: .%.app_preaction .$(MB_TARGET).app_preaction $$($$*_obj)
 	@$(ECHO) "LD $(notdir $@)"
 	@$(call $(MB_TARGET)_checkboard)
 	@$(LD) $(foreach libdir,$(LIBDIRS),-L$(libdir)) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$(LIBS),-l$(lib)) $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $(filter %.o,$^) -Wl,--end-group -o $@
@@ -29,5 +35,6 @@ $(BUILD_TEMP_DIR)/%.elf: .%.app_preaction $$($$*_obj)
 	@$(ECHO) "CLEAN $*.elf"
 	@$(RM) -rf $(BUILD_TEMP_DIR)
 	@$(RM) -f .$*.app_preaction
+	@$(RM) -f .$(MB_TARGET).app_preaction
 
 # vim: syntax=make tabstop=4 noexpandtab

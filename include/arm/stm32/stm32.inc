@@ -5,11 +5,11 @@
 # -------------------------------------------------
 #
 
-LDFLAGS += -L$(APP_LD_DIR) -T$(APP_LD_SCRIPT) -mthumb -mcpu=$(TARGET_CPU) -flto -Wl,--check-sections -Wl,--cref -Wl,--gc-sections -Wl,--unresolved-symbols=report-all
+LDFLAGS += -L$(APP_LD_DIR) -T$(APP_LD_SCRIPT) -mthumb -mcpu=$(TARGET_CPU) -flto -Wl,--check-sections -Wl,--cref -Wl,--gc-sections -Wl,--unresolved-symbols=report-all -fno-asynchronous-unwind-tables
 
 LIBDIRS += $(ARCH_INCLUDE_DIR)/ld
 
-COMMON_CFLAGS = -Os -g -mthumb -mcpu=$(TARGET_CPU) -nostdlib -Wpointer-arith -Wundef -Wno-write-strings -Wl,-EL --param max-inline-insns-single=500 -MMD -ffunction-sections -fdata-sections
+COMMON_CFLAGS = -Os -g -mthumb -mcpu=$(TARGET_CPU) -nostdlib -Wpointer-arith -Wundef -Wno-write-strings -Wl,-EL --param max-inline-insns-single=500 -MMD -ffunction-sections -fdata-sections -fno-asynchronous-unwind-tables
 CFLAGS += $(COMMON_CFLAGS) -Wstrict-prototypes -std=gnu11
 CPPFLAGS += $(COMMON_CFLAGS) -std=gnu++11 -fno-rtti -fno-exceptions 
 
