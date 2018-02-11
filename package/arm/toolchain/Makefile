@@ -1,4 +1,4 @@
-# \copyright 2017 Zorxx Software, All Rights Reserved
+# \copyright 2017-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for ARM toolchain package
 
@@ -18,10 +18,21 @@ TOOLCHAIN_SUFFIX := $(strip \
 $(PACKAGE_NAME)_FILENAME := "gcc-arm-none-eabi-$(TOOLCHAIN_VERSION)-$(TOOLCHAIN_YEAR)-$(TOOLCHAIN_QUARTER)-$(TOOLCHAIN_RELEASE)-$(TOOLCHAIN_SUFFIX)"
 $(PACKAGE_NAME)_SOURCE := "https://developer.arm.com/-/media/Files/downloads/gnu-rm/$(TOOLCHAIN_VERSION)-$(TOOLCHAIN_YEAR)$(TOOLCHAIN_QUARTER)/$($(PACKAGE_NAME)_FILENAME)"
 
-# Rename directory to remove version 
+define $(PACKAGE_NAME)_LINUX_POSTACTION
+	@$(CD) $1; \
+	$(MV) gcc-arm-none-eabi-$(TOOLCHAIN_VERSION)-$(TOOLCHAIN_YEAR)-$(TOOLCHAIN_QUARTER)-$(TOOLCHAIN_RELEASE) toolchain
+endef
+
+define $(PACKAGE_NAME)_WIN_POSTACTION
+	@$(CD) $1; \
+	$(MKDIR) toolchain; \
+	$(MV) arm-non-eabi bin lib share toolchain
+endef
+
 define $(PACKAGE_NAME)_POSTACTION
-	cd $1; \
-	mv gcc-arm-none-eabi-$(TOOLCHAIN_VERSION)-$(TOOLCHAIN_YEAR)-$(TOOLCHAIN_QUARTER)-$(TOOLCHAIN_RELEASE) toolchain
+	echo "Postaction"
+	$(if $(findstring Linux,$(HOST_ARCH)),$(call $(PACKAGE_NAME)_LINUX_POSTACTION,$1))
+	$(if $(findstring WIN,$(HOST_ARCH)),$(call $(PACKAGE_NAME)_WIN_POSTACTION,$1))
 endef
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)

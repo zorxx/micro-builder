@@ -46,6 +46,7 @@ endef
 define package_download_wget
 	$(ECHO) "Download (wget): $1"
 	$(MKDIR) -p $1_$(PKG_SRC_DIR)
+	-$(RM) -f $1_$(PKG_SRC_DIR)/$(strip $($1_FILENAME))
 	$(CD) $1_$(PKG_SRC_DIR);$(WGET) --no-check-certificate -nc $(strip $($1_SOURCE)) -O $(strip $($1_FILENAME))
 	$(call package_extract,$(strip $($1_FILENAME)),$1_$(PKG_SRC_DIR))
 endef
