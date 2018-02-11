@@ -15,7 +15,14 @@ CFLAGS += $(genlink_cppflags)
 CPPFLAGS += $(genlink_cppflags)
 LDFLAGS += $(genlink_cdefs)
 
+LIB_DIR += $(LIBOPENCM3_DIR)/lib
+LIBS += opencm3_$(genlink_family)
+
 TARGET_CPU = $(genlink_cpu) 
+
+define $(MB_TARGET)_APP_PREACTION
+	$(call libopencm3_app_preaction)
+endef
 
 define libopencm3_app_preaction
 	-$(MKDIR) -p $(APP_LD_DIR) > /dev/null
@@ -24,3 +31,4 @@ define libopencm3_app_preaction
 	rm $(APP_LD_DIR)/$(APP_LD_SCRIPT).tmp
 endef
 
+include $(INCLUDE_DIR)/arm/stm32/stm32.inc 

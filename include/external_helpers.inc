@@ -1,4 +1,4 @@
-# \copyright 2015-2016 Zorxx Software, All Rights Reserved
+# \copyright 2015-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Rules for dowloading/building external packages
 
@@ -34,6 +34,12 @@ define package_download_hg
 	$(ECHO) "Download (hg): $1"
 	$(HG) clone $(strip $($1_SOURCE)) $1_$(PKG_SRC_DIR)
 	$(if $($1_VERSION),$(ECHO) "Version: $($1_VERSION)";$(CD) $1_$(PKG_SRC_DIR);$(HG) checkout -q "$($1_VERSION)",$(ECHO) "Default version")
+endef
+
+# package_download_svn(package_name)
+define package_download_svn
+	$(ECHO) "Download (svn): $1"
+	$(SVN) co $(strip $($1_SOURCE)) $1_$(PKG_SRC_DIR)
 endef
 
 # package_download_wget(package_name)

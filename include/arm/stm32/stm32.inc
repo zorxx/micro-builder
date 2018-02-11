@@ -39,7 +39,7 @@ endef
 # stm32_app_flash(app_file,app_dir)
 define $(MB_TARGET)_app_flash
 	$(ECHO) "Flashing $(basename $1).bin"
-	cd $2;$(STFLASH) --reset write $(basename $1).bin 0x8000000
+	cd $2;$(STFLASH) write $(basename $1).bin 0x8000000
 endef
 
 # ----------------------------------------------------------------------------------------

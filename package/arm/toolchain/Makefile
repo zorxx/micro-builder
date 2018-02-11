@@ -6,7 +6,6 @@ include ../../../include/mb.inc
 
 PACKAGE_NAME := toolchain
 $(PACKAGE_NAME)_SOURCE_METHOD := wget
-TOOLCHAIN_VERSION := 7
 TOOLCHAIN_YEAR := 2017
 TOOLCHAIN_QUARTER := q4
 TOOLCHAIN_RELEASE := major

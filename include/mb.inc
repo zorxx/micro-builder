@@ -1,4 +1,4 @@
-# \copyright 2015-2017 Zorxx Software, All Rights Reserved
+# \copyright 2015-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief file to be included at the top of each GNU makefile
 # This file contains a wide variety of definitions (directories, tools, compiler/linker
@@ -30,6 +30,7 @@ UNZIP	:= unzip
 TAR	:= tar
 GIT	:= git
 HG	:= hg
+SVN	:= svn
 PYTHON	:= python
 ECHO	:= echo
 TOUCH	:= touch
