@@ -5,17 +5,14 @@
 PREREQS := package/arm/linaro_toolchain package/stm32/stm32cube package/stm32/stlink
 
 STM32_FAMILY := F1
-STM32_CPU := STM32F103xB
-STM32_BOARD := STM3210C_EVAL
-STM32CUBE_BSP := STM3210C_EVAL
+STM32_CPU := STM32F103x6
+STM32_BOARD := STM32F103RB-Nucleo
+STM32_BSP := STM32F1xx_Nucleo
 
 TARGET_CPU := cortex-m3
 TARGET_CPU_SPEED := 72000000
 
 VARIANT_FLAGS := -D${STM32_CPU} -D__STM32${STM32_FAMILY}__
-
-INCDIR += $(INCLUDE_DIR)/arm/stm32/stm32f103c/stm32cube
-INCDIR += ./package/stm32/stm32cube/stm32cube_source/Drivers/BSP 
 
 CFLAGS += $(VARIANT_FLAGS)
 CPPFLAGS += $(VARIANT_FLAGS) 

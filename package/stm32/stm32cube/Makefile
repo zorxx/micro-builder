@@ -16,7 +16,7 @@ endef
 # Rename directory to remove version 
 define $(PACKAGE_NAME)_POSTACTION
         $(MV) $(STM32CUBE_SRCDIR)/STM32Cube_*/* $(STM32CUBE_SRCDIR) 
-        sed -i /^0/d $(STM32CUBE_TEMPLATE_DIR)/gcc/linker/$(call uc,$(STM32_CPU))_FLASH.ld
+        sed -i /^0/d $(STM32CUBE_LINKINFO_DIR)/gcc/linker/$(call uc,$(STM32_CPU))_FLASH.ld
 endef
 
 # ----------------------------------------------------------------------------------------
@@ -25,16 +25,17 @@ endef
 LIB_NAME_CORE := lib$(PACKAGE_NAME)
 $(LIB_NAME_CORE)_obj := $(foreach file, \
                 $(wildcard $(STM32CUBE_HAL_DIR)/Src/*.c) \
-	        $(STM32CUBE_TEMPLATE_DIR)/system_stm32$(call lc,${STM32_FAMILY})xx.c \
-	        $(STM32CUBE_TEMPLATE_DIR)/gcc/startup_$(call lc,${STM32_CPU}).s, \
+	        $(wildcard $(STM32CUBE_TEMPLATE_DIR)/Src/system_*.c) \
+	        $(STM32CUBE_LINKINFO_DIR)/gcc/startup_$(call lc,${STM32_CPU}).s, \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
+
 
 LIB_NAME_BSP := lib$(PACKAGE_NAME)_bsp
 $(LIB_NAME_BSP)_obj := $(foreach file, \
                 $(wildcard $(STM32CUBE_BSP_DIR)/*.c), \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
-LIBRARY_TARGETS += $(LIB_NAME_CORE)
+LIBRARY_TARGETS += $(LIB_NAME_CORE) $(LIB_NAME_BSP)
 
 # ----------------------------------------------------------------------------------------
 

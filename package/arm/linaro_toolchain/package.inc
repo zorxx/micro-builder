@@ -14,6 +14,8 @@ OBJCOPY	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objcopy
 OBJDUMP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objdump
 READELF	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)readelf
 
+LDFLAGS += -Wl,--build-id=none
+
 export PATH := $(PATH):$(TOOLCHAIN_BIN_DIR)
 
 # vim: syntax=make tabstop=4 noexpandtab
