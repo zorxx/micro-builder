@@ -19,6 +19,7 @@ USER_DIR := $(TOPDIR)/user
 # Determine host architecture
 include $(TOPDIR)/config.inc
 include $(TOPDIR)/include/host.inc
+include $(TOPDIR)/include/util.inc
 
 # Host tools
 WGET	:= wget
@@ -125,6 +126,11 @@ $(BUILD_TEMP_DIR)/%.o: %.ino
 	@$(CXX) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(CPPFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
 
 $(BUILD_TEMP_DIR)/%.o: %.S
+	@$(ECHO) "ASM $^"
+	@$(MKDIR) -p $(dir $@)
+	@$(CC) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(ASMFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@
+
+$(BUILD_TEMP_DIR)/%.o: %.s
 	@$(ECHO) "ASM $^"
 	@$(MKDIR) -p $(dir $@)
 	@$(CC) $(foreach inc,$(call reverse_list,$(INCDIR)),-I$(inc)) $(ASMFLAGS) $(foreach def,$(CDEFS),-D$(def)) -c $^ -o $@

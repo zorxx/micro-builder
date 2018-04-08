@@ -51,6 +51,13 @@ define package_download_wget
 	$(call package_extract,$(strip $($1_FILENAME)),$1_$(PKG_SRC_DIR))
 endef
 
+# package_download_archive(package_name)
+define package_download_archive
+	$(ECHO) "Download (local archive): $1"
+	$(MKDIR) -p $1_$(PKG_SRC_DIR)
+	$(call package_extract,../$(strip $($1_FILENAME)),$1_$(PKG_SRC_DIR))
+endef
+
 define package_extract
 	$(CD) $2; \
 		$(if $(findstring .tar.gz,$1),$(TAR) xzf $1) \

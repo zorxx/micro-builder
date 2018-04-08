@@ -28,7 +28,7 @@ endef
 
 # stm32_post_app(app_out_file)
 define $(MB_TARGET)_post_app
-	$(OBJCOPY) -O binary $1 $(basename $1).bin
+	$(OBJCOPY) --strip-unneeded -S -O binary $1 $(basename $1).bin
 endef
 
 # stm32_app_info(app_file,app_dir)
