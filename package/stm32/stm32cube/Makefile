@@ -25,6 +25,7 @@ endef
 LIB_NAME_CORE := lib$(PACKAGE_NAME)
 $(LIB_NAME_CORE)_obj := $(foreach file, \
                 $(wildcard $(STM32CUBE_HAL_DIR)/Src/*.c) \
+                $(wildcard $(STM32CUBE_COMPONENTS_DIR)/*/*.c) \
 	        $(STM32CUBE_LINKINFO_DIR)/gcc/startup_$(call lc,${STM32_CPU}).s, \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
