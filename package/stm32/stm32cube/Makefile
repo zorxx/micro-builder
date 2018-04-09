@@ -25,17 +25,11 @@ endef
 LIB_NAME_CORE := lib$(PACKAGE_NAME)
 $(LIB_NAME_CORE)_obj := $(foreach file, \
                 $(wildcard $(STM32CUBE_HAL_DIR)/Src/*.c) \
-	        $(wildcard $(STM32CUBE_TEMPLATE_DIR)/Src/system_*.c) \
 	        $(STM32CUBE_LINKINFO_DIR)/gcc/startup_$(call lc,${STM32_CPU}).s, \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 
-LIB_NAME_BSP := lib$(PACKAGE_NAME)_bsp
-$(LIB_NAME_BSP)_obj := $(foreach file, \
-                $(wildcard $(STM32CUBE_BSP_DIR)/*.c), \
-                $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-
-LIBRARY_TARGETS += $(LIB_NAME_CORE) $(LIB_NAME_BSP)
+LIBRARY_TARGETS += $(LIB_NAME_CORE)
 
 # ----------------------------------------------------------------------------------------
 

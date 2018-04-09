@@ -2,12 +2,11 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Generic STM32F103C board variant for STM32cube 
 
-PREREQS := package/arm/linaro_toolchain package/stm32/stm32cube package/stm32/stlink
+PREREQS := package/arm/linaro_toolchain package/stm32/stm32cube package/stm32/stm32cube_bsp package/stm32/stlink
 
 STM32_FAMILY := F1
 STM32_CPU := STM32F103x6
-STM32_BOARD := STM32F103RB-Nucleo
-STM32_BSP := STM32F1xx_Nucleo
+STM32_BSP := bluepill
 
 TARGET_CPU := cortex-m3
 TARGET_CPU_SPEED := 72000000
