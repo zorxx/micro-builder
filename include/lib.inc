@@ -12,7 +12,7 @@ endif
 $(LIB_BIN_DIR)/%.a: $$($$*_obj)
 	@$(ECHO) "AR $(notdir $@)"
 	@$(MKDIR) -p $(dir $@)
-	@$(AR) rcs $@ $(filter %.o, $^)
+	@@$(AR) rcs $(ARFLAGS) $@ $(filter %.o, $^)
 	@$(if $(MB_TARGET)_post_lib,$(call $(MB_TARGET)_post_lib,$@))
 .PRECIOUS: $(BUILD_TEMP_DIR)/%.o
 

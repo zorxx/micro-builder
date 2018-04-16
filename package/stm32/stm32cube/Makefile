@@ -13,10 +13,14 @@ define $(PACKAGE_NAME)_PREACTION
 	$(if $(wildcard $($(PACKAGE_NAME)_FILENAME)),,$(error The archive $($(PACKAGE_NAME)_FILENAME) must be obtained from https://st.com and copied to $(STM32CUBE_DIR)))
 endef
 
-# Rename directory to remove version 
+# Rename the source directory to remove the version number
+# Ignore all weak functions. Their implementation won't work when linking statically since the weak function
+#  is defined in the same compilation unit as it's called, so the linker will always choose the weak function
+#  rather than the BSP-defined function we really want
 define $(PACKAGE_NAME)_POSTACTION
-        $(MV) $(STM32CUBE_SRCDIR)/STM32Cube_*/* $(STM32CUBE_SRCDIR) 
+        $(MV) $(STM32CUBE_SRCDIR)/STM32Cube_*/* $(STM32CUBE_SRCDIR)
         sed -i /^0/d $(STM32CUBE_LINKINFO_DIR)/gcc/linker/$(call uc,$(STM32_CPU))_FLASH.ld
+	find ${STM32CUBE_HAL_DIR} -name *.c -exec echo Fix {} \; -exec awk '/^( *)__weak/ {$$3 = "_ignore_"$$3};{print > "tmp.tmp"}' {} \; -exec mv tmp.tmp {} \;
 endef
 
 # ----------------------------------------------------------------------------------------
@@ -24,12 +28,11 @@ endef
 
 LIB_NAME_CORE := lib$(PACKAGE_NAME)
 $(LIB_NAME_CORE)_obj := $(foreach file, \
-                $(wildcard $(STM32CUBE_HAL_DIR)/Src/*.c) \
+                $(filter-out %_template.c,$(wildcard $(STM32CUBE_HAL_DIR)/Src/*.c)) \
                 $(wildcard $(STM32CUBE_COMPONENTS_DIR)/*/*.c) \
                 $(wildcard $(STM32CUBE_UTILITIES_DIR)/Fonts/*.c) \
                 $(STM32CUBE_LINKINFO_DIR)/gcc/startup_$(call lc,${STM32_CPU}).s, \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-
 
 LIBRARY_TARGETS += $(LIB_NAME_CORE)
 
