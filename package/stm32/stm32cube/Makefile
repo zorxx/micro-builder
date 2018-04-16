@@ -19,7 +19,7 @@ endef
 #  rather than the BSP-defined function we really want
 define $(PACKAGE_NAME)_POSTACTION
         $(MV) $(STM32CUBE_SRCDIR)/STM32Cube_*/* $(STM32CUBE_SRCDIR)
-        sed -i /^0/d $(STM32CUBE_LINKINFO_DIR)/gcc/linker/$(call uc,$(STM32_CPU))_FLASH.ld
+        cd ${STM32CUBE_DIR};patch -p1 -i usart_baud.patch
 	find ${STM32CUBE_HAL_DIR} -name *.c -exec echo Fix {} \; -exec awk '/^( *)__weak/ {$$3 = "_ignore_"$$3};{print > "tmp.tmp"}' {} \; -exec mv tmp.tmp {} \;
 endef
 

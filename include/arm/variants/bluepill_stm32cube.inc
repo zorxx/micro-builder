@@ -5,7 +5,7 @@
 PREREQS := package/arm/linaro_toolchain package/stm32/stm32cube package/stm32/stm32cube_bsp package/stm32/stlink
 
 STM32_FAMILY := F1
-STM32_CPU := STM32F103x6
+STM32_CPU := STM32F103xB
 STM32_BSP := bluepill
 
 TARGET_CPU := cortex-m3

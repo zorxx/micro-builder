@@ -7,7 +7,7 @@ include ../../../include/mb.inc
 PACKAGE_NAME := RF24
 
 # Download information
-$(PACKAGE_NAME)_SOURCE := "https://github.com/TMRh20/RF24.git"
+$(PACKAGE_NAME)_SOURCE := "https://github.com/nRF24/RF24.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
 
 # Library

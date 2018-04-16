@@ -1,0 +1,11 @@
+--- a/stm32cube_source/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_usart.h	2017-05-16 14:51:26.000000000 -0500
++++ b/stm32cube_source/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_usart.h	2018-04-15 23:37:02.304856295 -0500
+@@ -558,7 +558,7 @@
+ 
+ #define IS_USART_BAUDRATE(BAUDRATE) ((BAUDRATE) < 4500001U)
+ 
+-#define USART_DIV(_PCLK_, _BAUD_) (((_PCLK_)*25U)/(2U*(_BAUD_)))
++#define USART_DIV(_PCLK_, _BAUD_) (((_PCLK_)*25U)/(4U*(_BAUD_)))
+ 
+ #define USART_DIVMANT(_PCLK_, _BAUD_) (USART_DIV((_PCLK_), (_BAUD_))/100U)
+ 
