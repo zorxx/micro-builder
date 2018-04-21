@@ -1,4 +1,5 @@
 language: c
+script: make
 env:
     matrix:
         - MB_TARGET=xtensa_nodemcu_arduino
