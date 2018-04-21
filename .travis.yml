@@ -1,0 +1,12 @@
+language: c
+script: make
+env:
+    matrix:
+        - MB_TARGET=xtensa_nodemcu_arduino
+        - MB_TARGET=xtensa_esp12f_arduino
+        - MB_TARGET=xtensa_nodemcu
+        - MB_TARGET=xtensa_esp12f
+        - MB_TARGET=avr_nano_arduino
+        - MB_TARGET=arm_bluepill_arduino
+        - MB_TARGET=arm_bluepill_libopencm3
+        - MB_TARGET=arm_stm32f103c_arduino

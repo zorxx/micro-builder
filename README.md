@@ -1,5 +1,7 @@
 micro-builder: Build Environment for Microcontroller Projects
 
+[![Build Status](https://travis-ci.org/zorxx/micro-builder.svg?branch=master)](https://travis-ci.org/zorxx/micro-builder)
+
 Goals:
 - Simple, flexible environment for building applications for microcontrollers
 - Make use of existing projects (don't re-invent wheels)

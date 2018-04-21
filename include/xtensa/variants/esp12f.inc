@@ -1,9 +1,8 @@
-# \copyright 2017 Zorxx Software, All Rights Reserved
+# \copyright 2017-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief ESP12F Variant
 
-PREREQS ?= package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/esp8266_sdk \
-           package/esp8266/esp8266_sdk_extras
+PREREQS := package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/esp8266_sdk
 
 TARGET_FLASH_SIZE := 32M
 TARGET_FLASH_MODE := dio
