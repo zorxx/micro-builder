@@ -1,16 +1,18 @@
-# \copyright 2015-2016 Zorxx Software, All Rights Reserved
+# \copyright 2015-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Top make include file for ESP8266 architecture
 
 # -------------------------------------------------
 #
 
-LDFLAGS += -T$(APP_LD_SCRIPT) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static
+APP_LD_DIR ?= $(ARCH_INCLUDE_DIR)
 
-CFLAGS += -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections
+LDFLAGS += -L $(APP_LD_DIR) $(addprefix -T ,$(APP_LD_SCRIPT)) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static -Wl,-EL
+
+CFLAGS += -Os -g -Wpointer-arith -Wno-implicit-function-declaration -fno-inline-functions -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections
 CPPFLAGS += -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections
 ASMFLAGS += -c -g -x assembler-with-cpp -MMD -mlongcalls -mtext-section-literals
-CDEFS += __esp8266__ __ets__ ICACHE_FLASH ESP8266 F_CPU=$(TARGET_CPU_SPEED)
+CDEFS += __esp8266__ __ets__ ICACHE_FLASH ESP8266 F_CPU=$(TARGET_CPU_SPEED) ESP_PLATFORM
 OBJCOPYDEFS += -O elf32-xtensa-le -B xtensa --rename-section .data=.irom0.other
 
 # ----------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-# \copyright 2015-2017 Zorxx Software, All Rights Reserved
+# \copyright 2015-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for ESP8266 SDK package
 
@@ -10,11 +10,21 @@ PACKAGE_NAME := esp8266_sdk
 $(PACKAGE_NAME)_SOURCE := "https://github.com/espressif/ESP8266_RTOS_SDK.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
 
+define $(PACKAGE_NAME)_POSTACTION
+	$(STRIP) -N printf $(ESP8266_SDK_DIR)/components/esp8266/lib/libcirom.a
+	$(STRIP) -N puts $(ESP8266_SDK_DIR)/components/esp8266/lib/libcirom.a
+endef
+
 # Common Library
 LIB_NAME_COMMON := lib$(PACKAGE_NAME)_common
 $(LIB_NAME_COMMON)_obj := $(foreach file, \
-                          $(wildcard *.c), \
+                          $(foreach d,$(ESP8266_SDK_SRCDIRS),$(wildcard $(ESP8266_SDK_DIR)/components/$(d)/*.c)) \
+                          $(foreach d,$(ESP8266_SDK_SRCDIRS),$(wildcard $(ESP8266_SDK_DIR)/components/$(d)/*.S)), \
                           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
+
+CFLAGS += -D_POSIX_SOURCE -DLWIP_OPEN_SRC -DPBUF_RSV_FOR_WLAN -DEBUF_LWIP
+CFLAGS += -DMEMLEAK_DEBUG -DICACHE_FLASH
+CFLAGS += -DMBEDTLS_CONFIG_FILE='"esp_config.h"'
 
 LIBRARY_TARGETS += $(LIB_NAME_COMMON)
 LIBRARY_SUBMAKE := true

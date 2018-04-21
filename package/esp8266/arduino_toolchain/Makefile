@@ -8,12 +8,12 @@ PACKAGE_NAME := arduino_toolchain
 $(PACKAGE_NAME)_SOURCE_METHOD := wget
 
 $(PACKAGE_NAME)_FILENAME := $(strip \
-	$(if $(findstring Linux_64,$(HOST_ARCH)),linux64-xtensa-lx106-elf-gb404fb9.tar.gz, \
+	$(if $(findstring Linux_64,$(HOST_ARCH)),linux64-xtensa-lx106-elf-gb404fb9.tgz, \
 		$(if $(findstring Linux_32,$(HOST_ARCH)),linux32-xtensa-lx106-elf.tar.gz, \
 			$(if $(findstring WIN,$(HOST_ARCH)),win32-xtensa-lx106-elf-gb404fb9-2.tar.gz, \
 				$(if $(findstring OSX,$(HOST_ARCH)),osx-xtensa-lx106-elf-gb404fb9-2.tar.gz, \
 					unknown)))))
-$(PACKAGE_NAME)_SOURCE := http://arduino.esp8266.com/$($(PACKAGE_NAME)_FILENAME)
+$(PACKAGE_NAME)_SOURCE := https://github.com/esp8266/Arduino/releases/download/2.3.0/$($(PACKAGE_NAME)_FILENAME)
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)
 

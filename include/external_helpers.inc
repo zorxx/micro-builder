@@ -60,6 +60,7 @@ endef
 
 define package_extract
 	$(CD) $2; \
+		$(if $(findstring .tgz,$1),$(TAR) xzf $1) \
 		$(if $(findstring .tar.gz,$1),$(TAR) xzf $1) \
 		$(if $(findstring .tar.bz2,$1),$(TAR) xjf $1) \
 		$(if $(findstring .tar.xz,$1),$(TAR) xJf $1) \
