@@ -5,22 +5,16 @@ before_install:
   - sudo apt-get install -y libusb-dev libusb-1.0.0-dev
 matrix:
     include:
-        - env: MB_TARGET=xtensa_nodemcu_arduino
-          env: TEST_APP=app/arduino/blink
-        - env: MB_TARGET=xtensa_esp12f_arduino
-          env: TEST_APP=app/arduino/blink
+        - env: MB_TARGET=xtensa_nodemcu_arduino;TEST_APP=app/arduino/blink
+        - env: MB_TARGET=xtensa_esp12f_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=xtensa_nodemcu
         - env: MB_TARGET=xtensa_esp12f
         - env: MB_TARGET=xtensa_huzzah
-        - env: MB_TARGET=avr_nano_arduino
-          env: TEST_APP=app/arduino/blink
-        - env: MB_TARGET=arm_bluepill_arduino
-          env: TEST_APP=app/arduino/blink
+        - env: MB_TARGET=avr_nano_arduino;TEST_APP=app/arduino/blink
+        - env: MB_TARGET=arm_bluepill_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=arm_bluepill_libopencm3
-        - env: MB_TARGET=arm_stm32f103c_arduino
-          env: TEST_APP=app/arduino/blink
-        - env: MB_TARGET=arm_stm32f4_arduino
-          env: TEST_APP=app/arduino/blink
+        - env: MB_TARGET=arm_stm32f103c_arduino;TEST_APP=app/arduino/blink
+        - env: MB_TARGET=arm_stm32f4_arduino;TEST_APP=app/arduino/blink
 script:
-    - sh -c "if [ '$(TEST_APP)' != '' ]; then $(MB_TARGET) make -C $(TEST_APP)"
-    - sh -c "if [ '$(TEST_APP)' = '' ]; then $(MB_TARGET) make"
+    - sh -c "if [ '$(TEST_APP)' != '' ]; then $(MB_TARGET) make -C $(TEST_APP); fi"
+    - sh -c "if [ '$(TEST_APP)' = '' ]; then $(MB_TARGET) make; fi"
