@@ -3,7 +3,6 @@
 # \brief Generic STM32F103C board variant 
 
 PREREQS := package/arm/toolchain package/stm32/stm32f1_arduino package/stm32/stlink
-#PREREQS := package/arm/linaro_toolchain package/stm32/stm32f1_arduino package/stm32/stlink
 
 STM32_CPU := STM32F1
 STM32_BOARD := genericSTM32F103C

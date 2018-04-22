@@ -16,5 +16,5 @@ matrix:
         - env: MB_TARGET=arm_stm32f103c_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=arm_stm32f4_arduino;TEST_APP=app/arduino/blink
 script:
+    - make all
     - sh -c "if [ '${TEST_APP}' != '' ]; then make -C ${TEST_APP}; fi"
-    - sh -c "if [ '${TEST_APP}' = '' ]; then make; fi"
