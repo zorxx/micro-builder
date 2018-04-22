@@ -3,13 +3,24 @@ script: make
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libusb-dev libusb-1.0.0-dev
-env:
-    matrix:
-        - MB_TARGET=xtensa_nodemcu_arduino
-        - MB_TARGET=xtensa_esp12f_arduino
-        - MB_TARGET=xtensa_nodemcu
-        - MB_TARGET=xtensa_esp12f
-        - MB_TARGET=avr_nano_arduino
-        - MB_TARGET=arm_bluepill_arduino
-        - MB_TARGET=arm_bluepill_libopencm3
-        - MB_TARGET=arm_stm32f103c_arduino
+matrix:
+    include:
+        - env: MB_TARGET=xtensa_nodemcu_arduino
+          env: TEST_APP=app/arduino/blink
+        - env: MB_TARGET=xtensa_esp12f_arduino
+          env: TEST_APP=app/arduino/blink
+        - env: MB_TARGET=xtensa_nodemcu
+        - env: MB_TARGET=xtensa_esp12f
+        - env: MB_TARGET=xtensa_huzzah
+        - env: MB_TARGET=avr_nano_arduino
+          env: TEST_APP=app/arduino/blink
+        - env: MB_TARGET=arm_bluepill_arduino
+          env: TEST_APP=app/arduino/blink
+        - env: MB_TARGET=arm_bluepill_libopencm3
+        - env: MB_TARGET=arm_stm32f103c_arduino
+          env: TEST_APP=app/arduino/blink
+        - env: MB_TARGET=arm_stm32f4_arduino
+          env: TEST_APP=app/arduino/blink
+script:
+    - sh -c "if [ '$(TEST_APP)' != '' ]; then $(MB_TARGET) make -C $(TEST_APP)"
+    - sh -c "if [ '$(TEST_APP)' = '' ]; then $(MB_TARGET) make"
