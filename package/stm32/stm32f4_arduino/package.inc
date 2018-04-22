@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Build environment configuration for STM32F1 Arduino package
 
-ARDUINO_DIR := $(PACKAGE_DIR)/stm32/stm32f1_arduino/arduino_source
+ARDUINO_DIR := $(PACKAGE_DIR)/stm32/stm32f4_arduino/arduino_source
 ARDUINO_TARGET_CPU_DIR := $(ARDUINO_DIR)/STM32F4
 ARDUINO_COMMON_DIR := $(ARDUINO_DIR)/STM32F1
 ARDUINO_LIB_DIR := $(ARDUINO_TARGET_CPU_DIR)/libraries
