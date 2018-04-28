@@ -26,7 +26,7 @@ ESP8266_SDK_INCDIRS := \
 	lwip/include lwip/include/lwip/ipv4 lwip/include/lwip/ipv6 lwip/include/lwip/posix lwip/include/lwip/apps \
 	lwip/include/lwip lwip/lwip/src/include/lwip lwip/include/lwip/port lwip/lwip/src/include \
 	lwip/lwip/src/include/posix \
-	freertos/include \
+	freertos/include freertos/include/port freertos/include/port/freertos freertos/include/freertos/private \
 	tcpip_adapter/include \
 	espconn/include \
 	mqtt/include/mqtt \
