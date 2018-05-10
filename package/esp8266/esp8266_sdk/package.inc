@@ -33,6 +33,7 @@ ESP8266_SDK_INCDIRS := \
 	nopoll/include nopoll/include/nopoll \
 	ssl/openssl/include ssl/openssl/include/internal ssl/openssl/include/openssl \
 	ssl/openssl/include/platform ssl/mbedtls/mbedtls/include ssl/mbedtls/port/include \
+	ssl/mbedtls/port/esp8266/include/mbedtls \
 	spiffs/include/spiffs
 
 INCDIR += $(foreach inc,$(ESP8266_SDK_INCDIRS),$(ESP8266_SDK_DIR)/components/$(inc))

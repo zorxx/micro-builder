@@ -20,8 +20,8 @@ tools, libraries, applications, etc. The two major components of a package are
 
 - Makefile
     This contains all of the information for downloading and building the package
-- <package_name>.inc
-    When the package is included by the user in /config.inc, this file is included
+- package.inc
+    When the package is defined as a prerequisite of any component, this file is included
     in the build environment. This allows the package to provide things to the build
     environment, such as include file directories (for library packages) or toolchain
     binary locations (for toolchain packages).
@@ -60,9 +60,11 @@ Quickstart:
 ------------------------------------------------------------------------------------
 Configuration
 
-The environment variable MB_OVERRIDE_CONFIG can be used to specify a custom config.inc file;
-this overrides the default config.inc that exists in the root of the micro-builder
-source tree.
+The environment variable MB_TARGET provides information to the build system about the
+target architecture, device, and other build dependencies such as an SDK or operating system.
+The format of the MB_TARGET is: <architecture>/<variant>. A list of all supported
+architectures and their variants can be found by executing "make variants" at the root
+of the micro-builder source tree.
 
 ------------------------------------------------------------------------------------
 Host environment dependencies
