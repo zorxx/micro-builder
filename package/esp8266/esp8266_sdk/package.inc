@@ -23,10 +23,13 @@ ESP8266_SDK_SRCDIRS := \
 ESP8266_SDK_INCDIRS := \
 	cjson/include \
 	esp8266/include esp8266/include/driver \
-	lwip/include lwip/include/lwip/ipv4 lwip/include/lwip/ipv6 lwip/include/lwip/posix lwip/include/lwip/apps \
+	lwip/include lwip/include/lwip/ipv4 lwip/include/lwip/ipv6 lwip/include/lwip/posix \
+        lwip/include/lwip/apps lwip/port/esp8266/include \
 	lwip/include/lwip lwip/lwip/src/include/lwip lwip/include/lwip/port lwip/lwip/src/include \
 	lwip/lwip/src/include/posix \
-	freertos/include freertos/include/port freertos/include/port/freertos freertos/include/freertos/private \
+	freertos/include freertos/include/port freertos/include/port/freertos \
+        freertos/port/esp8266/include/freertos freertos/port/esp8266/include \
+        freertos/include/freertos/private \
 	tcpip_adapter/include \
 	espconn/include \
 	mqtt/include/mqtt \
