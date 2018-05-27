@@ -1,12 +1,12 @@
-# \copyright 2017 Zorxx Software, All Rights Reserved
+# \copyright 2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief nodemcu Variant
 
 PREREQS ?= package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/esp8266_sdk
 
-TARGET_FLASH_SIZE := 32M
+TARGET_FLASH_SIZE := 4M
 TARGET_FLASH_MODE := dio
-TARGET_FLASH_SPEED := 40
+TARGET_FLASH_SPEED := 80
 
 TARGET_CPU_SPEED := 80000000
 TARGET_BOARD := generic

@@ -1,9 +1,7 @@
-# \copyright 2017 Zorxx Software, All Rights Reserved
+# \copyright 2017-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for rboot, ESP8266 bootloader 
 
-#required_prereqs = package/esp8266/esp8266_sdk
-required_prereqs = package/esp8266/arduino
 dependencies = package/esp8266/esptool2
 
 include ../../../include/mb.inc
@@ -14,7 +12,7 @@ include ../../../include/mb.inc
 PACKAGE_NAME := rboot
 
 # External package download information
-$(PACKAGE_NAME)_SOURCE := "https://github.com/raburton/rboot.git"
+$(PACKAGE_NAME)_SOURCE := "https://github.com/zorxx/rboot.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)
@@ -28,13 +26,29 @@ define GENERIC_rboot_build
 	@echo "Making rboot..."
         RBOOT_EXTRA_INCDIR="$(INCDIR)" \
 	RBOOT_BAUDRATE=115200 \
+	RBOOT_RTC_ENABLED=1 \
+	RBOOT_BIG_FLASH=1 \
+	RBOOT_GPIO_ENABLED=1 \
+	SPI_SIZE=$(TARGET_FLASH_SIZE) \
+	SPI_MODE=$(TARGET_FLASH_MODE) \
+	SPI_SPEED=$(TARGET_FLASH_SPEED) \
+	RBOOT_DEFAULT_CONFIG_IMAGE_COUNT=3 \
+	RBOOT_DEFAULT_CONFIG_ROM0=1048576 \
+	RBOOT_DEFAULT_CONFIG_ROM1=2097152 \
+	RBOOT_DEFAULT_CONFIG_ROM2=3145728 \
         ESPTOOL2="$(ESPTOOL2)" \
 		$(MAKE) -C rboot_source all
 endef
 
+rboot:
+	$(call GENERIC_rboot_build)
+
+rboot_clean:
+	@$(MAKE) -C rboot_source clean
+
 flash: all
 	@$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
-	@$(ESPTOOL) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) -cf rboot_source/firmware/rboot.bin
+	@$(ESPTOOL) -bz $(TARGET_FLASH_SIZE) -bf $(TARGET_FLASH_SPEED) -bm $(TARGET_FLASH_MODE) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) -cf rboot_source/firmware/rboot.bin
 
 # ----------------------------------------------------------
 # Application API Library

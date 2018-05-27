@@ -4,9 +4,9 @@
 
 PREREQS := package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/arduino
 
-TARGET_FLASH_SIZE := 32M
+TARGET_FLASH_SIZE := 4M
 TARGET_FLASH_MODE := dio
-TARGET_FLASH_SPEED := 40
+TARGET_FLASH_SPEED := 80
 
 TARGET_CPU_SPEED := 80000000
 TARGET_BOARD := nodemcu
