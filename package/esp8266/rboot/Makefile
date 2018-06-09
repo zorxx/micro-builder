@@ -33,9 +33,9 @@ define GENERIC_rboot_build
 	SPI_MODE=$(TARGET_FLASH_MODE) \
 	SPI_SPEED=$(TARGET_FLASH_SPEED) \
 	RBOOT_DEFAULT_CONFIG_IMAGE_COUNT=3 \
-	RBOOT_DEFAULT_CONFIG_ROM0=1048576 \
-	RBOOT_DEFAULT_CONFIG_ROM1=2097152 \
-	RBOOT_DEFAULT_CONFIG_ROM2=3145728 \
+	RBOOT_DEFAULT_CONFIG_ROM0=0x100000 \
+	RBOOT_DEFAULT_CONFIG_ROM1=0x200000 \
+	RBOOT_DEFAULT_CONFIG_ROM2=0x300000 \
         ESPTOOL2="$(ESPTOOL2)" \
 		$(MAKE) -C rboot_source all
 endef
@@ -55,9 +55,9 @@ flash: all
 
 LIB_NAME_API := lib$(PACKAGE_NAME)
 $(LIB_NAME_API)_obj := $(foreach file, \
-                          rboot_source/appcode/rboot-api.c, \
+                          $(wildcard rboot_source/appcode/*.c), \
                           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-
+CDEFS += BOOT_BIG_FLASH=1 BOOT_RTC_ENABLED=1
 LIBRARY_TARGETS += $(LIB_NAME_API)
 LIBRARY_SUBMAKE := true
 
