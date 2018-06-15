@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for rboot, ESP8266 bootloader 
 
-dependencies = package/esp8266/esptool2
+dependencies = package/esp8266/ztool
 
 include ../../../include/mb.inc
 
