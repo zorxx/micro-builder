@@ -36,6 +36,7 @@ define GENERIC_rboot_build
 	RBOOT_DEFAULT_CONFIG_ROM0=0x100000 \
 	RBOOT_DEFAULT_CONFIG_ROM1=0x200000 \
 	RBOOT_DEFAULT_CONFIG_ROM2=0x300000 \
+        XTENSA_BINDIR="$(TOOLCHAIN_BIN_DIR)" \
         ZTOOL="$(ZTOOL)" \
 		$(MAKE) --no-print-directory -C rboot_source all
 endef
