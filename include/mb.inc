@@ -190,4 +190,12 @@ endef
 rebuild: clean all
 .PHONY: all clean
 
+erase_flash:
+	@$(call $(TARGET_ARCH)_flash_erase)
+.PHONY: erase_flash
+
+flash_boot:
+	@$(call $(TARGET_ARCH)_flash_boot)
+.PHONY: flash_boot
+
 # vim: syntax=make tabstop=4 noexpandtab

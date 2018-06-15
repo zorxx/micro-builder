@@ -1,4 +1,4 @@
-# \copyright 2015-2016 Zorxx Software, All Rights Reserved
+# \copyright 2015-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for ESP8266 Arduino SDK package
 
@@ -9,13 +9,21 @@ PACKAGE_NAME := arduino
 # External package download information
 $(PACKAGE_NAME)_SOURCE := "https://github.com/esp8266/Arduino.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
-$(PACKAGE_NAME)_VERSION := 2.3.0
+$(PACKAGE_NAME)_VERSION := 2.4.1
 
 SRCDIR := $(PACKAGE_NAME)_source
+
+# Remove the Cache_Read_Enable_New function from libmain.a. We need to
+#  use the function defined in rboot in order to make use of flash
+#  larger than 1 MiB
+define $(PACKAGE_NAME)_POSTACTION
+$(OBJCOPY) -W Cache_Read_Enable_New $(SRCDIR)/tools/sdk/lib/libmain.a
+endef
 
 # Core Library
 LIB_NAME_CORE := lib$(PACKAGE_NAME)_core
 $(LIB_NAME_CORE)_obj := $(foreach file, \
+		$(SRCDIR)/tests/host/common/noniso.c \
 		$(wildcard $(SRCDIR)/cores/esp8266/*.c) \
 		$(wildcard $(SRCDIR)/cores/esp8266/umm_malloc/*.c) \
 		$(wildcard $(SRCDIR)/cores/esp8266/spiffs/*.c) \
@@ -68,7 +76,8 @@ $(LIB_NAME_EEPROM)_obj := $(foreach file, \
 # WebServer Library 
 LIB_NAME_ESP8266_WEBSERVER := lib$(PACKAGE_NAME)_WebServer
 $(LIB_NAME_ESP8266_WEBSERVER)_obj := $(foreach file, \
-		$(wildcard $(SRCDIR)/libraries/ESP8266WebServer/src/*.cpp), \
+		$(wildcard $(SRCDIR)/libraries/ESP8266WebServer/src/*.cpp) \
+		$(wildcard $(SRCDIR)/libraries/ESP8266WebServer/src/detail/*.cpp), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 # Ethernet Library

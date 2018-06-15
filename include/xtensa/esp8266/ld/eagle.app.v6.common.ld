@@ -192,17 +192,18 @@ SECTIONS
     /* These must be located in internal RAM to prevent far accesses to literal data.
      *  All of the following libraries are distributed in binary form, so we cannot
      *  change the compilation options to allow for far accesses to data. */
-    *libgcc.a:(.literal* .text*)
-    *libm.a:(.literal* .text*)
-    *libc.a:(.literal* .text*)
-    *libmain.a:(.literal* .text*)
-    *libphy.a:(.literal* .text*)
-    *liblwip.a:(.literal* .text*)
-    *libpp.a:(.literal* .text*)
-    *libwps.a:(.literal* .text*)
-    *libwpa.a:(.literal* .text*)
-    *libnet80211.a:(.literal* .text*)
-    *libcrypto.a:(.literal* .text*)
+    *libgcc.a:(.literal .text .literal.* .text.*)
+    *libmain.a:(.literal .text .literal.* .text.*)
+    *libphy.a:(.literal .text .literal.* .text.*)
+    *libpp.a:(.literal .text .literal.* .text.*)
+    *libhal.a:int_asm--set_intclear.o(.literal .text .literal.* .text.*)
+    *libnet80211.a:wl_chm.o(.literal .text .literal.* .text.*)
+
+    /* Arduino necessities */
+    *libarduino_core.a:*umm_malloc.o(.literal* .text*)
+    *libarduino_core.a:*cont.o(.literal* .text*)
+
+    *(.gnu.linkonce.literal.* .gnu.linkonce.t.*.literal .gnu.linkonce.t.*)
 
     /* Any compilation units that request to be located in interal RAM */
     *.o(.iram.text)
@@ -223,10 +224,13 @@ SECTIONS
   .irom0.text : ALIGN(4)
   {
     _irom0_text_start = ABSOLUTE(.);
-    *.o(.literal*, .text*)
-    *.a(.literal*, .text*)
-    *(.literal .text .literal.* .text.* .stub .gnu.warning .gnu.linkonce.literal.* .gnu.linkonce.t.*.literal .gnu.linkonce.t.*)
+    *.a(.literal*)
+    *.o(.literal*)
+    *.a(.text*)
+    *.o(.text*)
+    *(.literal .text .literal.* .text.* .stub .gnu.warning)
     *(.irom0.literal .irom.literal .irom.text.literal .irom0.text .irom.text .irom.text.*)
+
     _irom0_text_end = ABSOLUTE(.);
   } >irom0_0_seg :irom0_0_phdr
 
@@ -235,8 +239,8 @@ SECTIONS
     _irom0_other_start = ABSOLUTE(.);
     *.bin.o(*)
     _irom0_other_end = ABSOLUTE(.);
-    _flash_code_end = ABSOLUTE(.);
   } >irom0_0_seg :irom0_0_phdr
+
 }
 
 /* get ROM code address */

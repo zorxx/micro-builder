@@ -1,4 +1,4 @@
-# \copyright 2015-2016 Zorxx Software, All Rights Reserved
+# \copyright 2015-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief ESP8266 Arduino package build environment
 
@@ -6,7 +6,7 @@ ESP8266_ARDUINO_DIR := $(PACKAGE_DIR)/esp8266/arduino/arduino_source
 
 # Core includes
 INCDIR += $(ESP8266_ARDUINO_DIR)/cores/esp8266 $(ESP8266_ARDUINO_DIR)/variants/$(TARGET_BOARD) \
- $(ESP8266_ARDUINO_DIR)/tools/sdk/lwip/include $(ESP8266_ARDUINO_DIR)/tools/sdk/include
+ $(ESP8266_ARDUINO_DIR)/tools/sdk/lwip2/include $(ESP8266_ARDUINO_DIR)/tools/sdk/include
 INCDIR += $(ESP8266_ARDUINO_DIR)/libraries/ArduinoOTA
 INCDIR += $(ESP8266_ARDUINO_DIR)/libraries/DNSServer/src
 INCDIR += $(ESP8266_ARDUINO_DIR)/libraries/EEPROM
@@ -31,12 +31,12 @@ INCDIR += $(ESP8266_ARDUINO_DIR)/libraries/Ticker
 INCDIR += $(ESP8266_ARDUINO_DIR)/libraries/Wire
 
 LIBDIRS += $(ESP8266_ARDUINO_DIR)/tools/sdk/lib
-CDEFS += ARDUINO_ARCH_ESP8266 ARDUINO=100 ESP8266
+CDEFS += ARDUINO_ARCH_ESP8266 ARDUINO=10805 ESP8266 __ets__ ICACHE_FLASH LWIP_OPEN_SRC TCP_MSS=536
 CFLAGS += -U__STRICT_ANSI__
 CPPFLAGS += -U__STRICT_ANSI__ -fno-use-cxa-atexit
-LDFLAGS += -u call_user_start -Wl,-wrap,system_restart_local -Wl,-wrap,register_chipv6_phy
+LDFLAGS += -u call_user_start -u _printf_float -u _scanf_float -Wl,-wrap,system_restart_local -Wl,-wrap,spi_flash_read
 
-LIBS += m gcc hal phy stdc++ net80211 lwip wpa main pp smartconfig wps crypto axtls
+LIBS += m c gcc hal phy stdc++ net80211 lwip2 wpa main pp smartconfig wps crypto axtls espnow airkiss wpa2
 LIBS += arduino_ArduinoOTA arduino_Ethernet arduino_HTTPUpdateServer arduino_SSDP arduino_Wire
 LIBS += arduino_AVRISP arduino_GDBStub arduino_mDNS arduino_TFT arduino_core arduino_Hash arduino_OneWire
 LIBS += arduino_Ticker arduino_DNSServer arduino_HTTPClient arduino_SD arduino_wifi arduino_eeprom

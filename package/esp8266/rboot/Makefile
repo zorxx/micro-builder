@@ -24,7 +24,7 @@ GENERIC_TARGETS := rboot_build
 
 define GENERIC_rboot_build
 	@echo "Making rboot..."
-        RBOOT_EXTRA_INCDIR="$(INCDIR)" \
+        @RBOOT_EXTRA_INCDIR="$(INCDIR)" \
 	RBOOT_BAUDRATE=115200 \
 	RBOOT_RTC_ENABLED=1 \
 	RBOOT_BIG_FLASH=1 \
@@ -36,15 +36,15 @@ define GENERIC_rboot_build
 	RBOOT_DEFAULT_CONFIG_ROM0=0x100000 \
 	RBOOT_DEFAULT_CONFIG_ROM1=0x200000 \
 	RBOOT_DEFAULT_CONFIG_ROM2=0x300000 \
-        ESPTOOL2="$(ESPTOOL2)" \
-		$(MAKE) -C rboot_source all
+        ZTOOL="$(ZTOOL)" \
+		$(MAKE) --no-print-directory -C rboot_source all
 endef
 
 rboot:
 	$(call GENERIC_rboot_build)
 
 rboot_clean:
-	@$(MAKE) -C rboot_source clean
+	@$(MAKE) --no-print-directory -C rboot_source clean
 
 flash: all
 	@$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"

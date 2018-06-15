@@ -9,7 +9,7 @@ APP_LD_DIR ?= $(ARCH_INCLUDE_DIR)
 
 LDFLAGS += -L $(APP_LD_DIR) $(addprefix -T ,$(APP_LD_SCRIPT)) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static -Wl,-EL
 
-CFLAGS += -Os -g -Wpointer-arith -Wno-implicit-function-declaration -fno-inline-functions -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections
+CFLAGS += -Os -g -Wpointer-arith -mlongcalls -fno-inline-functions -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections
 CPPFLAGS += -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections
 ASMFLAGS += -c -g -x assembler-with-cpp -MMD -mlongcalls -mtext-section-literals
 CDEFS += __esp8266__ __ets__ ICACHE_FLASH ESP8266 F_CPU=$(TARGET_CPU_SPEED) ESP_PLATFORM
@@ -24,17 +24,17 @@ endef
 # ----------------------------------------------------------------------------------------
 # Architecture-specific Application Steps
 
-# esp8266_post_app(app_out_file)
-# Note: this step assumes the linker definition file places all flash code (.irom0.text section) at flash address 0x10000
-define $(MB_TARGET)_post_app
-	$(ESPTOOL) -bz $(TARGET_FLASH_SIZE) -bf $(TARGET_FLASH_SPEED) -bm $(TARGET_FLASH_MODE) -eo $1 -bo $(dir $1)0x00000.bin -bs .text -bs .data -bs .rodata -bc -ec
-	$(OBJCOPY) --only-section .irom0.text -O binary $1 $(dir $1)irom0.bin
-	$(OBJCOPY) --only-section .irom0.other -O binary $1 $(dir $1)other.bin
+ZTOOL_OPTIONS = -d0 -z
+ifneq ($(APP_VERSION),)
+ZTOOL_OPTIONS += -v $(APP_VERSION)
+endif
+ifneq ($(APP_DESCRIPTION),)
+ZTOOL_OPTIONS += -n $(APP_DESCRIPTION)
+endif
 
-	python $(ARCH_INCLUDE_DIR)/esp8266/append.py $(dir $1)irom0.bin $(dir $1)other.bin $(dir $1)0x10000.bin
-	python $(ARCH_INCLUDE_DIR)/esp8266/pad.py $(dir $1)0x00000.bin $(dir $1)a.bin 65536
-	python $(ARCH_INCLUDE_DIR)/esp8266/append.py $(dir $1)a.bin $(dir $1)0x10000.bin $(dir $1)user1.bin
-	rm -f $(dir $1)a.bin
+# esp8266_post_app(app_out_file)
+define $(MB_TARGET)_post_app
+	$(ZTOOL) $(ZTOOL_OPTIONS) -e $1 -o $(basename $1).bin -r".irom0.text .irom0.other" -s".text .data .rodata"
 endef
 
 # esp8266_app_info(app_file,app_dir)
@@ -45,7 +45,7 @@ endef
 # esp8266_app_flash(app_file,app_dir)
 define $(MB_TARGET)_app_flash
 	$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
-	$(ESPTOOL) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) $(foreach file,$(wildcard $2/0x*.bin),-ca $(notdir $(basename $(file))) -cf $(file))
+	$(ESPTOOL) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) -ca 0x100000 -cf $2/$(basename $1).bin
 endef
 
 # ----------------------------------------------------------------------------------------
@@ -56,6 +56,11 @@ define $(MB_TARGET)_checkboard(app_file,app_dir)
 	ifeq ($(BOARD_LD_SCRIPT_$(TARGET_BOARD)),)
 	$(error "Invalid board type specification ($(TARGET_BOARD))")
 	endif
+endef
+
+define xtensa_flash_erase
+	$(ECHO) "Erasing flash..."
+	$(ESPTOOL) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) -ce -cr
 endef
 
 # vim: syntax=make tabstop=4 noexpandtab
