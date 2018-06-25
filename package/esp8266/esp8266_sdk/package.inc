@@ -30,14 +30,14 @@ ESP8266_SDK_INCDIRS := \
 	freertos/include freertos/include/port freertos/include/freertos  freertos/include/port/freertos \
         freertos/port/esp8266/include/freertos freertos/port/esp8266/include \
         freertos/include/freertos/private \
-	tcpip_adapter/include \
+	tcpip_adapter/include spi_flash/include \
 	espconn/include \
 	mqtt/include/mqtt \
 	nopoll/include nopoll/include/nopoll \
 	ssl/openssl/include ssl/openssl/include/internal ssl/openssl/include/openssl \
 	ssl/openssl/include/platform ssl/mbedtls/mbedtls/include ssl/mbedtls/port/include \
 	ssl/mbedtls/port/esp8266/include/mbedtls \
-	spiffs/include/spiffs
+	spiffs/include/spiffs bootloader_support/include util/include
 
 INCDIR += $(foreach inc,$(ESP8266_SDK_INCDIRS),$(ESP8266_SDK_DIR)/components/$(inc))
 INCDIR += $(ESP8266_SDK_DIR)/..
