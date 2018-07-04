@@ -31,8 +31,8 @@ ESP8266_SDK_INCDIRS := \
         freertos/port/esp8266/include/freertos freertos/port/esp8266/include \
         freertos/include/freertos/private \
 	tcpip_adapter/include spi_flash/include \
-	espconn/include \
-	mqtt/include/mqtt \
+	espconn/include log/include \
+	mqtt/include/mqtt nvs_flash/include \
 	nopoll/include nopoll/include/nopoll \
 	ssl/openssl/include ssl/openssl/include/internal ssl/openssl/include/openssl \
 	ssl/openssl/include/platform ssl/mbedtls/mbedtls/include ssl/mbedtls/port/include \
