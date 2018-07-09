@@ -7,7 +7,7 @@
 
 APP_LD_DIR ?= $(ARCH_INCLUDE_DIR)
 
-LDFLAGS += -L $(APP_LD_DIR) $(addprefix -T ,$(APP_LD_SCRIPT)) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static -Wl,-EL
+LDFLAGS += -L $(APP_LD_DIR) $(foreach ld,$(APP_LD_SCRIPT),$(addprefix -T ,$(ld))) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static -Wl,-EL
 
 CFLAGS += -Os -g -Wpointer-arith -mlongcalls -fno-inline-functions -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections
 CPPFLAGS += -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections

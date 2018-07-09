@@ -26,6 +26,7 @@ WGET	:= wget
 MKDIR	:= mkdir
 RM	:= rm
 CD	:= cd
+CP	:= cp
 MV	:= mv
 UNZIP	:= unzip
 TAR	:= tar
