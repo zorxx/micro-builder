@@ -2,16 +2,15 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief nodemcu Variant
 
-PREREQS ?= package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/esp8266_sdk
+PREREQS := package/esp8266/toolchain package/esp8266/ztool package/esp8266/zboot \
+           package/esp8266/esptool package/esp8266/esp8266_sdk
 
 TARGET_FLASH_SIZE := 4M
-TARGET_FLASH_MODE := dio
+TARGET_FLASH_MODE := qio
 TARGET_FLASH_SPEED := 80
 
 TARGET_CPU_SPEED := 80000000
-TARGET_BOARD := generic
-
-APP_LD_SCRIPT := eagle.app.v6.new.2048.ld eagle.app.v6.common.ld eagle.rom.addr.v6.ld
+TARGET_BOARD := nodemcu
 
 # This must be last
 include $(INCLUDE_DIR)/xtensa/esp8266/esp8266.inc 

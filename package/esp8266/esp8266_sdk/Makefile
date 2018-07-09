@@ -10,44 +10,28 @@ PACKAGE_NAME := esp8266_sdk
 $(PACKAGE_NAME)_SOURCE := "https://github.com/espressif/ESP8266_RTOS_SDK.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
 
+# Remove the Cache_Read_Enable_New function from libmain.a. We need to
+#  use the function defined in rboot in order to make use of flash
+#  larger than 1 MiB
 define $(PACKAGE_NAME)_POSTACTION
-	$(STRIP) -N printf $(ESP8266_SDK_DIR)/components/esp8266/lib/libcirom.a
-	$(STRIP) -N puts $(ESP8266_SDK_DIR)/components/esp8266/lib/libcirom.a
+$(OBJCOPY) -W Cache_Read_Enable_New $(ESP8266_SDK_DIR)/components/esp8266/lib/libcore.a
 endef
-
-# Common Library
-LIB_NAME_COMMON := lib$(PACKAGE_NAME)_common
-$(LIB_NAME_COMMON)_obj := $(foreach file, \
-                          $(foreach d,$(ESP8266_SDK_SRCDIRS),$(wildcard $(ESP8266_SDK_DIR)/components/$(d)/*.c)) \
-                          $(foreach d,$(ESP8266_SDK_SRCDIRS),$(wildcard $(ESP8266_SDK_DIR)/components/$(d)/*.S)), \
-                          $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
-
-CFLAGS += -D_POSIX_SOURCE -DLWIP_OPEN_SRC -DPBUF_RSV_FOR_WLAN -DEBUF_LWIP
-CFLAGS += -DMEMLEAK_DEBUG -DICACHE_FLASH
-CFLAGS += -DMBEDTLS_CONFIG_FILE='"esp_config.h"' -DMBEDTLS_AES_C
-CFLAGS += -DIDF_VER="2"
-
-# Configuration parameters
-CFLAGS += -DCONFIG_TCP_OVERSIZE_MSS -DCONFIG_TCPIP_TASK_STACK_SIZE=512 -DCONFIG_TCP_MSS=1460
-CFLAGS += -DCONFIG_TCP_SND_BUF_DEFAULT=2920 -DCONFIG_UDP_RECVMBOX_SIZE=6
-CFLAGS += -DCONFIG_LWIP_DHCP_MAX_NTP_SERVERS=1 -DCONFIG_TCP_WND_DEFAULT=5840
-CFLAGS += -DCONFIG_TCP_SYNMAXRTX=6 -DCONFIG_TCP_MAXRTX=12 -DCONFIG_TCP_RECVMBOX_SIZE=6
-CFLAGS += -DCONFIG_LWIP_TCP_CLOSE_TIMEOUT_MS_DEFAULT=10000 -DCONFIG_DNS_MAX_SERVERS=2
-CFLAGS += -DCONFIG_LWIP_ARP_TABLE_SIZE=10 -DCONFIG_LWIP_ARP_MAXAGE=300
-CFLAGS += -DCONFIG_LWIP_DHCPS_MAX_STATION_NUM=8 -DCONFIG_LWIP_DHCPS_LEASE_UNIT=60
-CFLAGS += -DCONFIG_PARTITION_TABLE_OFFSET=0x8000
-CFLAGS += -DCONFIG_PARTITION_TABLE_CUSTOM_APP_BIN_OFFSET=0x10000
-CFLAGS += -DCONFIG_LOG_DEFAULT_LEVEL=3 -DCONFIG_LWIP_IPV6
-CFLAGS += -DCONFIG_LWIP_IPV6_NUM_ADDRESSES=3 -DCONFIG_LWIP_IP_REASS_MAX_PBUFS=10
-CFLAGS += -DCONFIG_IP_LOST_TIMER_INTERVAL=120
-
-LIBRARY_TARGETS += $(LIB_NAME_COMMON)
-LIBRARY_SUBMAKE := true
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)
 
+# ----------------------------------------------------------
+
+GENERIC_TARGETS := esp8266_sdk_build
+
+define GENERIC_esp8266_sdk_build
+	@echo "Making esp8266_sdk..."
+	$(CP) sdkconfig $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR)
+	IDF_PATH=$(ESP8266_SDK_DIR) PATH=$(PATH):$(TOOLCHAIN_BIN_DIR) \
+		$(MAKE) -C $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR) all
+endef
+
 include $(INCLUDE_DIR)/ext.inc
-include $(INCLUDE_DIR)/lib.inc
+include $(INCLUDE_DIR)/generic.inc
 include $(INCLUDE_DIR)/dir.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

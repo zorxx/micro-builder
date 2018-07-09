@@ -2,54 +2,51 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Build environment for ESP8266 SDK package
 
-ESP8266_SDK_DIR := $(PACKAGE_DIR)/esp8266/esp8266_sdk/esp8266_sdk_source
+ESP8266_SDK_DIR = $(PACKAGE_DIR)/esp8266/esp8266_sdk/esp8266_sdk_source
+ESP8266_SDK_PROJDIR = examples/protocols/http_request
 
-ESP8266_SDK_SRCDIRS := \
-	cjson/library \
-	esp8266/driver \
-	esp8266/source \
-	lwip/lwip/src/api lwip/lwip/src/apps/sntp lwip/lwip/src/netif \
-	lwip/lwip/src/core lwip/lwip/src/core/ipv4 lwip/lwip/src/core/ipv6 \
-        lwip/port/freertos lwip/port/netif lwip/apps/dhcpserver lwip/apps/sntp lwip/apps/multi-threads \
-	freertos/library \
-	tcpip_adapter \
-	espconn/library \
-	mqtt/source/library mqtt/source/platformi \
-	nopoll/library \
-	ssl/mbedtls/mbedtls/library ssl/mbedtls/port \
-	ssl/openssl/source/library ssl/openssl/source/platform \
-	spiffs\library
+# ---------------------------------------------------------------------------
+# Libraries
 
-ESP8266_SDK_INCDIRS := \
-	cjson/include \
-	esp8266/include esp8266/include/driver \
-	lwip/include lwip/include/lwip/ipv4 lwip/include/lwip/ipv6 lwip/include/lwip/posix \
-        lwip/include/lwip/apps lwip/port/esp8266/include \
-	lwip/include/lwip lwip/lwip/src/include/lwip lwip/include/lwip/port lwip/lwip/src/include \
-	lwip/lwip/src/include/posix \
-	freertos/include freertos/include/port freertos/include/freertos  freertos/include/port/freertos \
-        freertos/port/esp8266/include/freertos freertos/port/esp8266/include \
-        freertos/include/freertos/private \
-	tcpip_adapter/include spi_flash/include \
-	espconn/include log/include \
-	mqtt/include/mqtt nvs_flash/include \
-	nopoll/include nopoll/include/nopoll \
-	ssl/openssl/include ssl/openssl/include/internal ssl/openssl/include/openssl \
-	ssl/openssl/include/platform ssl/mbedtls/mbedtls/include ssl/mbedtls/port/include \
-	ssl/mbedtls/port/esp8266/include/mbedtls \
-	spiffs/include/spiffs bootloader_support/include util/include
+ESP8266_SDK_LIBS = lwip spiffs ssl mqtt util nvs_flash log newlib tcpip_adapter cjson freertos esp8266 spi_flash espos
+ESP8266_CORE_LIBS = hal core net80211 gcc pp espnow airkiss phy wps pwm ssc crypto smartconfig wpa
 
+LIBDIRS += $(foreach lib,$(ESP8266_SDK_LIBS),$(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR)/build/$(lib))
+LIBDIRS += $(ESP8266_SDK_DIR)/components/esp8266/lib
+LIBDIRS += $(ESP8266_SDK_DIR)/components/newlib/newlib/lib
+LIBDIRS += $(ESP8266_SDK_DIR)/components/ssl/wolfssl/lib
+
+LIBS += gcc stdc++ gcov
+LIBS += m c c_nano wolfssl
+LIBS += $(ESP8266_SDK_LIBS) $(ESP8266_CORE_LIBS) 
+
+# ---------------------------------------------------------------------------
+# Includes
+ 
+#ESP8266_SDK_INCDIRS = freertos/include freertos/port/esp8266/include/freertos
+#ESP8266_SDK_INCDIRS += freertos/include/freertos/private esp8266/include
+#ESP8266_SDK_INCDIRS += lwip/lwip/src/include lwip/port/esp8266/include tcpip_adapter/include
+#ESP8266_SDK_INCDIRS += lwip/include/lwip/apps log/include nvs_flash/include
+
+ESP8266_SDK_INCDIRS = \
+  util/include bootloader_support/include cjson/include cjson/cJSON esp8266/include \
+  esp8266/include espos/include freertos/include freertos/include/freertos \
+  freertos/include/freertos/private freertos/port/esp8266/include \
+  freertos/port/esp8266/include/freertos log/include lwip/include lwip/include/lwip/apps \
+  lwip/lwip/src/include lwip/port/esp8266/include lwip/include/lwip/apps/multi-threads \
+  mqtt/include mqtt/paho/MQTTClient-C/src mqtt/paho/MQTTClient-C/src/FreeRTOS \
+  mqtt/paho/MQTTPacket/src newlib/include newlib/newlib/include newlib/newlib/port/include \
+  nvs_flash/include spi_flash/include spiffs/include spiffs/include/spiffs ssl/include \
+  ssl/mbedtls/mbedtls/include ssl/mbedtls/port/esp8266/include \
+  ssl/mbedtls/port/openssl/include tcpip_adapter/include tcpip_adapter/include
 INCDIR += $(foreach inc,$(ESP8266_SDK_INCDIRS),$(ESP8266_SDK_DIR)/components/$(inc))
 INCDIR += $(ESP8266_SDK_DIR)/..
 
-APP_LD_DIR := $(ESP8266_SDK_DIR)/components/esp8266/ld
-
-LIBDIRS += $(ESP8266_SDK_DIR)/components/esp8266/lib
-LIBS += gcc stdc++ gcov
-LIBS += airkiss cirom crypto espnow hal core minic mirom net80211 \
-        phy pp pwm smartconfig ssc wpa wps
-
-LIBS += esp8266_sdk_common
+# ---------------------------------------------------------------------------
+# Linker 
+ 
+APP_LD_DIR = $(ESP8266_SDK_DIR)/..
+APP_LD_SCRIPT = esp8266.rom.ld esp8266.app.ld esp8266.common.ld
 
 CDEFS += MEMLEAK_DEBUG
 
