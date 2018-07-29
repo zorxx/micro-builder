@@ -1,11 +1,11 @@
---- NewLiquidCrystal_source/FastIO.h.old	2016-01-17 17:59:53.133709360 -0600
-+++ NewLiquidCrystal_source/FastIO.h	2016-01-17 18:00:16.264671469 -0600
+--- NewLiquidCrystal_source/FastIO.h.old	2018-07-29 10:59:19.006731632 -0500
++++ NewLiquidCrystal_source/FastIO.h	2018-07-29 10:59:29.113457981 -0500
 @@ -47,7 +47,7 @@
- typedef volatile uint8_t *fio_register;
- 
- 
--#elif defined(__PIC32MX__)
-+#elif defined(__PIC32MX__) || defined(__esp8266__)
- typedef uint32_t fio_bit;
- typedef volatile uint32_t *fio_register;
- 
+  */
+ #ifndef __AVR__
+ #define FIO_FALLBACK
+-#define ATOMIC_BLOCK
++#define ATOMIC_BLOCK(x)
+ #define ATOMIC_RESTORESTATE
+ #else
+ #include <util/atomic.h> // for critical section management
