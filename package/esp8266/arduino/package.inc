@@ -40,6 +40,6 @@ LIBS += m c gcc hal phy stdc++ net80211 lwip2 wpa main pp smartconfig wps crypto
 LIBS += arduino_ArduinoOTA arduino_Ethernet arduino_HTTPUpdateServer arduino_SSDP arduino_Wire
 LIBS += arduino_AVRISP arduino_GDBStub arduino_mDNS arduino_TFT arduino_core arduino_Hash arduino_OneWire
 LIBS += arduino_Ticker arduino_DNSServer arduino_HTTPClient arduino_SD arduino_wifi arduino_eeprom
-LIBS += arduino_HTTPUpdate arduino_SPI arduino_WiFiMesh
+LIBS += arduino_HTTPUpdate arduino_SPI arduino_WiFiMesh arduino_WebServer
 
 # vim: syntax=make tabstop=4 noexpandtab
