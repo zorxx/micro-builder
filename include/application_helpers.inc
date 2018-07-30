@@ -18,13 +18,13 @@
 .PRECIOUS: .$(MB_TARGET).app_preaction
 
 # ---------------------------------------------------------------------------------------
-# Pre-action: things to be done before downloading an external package
+# Appliction build
 
 .SECONDEXPANSION:
-$(BUILD_TEMP_DIR)/%.elf: .%.app_preaction .$(MB_TARGET).app_preaction $$($$*_obj)
+$(BUILD_TEMP_DIR)/%.elf: .%.app_preaction .$(MB_TARGET).app_preaction $$($$(firstword $$(subst ., ,$$*))_obj)
 	@$(ECHO) "LD $(notdir $@)"
 	@$(call $(MB_TARGET)_checkboard)
-	@$(LD) $(foreach libdir,$(LIBDIRS),-L$(libdir)) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$(LIBS),-l$(lib)) $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $(filter %.o,$^) -Wl,--end-group -o $@
+	@$(LD) $(foreach libdir,$(LIBDIRS),-L$(libdir)) $(foreach var,$(subst ., ,$(basename $(notdir $@))),$($(var)_LDFLAGS)) $(LDFLAGS) -Wl,-Map=$(addsuffix .map,$(basename $@)) -Wl,--start-group $(foreach lib,$(LIBS),-l$(lib)) $(foreach lib,$($(basename $(notdir $@))_libs),-l$(lib)) $(filter %.o,$^) -Wl,--end-group -o $@
 	@$(if $(MB_TARGET)_post_app,$(call $(MB_TARGET)_post_app,$@))
 
 %_app_info:

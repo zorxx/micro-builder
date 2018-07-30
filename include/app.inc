@@ -7,6 +7,10 @@ ifeq ($(MISSING_PREREQS),)
 # Dependency includes
 -include $(foreach dep,$(dependencies),$(TOPDIR)/$(dep)/package.inc)
 
+ifneq ($(APP_VARIANTS),)
+APP_TARGETS := $(foreach var,$(APP_VARIANTS),$(foreach app,$(APP_TARGETS),$(app).$(var)))
+endif
+
 all:: $(foreach app,$(APP_TARGETS),$(BUILD_TEMP_DIR)/$(app).elf)
 
 clean:: $(foreach app,$(APP_TARGETS),$(app)_app_clean)
