@@ -7,6 +7,8 @@
 
 APP_LD_DIR ?= $(ARCH_INCLUDE_DIR)
 
+ESP8266_APP_FLASH_ADDRESS ?= 0x100000
+
 LDFLAGS += -L $(APP_LD_DIR) $(foreach ld,$(APP_LD_SCRIPT),$(addprefix -T ,$(ld))) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static -Wl,-EL
 
 CFLAGS += -Os -g -Wpointer-arith -mlongcalls -fno-inline-functions -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections
@@ -45,7 +47,7 @@ endef
 # esp8266_app_flash(app_file,app_dir)
 define $(MB_TARGET)_app_flash
 	$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
-	$(ESPTOOL) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) -ca 0x100000 -cf $2/$(basename $1).bin
+	$(ESPTOOL) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) -ca $(ESP8266_APP_FLASH_ADDRESS) -cf $2/$(basename $1).bin
 endef
 
 # ----------------------------------------------------------------------------------------

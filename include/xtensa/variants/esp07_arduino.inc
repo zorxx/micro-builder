@@ -11,6 +11,8 @@ TARGET_FLASH_SPEED := 80
 TARGET_CPU_SPEED := 80000000
 TARGET_BOARD := nodemcu
 
+ESP8266_APP_FLASH_ADDRESS ?= 0x3000
+
 APP_VARIANTS := app1of2 app2of2
 app1of2_LDFLAGS := -T$(ARCH_INCLUDE_DIR)/esp8266/ld/eagle.flash.1of2.ld
 app2of2_LDFLAGS := -T$(ARCH_INCLUDE_DIR)/esp8266/ld/eagle.flash.2of2.ld
