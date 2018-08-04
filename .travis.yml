@@ -3,7 +3,7 @@ script: make
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libusb-dev libusb-1.0.0-dev
-  - sudo apt-get install -y gperf 
+  - sudo apt-get install -y gperf texinfo
 matrix:
     include:
         - env: MB_TARGET=xtensa_nodemcu_arduino;TEST_APP=app/arduino/blink
