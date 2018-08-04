@@ -20,7 +20,14 @@ READELF	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)readelf
 STRIP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)strip
 export PATH := $(PATH):$(TOOLCHAIN_BIN_DIR)
 else
-$(info Not including target build definitions)
+CC	:= gcc
+CXX	:= g++
+AR	:= ar
+LD	:= g++
+OBJCOPY	:= objcopy
+OBJDUMP	:= objdump
+READELF	:= readelf
+STRIP	:= strip
 endif
 
 # vim: syntax=make tabstop=4 noexpandtab
