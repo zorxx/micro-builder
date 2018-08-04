@@ -2,12 +2,13 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Build environment configuration for ESP8266 toolchain
 
-TOOLCHAIN_DIR := $(PACKAGE_DIR)/esp8266/toolchain/toolchain_source/xtensa-lx106-elf
+ESP8266_TOOLCHAIN_DIR := $(PACKAGE_DIR)/esp8266/toolchain
+TOOLCHAIN_DIR := $(ESP8266_TOOLCHAIN_DIR)/toolchain_source/xtensa-lx106-elf
 TOOLCHAIN_BIN_DIR := $(TOOLCHAIN_DIR)/bin
 TOOLCHAIN_PREFIX := xtensa-lx106-elf-
 
 # Don't use any of these settings while building the toolchain itself
-ifneq ($(PACKAGE_NAME),toolchain)
+ifneq ($(CURDIR),$(ESP8266_TOOLCHAIN_DIR))
 CC	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)gcc
 CXX	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
 AR	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)ar

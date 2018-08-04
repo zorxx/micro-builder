@@ -2,9 +2,9 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for ESP8266 toolchain package
 
-PACKAGE_NAME := toolchain
-
 include ../../../include/mb.inc
+
+PACKAGE_NAME := toolchain
 
 $(PACKAGE_NAME)_SOURCE := "https://github.com/pfalcon/esp-open-sdk.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
