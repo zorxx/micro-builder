@@ -5,5 +5,6 @@
 ONEWIRE_LIB_DIR := $(LIBRARIES_DIR)/arduino/OneWire/OneWire_source
 CDEFS += ONEWIRE_SEARCH=1
 INCDIR += $(ONEWIRE_LIB_DIR)
+LIBS += OneWire
 
 # vim: syntax=make tabstop=4 noexpandtab

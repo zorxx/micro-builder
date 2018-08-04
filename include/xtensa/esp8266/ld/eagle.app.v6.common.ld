@@ -231,6 +231,7 @@ SECTIONS
     *(.literal .text .literal.* .text.* .stub .gnu.warning)
     *(.irom0.literal .irom.literal .irom.text.literal .irom0.text .irom.text .irom.text.*)
 
+    . = ALIGN (4);
     _irom0_text_end = ABSOLUTE(.);
   } >irom0_0_seg :irom0_0_phdr
 
@@ -238,6 +239,7 @@ SECTIONS
   {
     _irom0_other_start = ABSOLUTE(.);
     *.bin.o(*)
+    . = ALIGN (4);
     _irom0_other_end = ABSOLUTE(.);
   } >irom0_0_seg :irom0_0_phdr
 
