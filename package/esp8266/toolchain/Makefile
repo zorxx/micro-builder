@@ -15,7 +15,7 @@ EXTERNAL_TARGETS += $(PACKAGE_NAME)
 
 define GENERIC_esp8266_toolchain_build
 	@echo "Making ESP8266 toolchain..."
-	@cd toolchain_source;$(MAKE) STANDALONE=n
+	@cd toolchain_source;CC=gcc $(MAKE) STANDALONE=n
 endef
 
 GENERIC_TARGETS := esp8266_toolchain_build

@@ -19,15 +19,6 @@ OBJDUMP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objdump
 READELF	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)readelf
 STRIP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)strip
 export PATH := $(PATH):$(TOOLCHAIN_BIN_DIR)
-else
-CC	:= gcc
-CXX	:= g++
-AR	:= ar
-LD	:= g++
-OBJCOPY	:= objcopy
-OBJDUMP	:= objdump
-READELF	:= readelf
-STRIP	:= strip
 endif
 
 # vim: syntax=make tabstop=4 noexpandtab
