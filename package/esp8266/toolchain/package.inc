@@ -8,6 +8,7 @@ TOOLCHAIN_BIN_DIR := $(TOOLCHAIN_DIR)/bin
 TOOLCHAIN_PREFIX := xtensa-lx106-elf-
 
 # Don't use any of these settings while building the toolchain itself
+$(info "Testing toolchain dir ${CURDIR}, ${ESP8266_TOOLCHAIN_DIR})
 ifneq ($(CURDIR),$(ESP8266_TOOLCHAIN_DIR))
 CC	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)gcc
 CXX	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
