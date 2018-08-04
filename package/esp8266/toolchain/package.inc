@@ -8,8 +8,8 @@ TOOLCHAIN_BIN_DIR := $(TOOLCHAIN_DIR)/bin
 TOOLCHAIN_PREFIX := xtensa-lx106-elf-
 
 # Don't use any of these settings while building the toolchain itself
-$(info "Testing toolchain dir ${CURDIR}, ${ESP8266_TOOLCHAIN_DIR})
 ifneq ($(CURDIR),$(ESP8266_TOOLCHAIN_DIR))
+$(info Including target build definitions)
 CC	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)gcc
 CXX	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++
 AR	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)ar
@@ -19,6 +19,8 @@ OBJDUMP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)objdump
 READELF	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)readelf
 STRIP	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)strip
 export PATH := $(PATH):$(TOOLCHAIN_BIN_DIR)
+else
+$(info Not including target build definitions)
 endif
 
 # vim: syntax=make tabstop=4 noexpandtab
