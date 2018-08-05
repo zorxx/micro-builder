@@ -1,0 +1,25 @@
+--- esp8266_sdk_source/components/esp8266/source/esp_cache.c	2018-08-05 11:06:10.794643380 -0500
++++ esp8266_sdk_source/components/esp8266/source/esp_cache.c.new	2018-08-05 11:06:27.766587479 -0500
+@@ -26,7 +26,7 @@
+ static uint8_t s_cache_map;
+ static uint8_t s_cache_size = SOC_CACHE_SIZE;
+ 
+-void IRAM_ATTR Cache_Read_Enable_New(void)
++void IRAM_ATTR Cache_Read_Enable_New_Original(void)
+ {
+     Cache_Read_Enable(s_cache_map, 0, s_cache_size);
+ }
+--- esp8266_sdk_source/make/project.mk	2018-08-05 12:09:38.866100747 -0500
++++ esp8266_sdk_source/make/project.mk.new	2018-08-05 12:10:22.517956971 -0500
+@@ -239,10 +239,10 @@
+ EXTRA_LDFLAGS ?=
+ LDFLAGS ?= -nostdlib \
+ 	-u call_user_start_cpu0	\
+-	$(EXTRA_LDFLAGS) \
+ 	-Wl,--gc-sections	\
+ 	-Wl,-static	\
+ 	-Wl,--start-group	\
++	$(EXTRA_LDFLAGS) \
+ 	$(COMPONENT_LDFLAGS) \
+ 	-lgcc \
+ 	-lstdc++ \
