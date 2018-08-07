@@ -1,5 +1,5 @@
 language: c
-script: make
+script: unset CC;make
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libusb-dev libusb-1.0.0-dev
