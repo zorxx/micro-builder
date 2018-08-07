@@ -5,9 +5,9 @@
 PREREQS := package/esp8266/toolchain package/esp8266/ztool package/esp8266/zboot \
            package/esp8266/esptool package/esp8266/esp8266_sdk
 
-TARGET_FLASH_SIZE := 32M
-TARGET_FLASH_MODE := dio
-TARGET_FLASH_SPEED := 40
+TARGET_FLASH_SIZE := 4M
+TARGET_FLASH_MODE := qio
+TARGET_FLASH_SPEED := 80
 
 TARGET_CPU_SPEED := 80000000
 TARGET_BOARD := generic
