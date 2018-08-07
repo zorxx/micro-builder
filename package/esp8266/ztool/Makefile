@@ -19,7 +19,7 @@ GENERIC_TARGETS := ztool_build
 
 define GENERIC_ztool_build
 	@echo "Making ztool..."
-	@$(MAKE) --no-print-directory -C ztool_source all
+	@unset CC;$(MAKE) --no-print-directory -C ztool_source all
 endef
 
 ztool:
