@@ -3,10 +3,9 @@
 @@ -15,7 +15,8 @@
  do_mpc_get() {
      CT_GetFile "mpc-${CT_MPC_VERSION}" .tar.gz      \
++        http://ftp.vim.org/ftp/gnu/mpc              \
          {http,ftp,https}://ftp.gnu.org/gnu/mpc      \
--        http://www.multiprecision.org/mpc/download
-+        http://www.multiprecision.org/mpc/download  \
-+        http://ftp.vim.org/ftp/gnu/mpc
+         http://www.multiprecision.org/mpc/download
  }
  
  # Extract MPC
@@ -15,10 +14,9 @@
 @@ -11,7 +11,8 @@
  do_ncurses_get() {
      CT_GetFile "ncurses-${CT_NCURSES_VERSION}" .tar.gz  \
++               http://ftp.vim.org/ftp/gnu/ncurses                 \
                 {http,ftp,https}://ftp.gnu.org/pub/gnu/ncurses     \
--               ftp://invisible-island.net/ncurses
-+               ftp://invisible-island.net/ncurses \
-+               http://ftp.vim.org/ftp/gnu/ncurses
+                ftp://invisible-island.net/ncurses
  }
  
  do_ncurses_extract() {
@@ -27,10 +25,9 @@
 @@ -16,7 +16,8 @@
          else
              CT_GetFile "binutils-${CT_BINUTILS_VERSION}"                                        \
++                       http://ftp.vim.org/ftp/gnu/binutils                                      \
                         {http,ftp}://{ftp.gnu.org/gnu,ftp.kernel.org/pub/linux/devel}/binutils   \
--                       ftp://{sourceware.org,gcc.gnu.org}/pub/binutils/{releases,snapshots}
-+                       ftp://{sourceware.org,gcc.gnu.org}/pub/binutils/{releases,snapshots}     \
-+                       http://ftp.vim.org/ftp/gnu/binutils
+                        ftp://{sourceware.org,gcc.gnu.org}/pub/binutils/{releases,snapshots}
          fi
      fi
  
