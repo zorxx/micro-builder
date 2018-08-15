@@ -1,0 +1,36 @@
+--- toolchain_source/crosstool-NG/scripts/build/companion_libs/140-mpc.sh	2018-08-14 20:24:46.060752433 -0500
++++ toolchain_source/crosstool-NG/scripts/build/companion_libs/140-mpc.sh.new	2018-08-14 20:22:54.376338090 -0500
+@@ -15,7 +15,8 @@
+ do_mpc_get() {
+     CT_GetFile "mpc-${CT_MPC_VERSION}" .tar.gz      \
+         {http,ftp,https}://ftp.gnu.org/gnu/mpc      \
+-        http://www.multiprecision.org/mpc/download
++        http://www.multiprecision.org/mpc/download  \
++        http://ftp.vim.org/ftp/gnu/mpc
+ }
+ 
+ # Extract MPC
+--- toolchain_source/crosstool-NG/scripts/build/companion_libs/220-ncurses.sh	2018-08-14 20:33:11.240926000 -0500
++++ toolchain_source/crosstool-NG/scripts/build/companion_libs/220-ncurses.sh.new	2018-08-14 20:40:42.723129476 -0500
+@@ -11,7 +11,8 @@
+ do_ncurses_get() {
+     CT_GetFile "ncurses-${CT_NCURSES_VERSION}" .tar.gz  \
+                {http,ftp,https}://ftp.gnu.org/pub/gnu/ncurses     \
+-               ftp://invisible-island.net/ncurses
++               ftp://invisible-island.net/ncurses \
++               http://ftp.vim.org/ftp/gnu/ncurses
+ }
+ 
+ do_ncurses_extract() {
+--- toolchain_source/crosstool-NG/scripts/build/binutils/binutils.sh	2018-08-14 20:42:41.696358944 -0500
++++ toolchain_source/crosstool-NG/scripts/build/binutils/binutils.sh.new	2018-08-14 20:50:15.694842225 -0500
+@@ -16,7 +16,8 @@
+         else
+             CT_GetFile "binutils-${CT_BINUTILS_VERSION}"                                        \
+                        {http,ftp}://{ftp.gnu.org/gnu,ftp.kernel.org/pub/linux/devel}/binutils   \
+-                       ftp://{sourceware.org,gcc.gnu.org}/pub/binutils/{releases,snapshots}
++                       ftp://{sourceware.org,gcc.gnu.org}/pub/binutils/{releases,snapshots}     \
++                       http://ftp.vim.org/ftp/gnu/binutils
+         fi
+     fi
+ 

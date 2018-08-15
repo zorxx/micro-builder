@@ -25,7 +25,7 @@ PKG_SRC_DIR := source
 # package_download_git(package_name)
 define package_download_git
 	$(ECHO) "Download (git): $1"
-	$(GIT) clone $(strip $($1_SOURCE)) $1_$(PKG_SRC_DIR)
+	$(GIT) clone --recursive $(strip $($1_SOURCE)) $1_$(PKG_SRC_DIR)
 	$(if $($1_VERSION),$(ECHO) "Version: $($1_VERSION)";$(CD) $1_$(PKG_SRC_DIR);$(GIT) checkout -q "$($1_VERSION)",$(ECHO) "Default version")
 endef
 
