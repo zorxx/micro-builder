@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Adafruit HUZZAH Variant
 
-PREREQS := package/esp8266/toolchain package/esp8266/ztool package/esp8266/zboot \
+PREREQS := package/esp8266/esp_toolchain package/esp8266/ztool package/esp8266/zboot \
            package/esp8266/esptool package/esp8266/esp8266_sdk
 
 TARGET_FLASH_SIZE := 4M
