@@ -3,7 +3,7 @@ script: make
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libusb-dev libusb-1.0.0-dev
-  - sudo apt-get install -y gperf texinfo help2man
+  - sudo apt-get install -y gperf texinfo help2man flex bison
 matrix:
     include:
         - env: MB_TARGET=xtensa_esp07_arduino;TEST_APP=app/arduino/blink
