@@ -8,4 +8,6 @@ MEMORY
   irom0_0_seg :  org = 0x40200080, len = 0xfff000
 }
 
+PROVIDE ( _SPIFFS_end = 0x402FB000 );
+
 INCLUDE "eagle.app.v6.common.ld"
