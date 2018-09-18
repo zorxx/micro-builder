@@ -35,6 +35,11 @@ define GENERIC_esp8266_sdk_build
 		$(MAKE) -C $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR) all
 endef
 
+sdk_clean:
+	IDF_PATH=$(ESP8266_SDK_DIR) \
+		$(MAKE) --no-print-directory -C $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR) clean
+	@$(foreach file,$(wildcard .esp8266_sdk_build.generic),$(RM) $(file);)
+
 include $(INCLUDE_DIR)/ext.inc
 include $(INCLUDE_DIR)/generic.inc
 include $(INCLUDE_DIR)/dir.inc

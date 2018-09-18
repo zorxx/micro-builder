@@ -12,13 +12,13 @@
  	$(COMPONENT_LDFLAGS) \
  	-lgcc \
  	-lstdc++ \
---- esp8266_sdk_source/components/spi_flash/src/spi_flash.c	2018-08-14 21:29:48.296617040 -0500
-+++ esp8266_sdk_source/components/spi_flash/src/spi_flash.c.new	2018-08-14 21:30:31.842735757 -0500
-@@ -234,7 +234,6 @@
+--- esp8266_sdk_source/components/spi_flash/src/spi_flash_raw.c	2018-09-17 20:37:57.664786861 -0500
++++ esp8266_sdk_source/components/spi_flash/src/spi_flash_raw.c.new	2018-09-17 20:37:50.797081790 -0500
+@@ -33,7 +33,6 @@
      SET_PERI_REG_MASK(PERIPHS_SPI_FLASH_CTRL,SPI_ENABLE_AHB);
      SET_PERI_REG_MASK(CACHE_FLASH_CTRL_REG,CACHE_READ_EN_BIT);
  }
 -void Cache_Read_Enable_New(void) __attribute__((alias("Cache_Read_Enable_2")));
  
- static uint32_t IRAM_ATTR spi_flash_get_id(void)
+ uint32_t spi_flash_get_id_raw(esp_spi_flash_chip_t *chip)
  {
