@@ -8,7 +8,7 @@ PROVIDE ( Wait_SPI_Idle = 0x4000448c );
 PROVIDE ( Enable_QMode = 0x400044c0 );
 PROVIDE ( Disable_QMode = 0x40004508 );
 
-PROVIDE ( Cache_Read_Enable = 0x40004678 );
+PROVIDE ( Cache_Read_Enable_original = 0x40004678 );
 PROVIDE ( Cache_Read_Disable = 0x400047f0 );
 
 PROVIDE ( lldesc_build_chain = 0x40004f40 );
@@ -58,3 +58,8 @@ PROVIDE ( gpio_pin_wakeup_disable = 0x40004ed4 );
 PROVIDE ( gpio_pin_wakeup_enable = 0x40004e90 );
 
 PROVIDE ( ets_io_vprintf = 0x40001f00 );
+PROVIDE ( ets_printf = 0x400024cc );
+
+PROVIDE ( ets_memcpy = 0x400018b4 );
+PROVIDE ( ets_memset = 0x400018a4 );
+PROVIDE ( SPIRead = 0x40004b1c );

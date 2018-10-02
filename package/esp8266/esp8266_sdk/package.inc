@@ -37,8 +37,9 @@ ESP8266_SDK_INCDIRS = \
   mqtt/include mqtt/paho/MQTTClient-C/src mqtt/paho/MQTTClient-C/src/FreeRTOS \
   mqtt/paho/MQTTPacket/src newlib/include newlib/newlib/include newlib/newlib/port/include \
   nvs_flash/include spi_flash/include spiffs/include spiffs/include/spiffs ssl/include \
-  ssl/mbedtls/mbedtls/include ssl/mbedtls/port/esp8266/include \
-  ssl/mbedtls/port/openssl/include tcpip_adapter/include tcpip_adapter/include
+  ssl/mbedtls/mbedtls/include ssl/mbedtls/port/esp8266/include heap/include \
+  ssl/mbedtls/port/openssl/include tcpip_adapter/include tcpip_adapter/include \
+  heap/port/esp8266/include
 INCDIR += $(foreach inc,$(ESP8266_SDK_INCDIRS),$(ESP8266_SDK_DIR)/components/$(inc))
 INCDIR += $(ESP8266_SDK_DIR)/..
 
@@ -46,7 +47,7 @@ INCDIR += $(ESP8266_SDK_DIR)/..
 # Linker 
  
 APP_LD_DIR = $(ESP8266_SDK_DIR)/..
-APP_LD_SCRIPT = esp8266.rom.ld esp8266.app.ld esp8266.common.ld
+APP_LD_SCRIPT = esp8266.rom.ld esp8266.app.ld $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR)/build/esp8266/esp8266_common_out.ld
 
 CDEFS += MEMLEAK_DEBUG
 

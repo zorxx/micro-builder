@@ -60,6 +60,7 @@ zboot:
 
 zboot_clean:
 	@$(MAKE) --no-print-directory -C zboot_source clean
+	@$(foreach file,$(wildcard .zboot_build.generic),$(RM) $(file);)
 
 flash: all
 	@$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
