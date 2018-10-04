@@ -23,7 +23,7 @@ EXTERNAL_TARGETS += $(PACKAGE_NAME)
 
 GENERIC_TARGETS := esp8266_sdk_build
 
-ESP8266_SDK_EXTRA_LDFLAGS := "-L$(LIB_BIN_DIR) -lzboot"
+ESP8266_SDK_EXTRA_LDFLAGS := "-L$(LIB_BIN_DIR) -lzboot -Tesp8266.rom_cache.ld -L$(ESP8266_SDK_DIR)/.."
 
 define GENERIC_esp8266_sdk_build
 	@echo "Making esp8266_sdk..."
