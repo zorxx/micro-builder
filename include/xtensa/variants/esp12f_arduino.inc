@@ -2,8 +2,8 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief ESP12F Arduino Variant
 
-PREREQS := package/esp8266/arduino_toolchain package/esp8266/esptool package/esp8266/arduino \
-           package/esp8266/zboot
+PREREQS := package/esp8266/arduino_toolchain package/esp8266/ztool package/esp8266/zboot \
+           package/esp8266/esptool package/esp8266/arduino
 
 TARGET_FLASH_SIZE := 32M
 TARGET_FLASH_MODE := dio
