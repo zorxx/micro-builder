@@ -5,7 +5,7 @@
 PREREQS := package/esp8266/arduino_toolchain package/esp8266/ztool package/esp8266/zboot \
            package/esp8266/esptool package/esp8266/arduino
 
-TARGET_FLASH_SIZE := 32M
+TARGET_FLASH_SIZE := 4M
 TARGET_FLASH_MODE := qio
 TARGET_FLASH_SPEED := 40
 
