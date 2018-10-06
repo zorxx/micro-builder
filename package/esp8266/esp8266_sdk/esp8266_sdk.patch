@@ -22,3 +22,14 @@
  
  uint32_t spi_flash_get_id_raw(esp_spi_flash_chip_t *chip)
  {
+--- esp8266_sdk_source/components/esp8266/source/startup.c	2018-10-05 20:09:03.077295926 -0500
++++ esp8266_sdk_source/components/esp8266/source/startup.c.new	2018-10-05 20:08:53.713816636 -0500
+@@ -41,7 +41,7 @@
+ extern int wifi_nvs_init(void);
+ extern esp_err_t esp_pthread_init(void);
+ 
+-static void user_init_entry(void *param)
++void user_init_entry(void *param)
+ {
+     void (**func)(void);
+ 

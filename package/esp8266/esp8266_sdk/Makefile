@@ -40,8 +40,18 @@ sdk_clean:
 		$(MAKE) --no-print-directory -C $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR) clean
 	@$(foreach file,$(wildcard .esp8266_sdk_build.generic),$(RM) $(file);)
 
+# ----------------------------------------------------------
+
+LIB_NAME_ESP8266_SDK := libesp8266_sdk
+$(LIB_NAME_ESP8266_SDK)_obj := $(foreach file, \
+                startup.c, \
+                $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
+
+LIBRARY_TARGETS := $(LIB_NAME_ESP8266_SDK)
+
 include $(INCLUDE_DIR)/ext.inc
 include $(INCLUDE_DIR)/generic.inc
+include $(INCLUDE_DIR)/lib.inc
 include $(INCLUDE_DIR)/dir.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

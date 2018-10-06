@@ -18,6 +18,7 @@ LIBDIRS += $(ESP8266_SDK_DIR)/components/ssl/wolfssl/lib
 
 LIBS += gcc stdc++ gcov
 LIBS += m c c_nano wolfssl
+LIBS += esp8266_sdk
 LIBS += $(ESP8266_SDK_LIBS) $(ESP8266_CORE_LIBS) 
 
 # ---------------------------------------------------------------------------
@@ -42,6 +43,7 @@ ESP8266_SDK_INCDIRS = \
   heap/port/esp8266/include
 INCDIR += $(foreach inc,$(ESP8266_SDK_INCDIRS),$(ESP8266_SDK_DIR)/components/$(inc))
 INCDIR += $(ESP8266_SDK_DIR)/..
+INCDIR += $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR)/build/include
 
 # ---------------------------------------------------------------------------
 # Linker 
@@ -50,5 +52,6 @@ APP_LD_DIR = $(ESP8266_SDK_DIR)/..
 APP_LD_SCRIPT = esp8266.rom.ld esp8266.app.ld $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR)/build/esp8266/esp8266_common_out.ld
 
 CDEFS += MEMLEAK_DEBUG
+LDFLAGS += -ecall_user_start_zboot
 
 # vim: syntax=make tabstop=4 noexpandtab
