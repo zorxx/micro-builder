@@ -18,13 +18,12 @@
 #include <string.h>
 
 #include "sdkconfig.h"
+#include "zboot-api.h"
 #include "nvs_flash.h"
 #include "esp_image_format.h"
 #include "esp_wifi_osi.h"
 #include "esp_heap_caps_init.h"
 #include "esp_partition.h"
-
-#define __ESP_FILE__ "startup.c"
 
 extern void chip_boot(size_t start_addr);
 extern void user_init_entry(void *param);
@@ -90,8 +89,16 @@ void call_user_start_zboot(void)
         "movi       a1, _chip_interrupt_tmp\n"
         : : :"memory");
 
+    zboot_api_init();
     heap_caps_init();
     wifi_os_init();
     assert(wifi_task_create(user_init_entry, "uiT", CONFIG_MAIN_TASK_STACK_SIZE, NULL, wifi_task_get_max_priority()) != NULL);
     wifi_os_start();
+}
+
+extern void lwip_fcntl(int s, int cmd, int val);
+
+void fcntl(int s, int cmd, int val)
+{
+   lwip_fcntl(s, cmd, val);
 }
