@@ -8,14 +8,13 @@ include ../../../include/mb.inc
 
 APP_NAME = hello_world
 $(APP_NAME)_obj := $(foreach file, \
-	           $(wildcard *.c) \
-	           $(wildcard *.cpp) \
-	           $(wildcard *.S), \
+	           $(wildcard *.c), \
 	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 APP_TARGETS := $(APP_NAME)
 INCDIR += .
 
+include $(INCLUDE_DIR)/dir.inc
 include $(INCLUDE_DIR)/app.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

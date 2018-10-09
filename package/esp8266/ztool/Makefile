@@ -25,7 +25,8 @@ endef
 ztool:
 	$(call GENERIC_ztool_build)
 ztool_clean:
-	$(MAKE) -C ztool_source clean
+	@$(MAKE) -C ztool_source clean
+	@-$(RM) .$(PACKAGE_NAME)_build.generic
 .PHONY: ztool ztool_clean
 
 include $(INCLUDE_DIR)/ext.inc
