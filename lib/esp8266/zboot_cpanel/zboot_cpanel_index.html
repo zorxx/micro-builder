@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>zboot</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/helpers.js"></script> 
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+.w3-sidebar {
+  z-index: 3;
+  width: 250px;
+  top: 43px;
+  bottom: 35px;
+  height: inherit;
+}
+.bottombar {
+  text-decoration:none;
+  color:#787878;
+}
+.bottombar:hover {
+  color:#ffffff;
+}
+</style>
+</head><body>
+
+<div class="w3-top">
+  <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <a href="https://github.com/zorxx/zboot" class="w3-bar-item w3-button w3-theme-l1">zboot</a>
+    <button class="w3-bar-item w3-button w3-hover-white" onclick="displayBody('bodyImageList')">Images</button>
+    <button class="w3-bar-item w3-button w3-hover-white" onclick="displayBody('bodyLoad')">Load</button>
+  </div>
+</div>
+
+<div class="w3-bottom">
+  <div class="w3-bar w3-theme w3-bottom">
+     <a href="http://www.zorxx.com" target="_blank" class="w3-bar-item w3-small w3-right bottombar">Zorxx Software</a>
+  </div>
+</div>  
+
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar" style="display: none;">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4 class="w3-bar-item"><b>Status</b></h4>
+  <table style="font-size:16px;" id="status_table" width="100%" class="w3-padding"></table>
+  <div align="center"><button class="w3-button w3-black" onclick="op((function() {window.location.reload()})(),'reboot=1');">Reboot</button></div>
+</nav>
+
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor: pointer; display: none;" title="close side menu" id="myOverlay"></div>
+  <div id="bodyImageList" class="w3-main" style="margin-left:250px">
+    <div id="image_list" class="w3-padding-64"></div>
+  </div>
+
+  <div id="bodyLoad" class="w3-main" style="margin-left:250px;display:none;">
+    <div id="image_list" class="w3-padding-64 w3-padding-large">
+      <label for="automatic">Automatically Select Location</label>
+      <input type="checkbox" id="auto"  onChange='handleAutoLocation(this.checked);' checked />
+      <br/>
+      <form method="post" action="/new_zboot_image" enctype="multipart/form-data"> 
+        <input type="file" id="new_image" name="new_image" accept=".bin" />
+        <br/>
+        <input type="submit" value="Upload" /> 
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var mySidebar = document.getElementById("mySidebar");
+var overlayBg = document.getElementById("myOverlay");
+
+function displayBody(bodyId) {
+   var bodies = document.getElementsByClassName("w3-main");
+   var i;
+   for(i = 0; i < bodies.length; i++) {
+      bodies[i].style.display = (bodies[i].id == bodyId) ? "block" : "none"; 
+   }
+}
+
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidebar.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+}
+
+$(document).ready(function() {
+   var current_index = parseInt(getValue("current_boot_index=0", -1));
+   var coldboot_index = parseInt(getValue("cold_boot_index=0", -1));
+   var temp_index = parseInt(getValue("get_temp_boot_index=0", -1));
+   var failsafe_index = parseInt(getValue("get_temp_boot_index=0", -1));
+   var coldboot_mode = parseInt(getValue("get_mode=0", -1));
+   var count = parseInt(getValue("image_count=0", 0));
+   updateImageList(count, current_index, coldboot_index, temp_index);
+   if(current_index > -1)
+      addStatusItem("Running Index", current_index)
+   if(coldboot_index > -1)
+      addStatusItem("ColdBoot Index", coldboot_index)
+   if(failsafe_index > -1)
+      addStatusItem("Failsafe Index", failsafe_index)
+   var modeName = "Normal";
+   if(coldboot_mode & (1 << 1))
+      modeName = "GPIO Selected";
+   else if(coldboot_mode & (1 << 2))
+      modeName = "Temporary";
+   else if(coldboot_mode & (1 << 3))
+      modeName = "GPIO Skip";
+   else if(coldboot_mode & (1 << 4))
+      modeName = "Failsafe";
+   addStatusItem("Mode", modeName)
+}); 
+
+</script>
+
+
+</body></html>
