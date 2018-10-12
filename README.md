@@ -51,9 +51,22 @@ The build environment relies on the existence of the following packages. All oth
 - subversion
 - unzip
 - python 2.7
- 
+- libusb-dev
+- libusb-1.0.0-dev
+- gperf
+- texinfo
+- help2man
+- flex
+- bison
+
 Not all build targets require all prerequisites, so it may be possible to perform successful
 builds without the availability of all the items above.
+
+On Debian-based systems, the following command line can be used to install all prerequisites:
+
+```bash
+sudo apt install git mercurial subversion unzip python libusb-dev libusb-1.0.0-dev gperf texinfo help2man flex bison
+```
 
 ## micro-builder Design
 
