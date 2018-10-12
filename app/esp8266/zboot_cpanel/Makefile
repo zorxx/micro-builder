@@ -16,6 +16,7 @@ $(APP_NAME)_obj := $(BUILD_TEMP_DIR)/arduino.o
 else
 
 $(info Using ESP8266 SDK implementation)
+include $(LIBRARIES_DIR)/common/mongoose/package.inc
 $(APP_NAME)_obj := $(BUILD_TEMP_DIR)/esp8266_sdk.o 
 LIBS += mongoose
 
