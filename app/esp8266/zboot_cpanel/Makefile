@@ -11,11 +11,14 @@ APP_NAME = cpanel
 ifneq ($(ESP8266_ARDUINO_DIR),)
 
 $(info Using ESP8266 Arduino implementation)
+$(call build_dependency,lib/common/zboot_cpanel)
 $(APP_NAME)_obj := $(BUILD_TEMP_DIR)/arduino.o 
 
 else
 
 $(info Using ESP8266 SDK implementation)
+
+dependencies += lib/common/mongoose
 include $(LIBRARIES_DIR)/common/mongoose/package.inc
 $(APP_NAME)_obj := $(BUILD_TEMP_DIR)/esp8266_sdk.o 
 LIBS += mongoose

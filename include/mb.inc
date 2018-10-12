@@ -172,6 +172,10 @@ all:: $(filter-out $(abspath $(CURDIR)/.done_$(MB_TARGET)),$(foreach dep,$(PRERE
 
 endif
 
+define build_dependency
+	$(shell $(MAKE) --no-print-directory -C $(abspath $(TOPDIR)/$1))
+endef
+
 # ----------------------------------------------------------------------------------------
 # Miscellanous Productions and Functions
 

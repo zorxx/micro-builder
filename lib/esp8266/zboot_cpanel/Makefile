@@ -7,8 +7,9 @@ include ../../../include/mb.inc
 ifeq ($(ESP8266_ARDUINO_DIR),)
 
 $(info zboot_cpanel: mongoose web server implementation)
-CPANEL_PLATFORM := mongoose
+$(call build_dependency,lib/common/mongoose)
 include $(LIBRARIES_DIR)/common/mongoose/package.inc
+CPANEL_PLATFORM := mongoose
 
 else
 
