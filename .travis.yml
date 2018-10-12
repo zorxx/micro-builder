@@ -8,11 +8,11 @@ matrix:
     include:
         - env: MB_TARGET=xtensa_esp07_arduino;TEST_APP=app/esp8266/zboot_cpanel
         - env: MB_TARGET=xtensa_nodemcu_arduino;TEST_APP=app/esp8266/zboot_cpanel
-        - env: MB_TARGET=xtensa_nodemcu;TEST_APP=app/esp8266/hello_world
-        - env: MB_TARGET=xtensa_esp12f_arduino;TEST_APP=app/arduino/blink
-        - env: MB_TARGET=xtensa_esp12f;TEST_APP=app/esp8266/hello_world
-        - env: MB_TARGET=xtensa_huzzah;TEST_APP=app/esp8266/hello_world
-        - env: MB_TARGET=xtensa_huzzah_arduino;TEST_APP=app/arduino/blink
+        - env: MB_TARGET=xtensa_nodemcu;TEST_APP=app/esp8266/zboot_cpanel
+        - env: MB_TARGET=xtensa_esp12f_arduino;TEST_APP=app/esp8266/zboot_cpanel
+        - env: MB_TARGET=xtensa_esp12f;TEST_APP=app/esp8266/zboot_cpanel
+        - env: MB_TARGET=xtensa_huzzah;TEST_APP=app/esp8266/zboot_cpanel
+        - env: MB_TARGET=xtensa_huzzah_arduino;TEST_APP=app/esp8266/zboot_cpanel
         - env: MB_TARGET=avr_nano_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=arm_bluepill_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=arm_bluepill_libopencm3

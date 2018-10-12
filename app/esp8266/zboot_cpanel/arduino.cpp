@@ -1,16 +1,10 @@
-/* Copyright 2017 Zorxx Software. All rights reserved. */
+/* Copyright 2018 Zorxx Software. All rights reserved. */
 #include <ESP8266WiFi.h>
 #include "zboot_cpanel.h"
+#include "wifi_settings.h"
 
 #define SERIAL_BAUD_RATE (115200)
 #define SerialDebug(x) Serial.println(x)
-
-#if !defined(AP_SSID)
-#define AP_SSID "ssid"
-#endif
-#if !defined(AP_PASSWORD)
-#define AP_PASSWORD "password"
-#endif
 
 static bool ip_displayed = false;
 

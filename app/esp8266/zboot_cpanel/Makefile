@@ -2,15 +2,24 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief zboot control panel demo application for ESP8266
 
-required_prereqs = package/esp8266/arduino
 dependencies = package/esp8266/zboot lib/esp8266/zboot_cpanel
 
 include ../../../include/mb.inc
 
 APP_NAME = cpanel
-$(APP_NAME)_obj := $(foreach file, \
-	           $(wildcard *.cpp), \
-	           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
+
+ifneq ($(ESP8266_ARDUINO_DIR),)
+
+$(info Using ESP8266 Arduino implementation)
+$(APP_NAME)_obj := $(BUILD_TEMP_DIR)/arduino.o 
+
+else
+
+$(info Using ESP8266 SDK implementation)
+$(APP_NAME)_obj := $(BUILD_TEMP_DIR)/esp8266_sdk.o 
+LIBS += mongoose
+
+endif
 
 APP_TARGETS := $(APP_NAME)
 

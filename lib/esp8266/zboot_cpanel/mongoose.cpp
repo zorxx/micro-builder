@@ -65,7 +65,7 @@ static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data)
 {
    struct mbuf *io = &nc->recv_mbuf;
 
-   //DebugMessage("%s: event %d", __func__, ev);
+   DebugMessage("%s: event %d", __func__, ev);
    switch(ev)
    {  
       case MG_EV_HTTP_REQUEST:
@@ -91,7 +91,7 @@ static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data)
       {
          struct mg_http_multipart_part *mp = (struct mg_http_multipart_part *) ev_data;
          DebugMessage("%s: Begin upload %s", __func__, mp->file_name);
-         //HandleImageUploadStart(mp->file_name);
+         HandleImageUploadStart(mp->file_name);
          break;
       }
 
@@ -99,7 +99,7 @@ static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data)
       {
          struct mg_http_multipart_part *mp = (struct mg_http_multipart_part *) ev_data;
          DebugMessage("%s: Upload data %s, length %u", __func__, mp->file_name, mp->data.len);
-         //HandleImageUploadWrite(mp->file_name, (const uint8_t *) mp->data.p, mp->data.len);
+         HandleImageUploadWrite(mp->file_name, (const uint8_t *) mp->data.p, mp->data.len);
          break;
       }
 
@@ -107,7 +107,7 @@ static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data)
       {
          struct mg_http_multipart_part *mp = (struct mg_http_multipart_part *) ev_data;
          DebugMessage("%s: End upload %s", __func__, mp->file_name);
-         //HandleImageUploadEnd(mp->file_name);
+         HandleImageUploadEnd(mp->file_name);
          mg_send_head(nc, 303, 0, "Location: /");
          break;
       }
