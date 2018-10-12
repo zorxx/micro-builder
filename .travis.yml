@@ -6,8 +6,8 @@ before_install:
   - sudo apt-get install -y gperf texinfo help2man flex bison
 matrix:
     include:
-        - env: MB_TARGET=xtensa_esp07_arduino;TEST_APP=app/arduino/zboot_cpanel
-        - env: MB_TARGET=xtensa_nodemcu_arduino;TEST_APP=app/arduino/zboot_cpanel
+        - env: MB_TARGET=xtensa_esp07_arduino;TEST_APP=app/esp8266/zboot_cpanel
+        - env: MB_TARGET=xtensa_nodemcu_arduino;TEST_APP=app/esp8266/zboot_cpanel
         - env: MB_TARGET=xtensa_nodemcu;TEST_APP=app/esp8266/hello_world
         - env: MB_TARGET=xtensa_esp12f_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=xtensa_esp12f;TEST_APP=app/esp8266/hello_world
