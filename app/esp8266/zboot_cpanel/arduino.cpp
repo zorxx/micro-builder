@@ -3,6 +3,7 @@
 #include "zboot_cpanel.h"
 #include "wifi_settings.h"
 
+#define STR(x) #x
 #define SERIAL_BAUD_RATE (115200)
 #define SerialDebug(x) Serial.println(x)
 
@@ -30,7 +31,7 @@ void setup()
    SerialDebug(message);
   
    WiFi.mode(WIFI_STA);
-   WiFi.begin(AP_SSID, AP_PASSWORD);
+   WiFi.begin(STR(AP_SSID), STR(AP_PASSWORD));
    if(WiFi.status() != WL_CONNECTED)
    {
       delay(500);

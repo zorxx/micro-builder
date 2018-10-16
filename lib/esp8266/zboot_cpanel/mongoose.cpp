@@ -1,5 +1,5 @@
 /*! \copyright 2018 Zorxx Software. All rights reserved.
- *  \file arduino.cpp
+ *  \file mongoose.cpp
  *  \brief zboot control panel, mongoose web server implementation 
  */
 #include "mongoose.h"

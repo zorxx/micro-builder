@@ -9,6 +9,9 @@
 #include "wifi_settings.h"
 #include "zboot_cpanel.h"
 
+#define QUOTE(name) #name
+#define STR(macro) QUOTE(macro)
+
 /* FreeRTOS event group to signal when we are connected & ready to make a request */
 static EventGroupHandle_t wifi_event_group;
 
@@ -49,8 +52,8 @@ static void initialise_wifi(void)
     ESP_ERROR_CHECK( esp_wifi_init(&cfg) );
     ESP_ERROR_CHECK( esp_wifi_set_storage(WIFI_STORAGE_RAM) );
     wifi_config_t wifi_config;
-    strcpy((char *) wifi_config.sta.ssid, AP_SSID);
-    strcpy((char *) wifi_config.sta.password, AP_PASSWORD);
+    strcpy((char *) wifi_config.sta.ssid, STR(AP_SSID));
+    strcpy((char *) wifi_config.sta.password, STR(AP_PASSWORD));
     ESP_LOGI(TAG, "Setting WiFi configuration SSID %s...", wifi_config.sta.ssid);
     ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_STA) );
     ESP_ERROR_CHECK( esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );

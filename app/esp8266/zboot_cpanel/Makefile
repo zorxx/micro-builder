@@ -18,14 +18,21 @@ else
 
 $(info Using ESP8266 SDK implementation)
 
-dependencies += lib/common/mongoose
-include $(LIBRARIES_DIR)/common/mongoose/package.inc
+dependencies += lib/common/microhttpd
+include $(LIBRARIES_DIR)/common/microhttpd/package.inc
 $(APP_NAME)_obj := $(BUILD_TEMP_DIR)/esp8266_sdk.o 
-LIBS += mongoose
+LIBS += microhttpd
 
 endif
 
 APP_TARGETS := $(APP_NAME)
+
+ifneq ($(AP_SSID),)
+CDEFS += AP_SSID=$(AP_SSID)
+endif
+ifneq ($(AP_PASSWORD),)
+CDEFS += AP_PASSWORD=$(AP_PASSWORD)
+endif
 
 include $(INCLUDE_DIR)/dir.inc
 include $(INCLUDE_DIR)/app.inc
