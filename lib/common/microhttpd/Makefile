@@ -17,7 +17,7 @@ $(LIB_NAME)_obj := $(foreach file, \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 CDEFS += MICROHTTPD_NO_NETINET_IN_H
-CDEFS += DEBUG 
+#CDEFS += DEBUG
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)
 LIBRARY_TARGETS += $(LIB_NAME)
