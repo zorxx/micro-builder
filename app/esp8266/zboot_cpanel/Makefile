@@ -29,9 +29,13 @@ APP_TARGETS := $(APP_NAME)
 
 ifneq ($(AP_SSID),)
 CDEFS += AP_SSID=$(AP_SSID)
+else
+CDEFS += AP_SSID=ssid
 endif
 ifneq ($(AP_PASSWORD),)
 CDEFS += AP_PASSWORD=$(AP_PASSWORD)
+else
+CDEFS += AP_PASSWORD=password
 endif
 
 include $(INCLUDE_DIR)/dir.inc
