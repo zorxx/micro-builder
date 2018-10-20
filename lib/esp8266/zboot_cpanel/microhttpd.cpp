@@ -18,23 +18,23 @@ static tMicroHttpdContext mhttpd_ctx = NULL;
  * microhttpd callbacks
  */
 
-void handle_post(tMicroHttpdClient client, const char *uri, const char *param_list[],
+void handle_post(tMicroHttpdClient client, const char *uri, const char *filename, const char *param_list[],
    const uint32_t param_count, const char *source_address, void *cookie, bool start, bool finish,
    const char *data, const uint32_t data_length, const uint32_t total_length)
 {
    if(start)
    {  
-      DebugMessage("%s: Begin upload %s", __func__, uri);
-      HandleImageUploadStart(uri);
+      DebugMessage("%s: Begin upload %s", __func__, (filename) ? filename : "<unknown>");
+      HandleImageUploadStart(filename);
    }
    
    if(data_length > 0)
-      HandleImageUploadWrite(uri, (const uint8_t *) data, data_length);
+      HandleImageUploadWrite(filename, (const uint8_t *) data, data_length);
    
    if(finish)
    {  
-      DebugMessage("%s: finish upload %s", __func__, uri);
-      HandleImageUploadEnd(uri);
+      DebugMessage("%s: finish upload %s", __func__, (filename) ? filename : "<unknown>");
+      HandleImageUploadEnd(filename);
       microhttpd_send_response(client, 303, "none", 0, "Location: /\r\n", NULL);
    }
 }

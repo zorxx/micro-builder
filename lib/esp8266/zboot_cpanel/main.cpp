@@ -344,7 +344,7 @@ void HandleImageUploadStart(const char *filename)
    else
    {
       DebugMessage("Starting upload of new zboot image (%s), index %u, %08x\r\n",
-         filename, index, address);
+         (filename) ? filename : "<unknown">, index, address);
       zboot_write_context = zboot_write_init(address);
    }
 }
