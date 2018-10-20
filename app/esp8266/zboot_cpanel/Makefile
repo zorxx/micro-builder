@@ -11,7 +11,7 @@ APP_NAME = cpanel
 ifneq ($(ESP8266_ARDUINO_DIR),)
 
 $(info Using ESP8266 Arduino implementation)
-$(call build_dependency,lib/common/zboot_cpanel)
+$(call build_dependency,lib/esp8266/zboot_cpanel)
 $(APP_NAME)_obj := $(BUILD_TEMP_DIR)/arduino.o 
 
 else

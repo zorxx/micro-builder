@@ -3,7 +3,9 @@
 #include "zboot_cpanel.h"
 #include "wifi_settings.h"
 
-#define STR(x) #x
+#define QUOTE(name) #name
+#define STR(macro) QUOTE(macro)
+
 #define SERIAL_BAUD_RATE (115200)
 #define SerialDebug(x) Serial.println(x)
 
@@ -51,7 +53,7 @@ void loop()
       {
          ip_displayed = true;
          String message = "\r\nConnected to ";
-         message += AP_SSID;
+         message += STR(AP_SSID);
          message += "\r\nIP address: ";
          message += ((uint8_t *) &ip)[0];
          message += ".";
