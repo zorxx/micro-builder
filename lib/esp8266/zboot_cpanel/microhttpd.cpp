@@ -74,7 +74,7 @@ static void handle_not_found(tMicroHttpdClient client, const char *uri,
 
 static tMicroHttpdGetHandlerEntry get_handler_list[] =
 {
-   { "/op.html", handle_cgi, NULL }
+   { "/ajax", handle_cgi, NULL }
 };
 
 /* ----------------------------------------------------------------------------------------
@@ -105,26 +105,4 @@ void zboot_cpanel_init(void)
 void zboot_cpanel_loop(void)
 {
    microhttpd_process(mhttpd_ctx);
-}
-
-/* ----------------------------------------------------------------------------------------
- * ESP Functons 
- */ 
-
-#include "esp_log.h"
-
-#if defined(DEBUG)
-void DebugMessage(const char *format, ...)
-{
-   char message[150];
-   va_list arglist;
-   va_start(arglist, format);
-   vsnprintf(message, sizeof(message), format, arglist);
-   va_end(arglist);
-   ESP_LOGI("zboot_cpanel", message);
-}
-#endif
-
-void platform_system_restart(void)
-{
 }

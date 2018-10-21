@@ -4,34 +4,31 @@
 
 include ../../../include/mb.inc
 
+CPANEL_SRC := main.cpp
+
 ifeq ($(ESP8266_ARDUINO_DIR),)
 
 $(info zboot_cpanel: microhttpd web server implementation)
 
 $(call build_dependency,lib/common/microhttpd)
 include $(LIBRARIES_DIR)/common/microhttpd/package.inc
-CPANEL_PLATFORM := microhttpd
+CPANEL_SRC += microhttpd.cpp esp8266_sdk.cpp
 
 else ifeq ($(ESP8266_ARDUINO_DIR),1)
 
 $(info zboot_cpanel: mongoose web server implementation)
 $(call build_dependency,lib/common/mongoose)
 include $(LIBRARIES_DIR)/common/mongoose/package.inc
-CPANEL_PLATFORM := mongoose
+CPANEL_SRC += mmongoose.cpp esp8266_sdk.cpp
 
 else
 
 $(info zboot_cpanel: Arduino web server implementation)
-CPANEL_PLATFORM := arduino
+CPANEL_SRC += arduino.cpp
 
 endif
 
 LIB_NAME = libzboot_cpanel
-
-CPANEL_SRC_microhttpd = microhttpd.ecpp
-CPANEL_SRC_mongoose = mongoose.ecpp
-CPANEL_SRC_arduino = arduino.cpp
-CPANEL_SRC := main.cpp $(CPANEL_SRC_$(CPANEL_PLATFORM))
 
 $(LIB_NAME)_obj := $(foreach file, \
 	           $(CPANEL_SRC), \

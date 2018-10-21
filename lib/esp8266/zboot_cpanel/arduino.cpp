@@ -86,7 +86,7 @@ static void arduino_HandleUploadZbootImage()
 
 void zboot_cpanel_init(void)
 {
-    server.on("/op.html", arduino_HandleCGI);
+    server.on("/ajax", arduino_HandleCGI);
     server.on("/new_zboot_image", HTTP_POST, arudino_HandleZbootImage, arduino_HandleUploadZbootImage);
     server.onNotFound(arduino_HandleURI); // All linked files are handled via the NotFound handler
     server.begin();

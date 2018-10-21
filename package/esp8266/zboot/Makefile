@@ -74,6 +74,7 @@ $(LIB_NAME_API)_obj := $(foreach file, \
                           $(wildcard zboot_source/appcode/*.c), \
                           $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 CDEFS += BOOT_BIG_FLASH=1 BOOT_RTC_ENABLED=1
+#CDEFS += ZBOOT_API_DEBUG
 LIBRARY_TARGETS += $(LIB_NAME_API)
 LIBRARY_SUBMAKE := true
 

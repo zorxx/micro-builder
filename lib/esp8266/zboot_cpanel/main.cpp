@@ -162,6 +162,9 @@ typedef enum
    GET_VALUE_FAILSAFE_BOOT_INDEX,
    GET_VALUE_TEMP_BOOT_INDEX,
    GET_VALUE_OPTION,
+   GET_VALUE_FLASH_SIZE,
+   GET_VALUE_FLASH_SPEED,
+   GET_VALUE_FLASH_MODE,
    SET_VALUE_OPTION_ENABLE,
    SET_VALUE_OPTION_DISABLE,
    SET_VALUE_MODE,
@@ -203,6 +206,15 @@ static void GetValueHandler(void *param, const uint32_t arg_count, const char *a
          break;
       case GET_VALUE_OPTION:
          result = zboot_get_options(&value);
+         break;
+      case GET_VALUE_FLASH_SIZE:
+         result = zboot_get_flash_size(&value);
+         break;
+      case GET_VALUE_FLASH_SPEED:
+         result = zboot_get_flash_speed(&value);
+         break;
+      case GET_VALUE_FLASH_MODE:
+         result = zboot_get_flash_mode(&value);
          break;
       default:
          break;
@@ -284,6 +296,9 @@ static operation_handler_t operation_handler_list[] =
     { "current_boot_mode", GetValueHandler, (void*)GET_VALUE_CURRENT_BOOT_MODE },
     { "get_mode", GetValueHandler, (void*)GET_VALUE_BOOT_MODE },
     { "get_option", GetValueHandler, (void*)GET_VALUE_OPTION },
+    { "get_flash_size", GetValueHandler, (void*)GET_VALUE_FLASH_SIZE },
+    { "get_flash_speed", GetValueHandler, (void*)GET_VALUE_FLASH_SPEED },
+    { "get_flash_mode", GetValueHandler, (void*)GET_VALUE_FLASH_MODE },
     { "set_temp_boot_index", SetValueHandler, (void*)SET_VALUE_TEMP_BOOT_INDEX },
     { "select_boot_index", SetValueHandler, (void*)SET_VALUE_COLDBOOT_INDEX },
     { "set_failsafe_index", SetValueHandler, (void*)SET_VALUE_FAILSAFE_BOOT_INDEX },

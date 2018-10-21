@@ -77,7 +77,7 @@ static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data)
             memcpy(uri, hm->uri.p, hm->uri.len);
             uri[hm->uri.len] = '\0';
             DebugMessage("%s: URI %s", __func__, uri);
-            if(strcmp(uri, "/op.html") == 0)
+            if(strcmp(uri, "/ajax") == 0)
                mg_HandleCGI(nc, ev, ev_data);
             else
                HandleLinkedFile(uri, nc);
@@ -173,26 +173,4 @@ static void mg_HandleCGI(struct mg_connection *nc, int ev, void *ev_data)
 
    free(query);
    free(uri);
-}
-
-/* ----------------------------------------------------------------------------------------
- * ESP Functons 
- */ 
-#include "esp_log.h"
-
-#if defined(DEBUG)
-void DebugMessage(const char *format, ...)
-{
-   char message[150];
-   va_list arglist;
-   va_start(arglist, format);
-   vsnprintf(message, sizeof(message), format, arglist);
-   va_end(arglist);
-   ESP_LOGI("zboot_cpanel", message);
-}
-#endif
-
-void platform_system_restart(void)
-{
-   esp_restart();
 }

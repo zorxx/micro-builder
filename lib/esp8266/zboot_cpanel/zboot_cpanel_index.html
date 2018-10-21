@@ -76,29 +76,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 var mySidebar = document.getElementById("mySidebar");
 var overlayBg = document.getElementById("myOverlay");
 
-function displayBody(bodyId) {
-   var bodies = document.getElementsByClassName("w3-main");
-   var i;
-   for(i = 0; i < bodies.length; i++) {
-      bodies[i].style.display = (bodies[i].id == bodyId) ? "block" : "none"; 
-   }
-}
-
-function w3_open() {
-    if (mySidebar.style.display === 'block') {
-        mySidebar.style.display = 'none';
-        overlayBg.style.display = "none";
-    } else {
-        mySidebar.style.display = 'block';
-        overlayBg.style.display = "block";
-    }
-}
-
-function w3_close() {
-    mySidebar.style.display = "none";
-    overlayBg.style.display = "none";
-}
-
 $(document).ready(function() {
    var current_index = parseInt(getValue("current_boot_index=0", -1));
    var coldboot_index = parseInt(getValue("cold_boot_index=0", -1));
@@ -106,11 +83,14 @@ $(document).ready(function() {
    var failsafe_index = parseInt(getValue("get_temp_boot_index=0", -1));
    var coldboot_mode = parseInt(getValue("get_mode=0", -1));
    var count = parseInt(getValue("image_count=0", 0));
+   var flash_size = parseInt(getValue("get_flash_size=0", -1));
+   var flash_speed = parseInt(getValue("get_flash_speed=0", -1));
+   var flash_mode = parseInt(getValue("get_flash_mode=0", -1));
    updateImageList(count, current_index, coldboot_index, temp_index);
    if(current_index > -1)
       addStatusItem("Running Index", current_index)
    if(coldboot_index > -1)
-      addStatusItem("ColdBoot Index", coldboot_index)
+      addStatusItem("Cold Boot Index", coldboot_index)
    if(failsafe_index > -1)
       addStatusItem("Failsafe Index", failsafe_index)
    var modeName = "Normal";
@@ -122,7 +102,13 @@ $(document).ready(function() {
       modeName = "GPIO Skip";
    else if(coldboot_mode & (1 << 4))
       modeName = "Failsafe";
-   addStatusItem("Mode", modeName)
+   addStatusItem("Boot Mode", modeName)
+   if(flash_size > -1)
+      addStatusItem("Flash Size", flash_size_to_string(flash_size))
+   if(flash_speed > -1)
+      addStatusItem("Flash Speed", flash_speed_to_string(flash_speed))
+   if(flash_mode > -1)
+      addStatusItem("Flash Mode", flash_mode_to_string(flash_mode))
 }); 
 
 </script>
