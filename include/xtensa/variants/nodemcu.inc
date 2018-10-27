@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief nodemcu Variant
 
-PREREQS := package/esp8266/esp_toolchain package/esp8266/ztool package/esp8266/zboot \
+PREREQS := package/esp8266/esp_toolchain package/xtensa/ztool package/xtensa/zboot \
            package/xtensa/esptool_py package/esp8266/esp8266_sdk
 
 TARGET_FLASH_SIZE := 4M

@@ -1,8 +1,8 @@
 # \copyright 2017-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief rboot API source 
+# \brief zboot Xtensa Bootloader API source 
 
-ZBOOT_DIR := $(PACKAGE_DIR)/esp8266/zboot
+ZBOOT_DIR := $(PACKAGE_DIR)/xtensa/zboot
 ZBOOT_SRC_DIR := $(ZBOOT_DIR)/zboot_source
 
 INCDIR += \

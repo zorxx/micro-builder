@@ -1,6 +1,6 @@
 # \copyright 2017-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Recipe for ESP8266 ztool package
+# \brief Recipe for Xtensa ztool package
 
 include ../../../include/mb.inc
 

@@ -8,34 +8,30 @@ ESP32_SDK_PROJDIR = examples/protocols/http_request
 # ---------------------------------------------------------------------------
 # Libraries
 
-ESP32_SDK_LIBS = lwip bootloader_support aws_iot spiffs wpa_supplicant ssl mqtt util spi_flash log newlib smartconfig_ack tcpip_adapter cjson jsmn app_update freertos esp8266 nvs_flash espos heap
-ESP32_CORE_LIBS = hal core net80211 gcc pp espnow phy wps ssc smartconfig wpa
+ESP32_SDK_LIBS = lwip bootloader_support esp_http_server wear_levelling esp32 heap aws_iot \
+                 spiffs wpa_supplicant mqtt spi_flash log newlib smartconfig_ack tcpip_adapter \
+                 json app_update freertos nvs_flash openssl fatfs mdns json coap vfs ethernet \
+                 libsodium ulp 
+ESP32_CORE_LIBS = core net80211 gcc pp espnow phy wps smartconfig wpa
 
 LIBDIRS += $(foreach lib,$(ESP32_SDK_LIBS),$(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/$(lib))
 LIBDIRS += $(ESP32_SDK_DIR)/components/esp32/lib
 LIBDIRS += $(ESP32_SDK_DIR)/components/newlib/newlib/lib
-LIBDIRS += $(ESP32_SDK_DIR)/components/ssl/wolfssl/lib
 
 LIBS += gcc stdc++ gcov
-LIBS += m c c_nano wolfssl
-LIBS += esp8266_sdk
+LIBS += m
 LIBS += $(ESP32_SDK_LIBS) $(ESP32_CORE_LIBS) 
 
 # ---------------------------------------------------------------------------
 # Includes
  
 ESP32_SDK_INCDIRS = \
-  util/include bootloader_support/include cjson/include cjson/cJSON esp32/include \
-  esp8266/include espos/include freertos/include freertos/include/freertos \
-  freertos/include/freertos/private freertos/port/esp8266/include \
-  freertos/port/esp8266/include/freertos log/include lwip/include lwip/include/lwip/apps \
-  lwip/lwip/src/include lwip/port/esp8266/include lwip/include/lwip/apps/multi-threads \
-  mqtt/include mqtt/paho/MQTTClient-C/src mqtt/paho/MQTTClient-C/src/FreeRTOS \
-  mqtt/paho/MQTTPacket/src newlib/include newlib/newlib/include newlib/newlib/port/include \
-  nvs_flash/include spi_flash/include spiffs/include spiffs/include/spiffs ssl/include \
-  ssl/mbedtls/mbedtls/include ssl/mbedtls/port/esp8266/include heap/include \
-  ssl/mbedtls/port/openssl/include tcpip_adapter/include tcpip_adapter/include \
-  heap/port/esp8266/include lwip/lwip/src/include/posix
+  bootloader_support/include esp32/include freertos/include freertos/include/freertos \
+  freertos/port log/include soc/include soc/esp32/include driver/include esp_event/include \
+  lwip/port/esp32/include lwip/include/apps lwip/lwip/src/include lwip/lwip/src/include/posix \
+  lwip/lwip/src/include/lwip lwip/lwip/src/include/netif mqtt/esp-mqtt/include \
+  newlib/include newlib/platform_include nvs_flash/include spi_flash/include spiffs/include \
+  heap/include tcpip_adapter/include vfs/include
 INCDIR += $(foreach inc,$(ESP32_SDK_INCDIRS),$(ESP32_SDK_DIR)/components/$(inc))
 INCDIR += $(ESP32_SDK_DIR)/..
 INCDIR += $(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/include
@@ -44,7 +40,7 @@ INCDIR += $(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/include
 # Linker 
  
 APP_LD_DIR = $(ESP32_SDK_DIR)/..
-APP_LD_SCRIPT = esp32.rom.ld esp32.app.ld $(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/esp32/esp32_common_out.ld esp32.extra.ld
+APP_LD_SCRIPT = esp32.rom.ld $(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/esp32/esp32_out.ld
 
 CDEFS += MEMLEAK_DEBUG __ESP_FILE__=__FILE__
 #LDFLAGS += -ecall_user_start_zboot

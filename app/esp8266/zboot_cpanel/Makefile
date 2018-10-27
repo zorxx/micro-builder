@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief zboot control panel demo application for ESP8266
 
-dependencies = package/esp8266/zboot lib/esp8266/zboot_cpanel
+dependencies = lib/esp8266/zboot_cpanel
 
 include ../../../include/mb.inc
 

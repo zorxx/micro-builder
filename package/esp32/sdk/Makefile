@@ -14,7 +14,7 @@ $(PACKAGE_NAME)_SOURCE_METHOD := git
 #  use the function defined in rboot in order to make use of flash
 #  larger than 1 MiB
 define $(PACKAGE_NAME)_POSTACTION
-#$(OBJCOPY) -W Cache_Read_Enable_New $(ESP8266_SDK_DIR)/components/esp8266/lib/libcore.a
+$(OBJCOPY) -W Cache_Read_Enable_New $(ESP8266_SDK_DIR)/components/esp8266/lib/libcore.a
 endef
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)

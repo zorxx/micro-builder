@@ -2,7 +2,8 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief nodemcu Variant
 
-PREREQS := package/esp32/esp_toolchain package/xtensa/esptool_py package/esp32/sdk
+PREREQS := package/esp32/esp_toolchain package/xtensa/zboot package/xtensa/esptool_py \
+           package/xtensa/ztool package/esp32/sdk
 
 TARGET_FLASH_SIZE := 4M
 TARGET_FLASH_MODE := qio

@@ -1,8 +1,8 @@
 # \copyright 2017-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Recipe for zboot, ESP8266 bootloader 
+# \brief Recipe for zboot, Xtensa bootloader 
 
-dependencies = package/esp8266/ztool
+dependencies = package/xtensa/ztool
 
 include ../../../include/mb.inc
 
