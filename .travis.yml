@@ -1,10 +1,14 @@
 language: c
+language: python 
 script: make
+python:
+  - 2.7
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libusb-dev libusb-1.0.0-dev
   - sudo apt-get install -y gperf texinfo help2man flex bison
-  - sudo apt-get easy_install future
+install:
+  - pip install future
 matrix:
     include:
         - env: MB_TARGET=xtensa_esp07_arduino;TEST_APP=app/esp8266/zboot_cpanel
