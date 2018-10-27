@@ -1,10 +1,10 @@
 # \copyright 2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Build environment configuration for ESP8266 Xtensa toolchain
+# \brief Build environment configuration for ESP32 Xtensa toolchain
 
-TOOLCHAIN_DIR := $(PACKAGE_DIR)/esp8266/esp_toolchain/esp_toolchain_source/xtensa-lx106-elf
+TOOLCHAIN_DIR := $(PACKAGE_DIR)/esp32/esp_toolchain/esp_toolchain_source/xtensa-esp32-elf
 TOOLCHAIN_BIN_DIR := $(TOOLCHAIN_DIR)/bin
-TOOLCHAIN_PREFIX := xtensa-lx106-elf-
+TOOLCHAIN_PREFIX := xtensa-esp32-elf-
 
 CC	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)gcc
 CXX	:= $(TOOLCHAIN_BIN_DIR)/$(TOOLCHAIN_PREFIX)g++

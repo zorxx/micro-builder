@@ -2,8 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief nodemcu Variant
 
-PREREQS := package/esp8266/esp_toolchain package/esp8266/ztool package/esp8266/zboot \
-           package/xtensa/esptool package/esp8266/esp8266_sdk
+PREREQS := package/esp32/esp_toolchain package/xtensa/esptool package/esp32/sdk
 
 TARGET_FLASH_SIZE := 4M
 TARGET_FLASH_MODE := qio
@@ -13,6 +12,6 @@ TARGET_CPU_SPEED := 80000000
 TARGET_BOARD := nodemcu
 
 # This must be last
-include $(INCLUDE_DIR)/xtensa/esp8266/esp8266.inc 
+include $(INCLUDE_DIR)/xtensa/esp32/esp32.inc 
 
 # vim: syntax=make tabstop=4 noexpandtab

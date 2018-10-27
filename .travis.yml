@@ -4,6 +4,7 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libusb-dev libusb-1.0.0-dev
   - sudo apt-get install -y gperf texinfo help2man flex bison
+  - sudo apt-get install -y python-future
 matrix:
     include:
         - env: MB_TARGET=xtensa_esp07_arduino;TEST_APP=app/esp8266/zboot_cpanel
@@ -13,6 +14,7 @@ matrix:
         - env: MB_TARGET=xtensa_esp12f;TEST_APP=app/esp8266/zboot_cpanel
         - env: MB_TARGET=xtensa_huzzah;TEST_APP=app/esp8266/zboot_cpanel
         - env: MB_TARGET=xtensa_huzzah_arduino;TEST_APP=app/esp8266/zboot_cpanel
+        - env: MB_TARGET=xtensa_esp32
         - env: MB_TARGET=avr_nano_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=arm_bluepill_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=arm_bluepill_libopencm3

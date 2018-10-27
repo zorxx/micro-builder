@@ -1,6 +1,6 @@
 # \copyright 2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Recipe for Xtensa ESP8266 toolchain package
+# \brief Recipe for Xtensa ESP32 toolchain package
 
 include ../../../include/mb.inc
 
@@ -14,7 +14,7 @@ $(PACKAGE_NAME)_ARCH := $(strip \
 				$(if $(findstring OSX,$(HOST_ARCH)),osx, \
 					unknown)))))
 
-$(PACKAGE_NAME)_FILENAME := xtensa-lx106-elf-$($(PACKAGE_NAME)_ARCH)-1.22.0-88-gde0bdc1-4.8.5.tar.gz
+$(PACKAGE_NAME)_FILENAME := xtensa-esp32-elf-$($(PACKAGE_NAME)_ARCH)-1.22.0-73-ge28a011-5.2.0.tar.gz
 
 $(PACKAGE_NAME)_SOURCE := https://dl.espressif.com/dl/$($(PACKAGE_NAME)_FILENAME)
 

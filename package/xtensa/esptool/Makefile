@@ -1,6 +1,6 @@
-# \copyright 2015-2016 Zorxx Software, All Rights Reserved
+# \copyright 2015-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
-# \brief Recipe for ESP8266 esptool package
+# \brief Recipe for esptool package
 
 include ../../../include/mb.inc
 
