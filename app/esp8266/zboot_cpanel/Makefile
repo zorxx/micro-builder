@@ -11,17 +11,14 @@ APP_NAME = cpanel
 ifneq ($(ESP8266_ARDUINO_DIR),)
 
 $(info Using ESP8266 Arduino implementation)
-$(call build_dependency,lib/esp8266/zboot_cpanel)
 $(APP_NAME)_obj := $(BUILD_TEMP_DIR)/arduino.o 
 
 else
 
 $(info Using ESP8266 SDK implementation)
-
-dependencies += lib/common/microhttpd
-include $(LIBRARIES_DIR)/common/microhttpd/package.inc
+$(call build_dependency,lib/common/microhttpd)
+include $(LIBRARIES_DIR)/common/microhttpd/package.inc 
 $(APP_NAME)_obj := $(BUILD_TEMP_DIR)/esp8266_sdk.o 
-LIBS += microhttpd
 
 endif
 

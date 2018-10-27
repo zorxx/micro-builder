@@ -3,7 +3,7 @@
 # \brief Adafruit HUZZAH Variant
 
 PREREQS := package/esp8266/esp_toolchain package/esp8266/ztool package/esp8266/zboot \
-           package/xtensa/esptool package/esp8266/esp8266_sdk
+           package/xtensa/esptool_py package/esp8266/esp8266_sdk
 
 TARGET_FLASH_SIZE := 4M
 TARGET_FLASH_MODE := qio
