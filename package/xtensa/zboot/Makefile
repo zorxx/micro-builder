@@ -51,6 +51,7 @@ define GENERIC_zboot_build
 	ZBOOT_DEFAULT_CONFIG_ROM2=$(ZBOOT_ROM2) \
 	ZBOOT_DEFAULT_CONFIG_ROM3=$(ZBOOT_ROM3) \
         XTENSA_BINDIR="$(TOOLCHAIN_BIN_DIR)" \
+        TOOLCHAIN_PREFIX=$(TOOLCHAIN_PREFIX) \
         ZTOOL="$(ZTOOL)" \
 		$(MAKE) --no-print-directory -C zboot_source all
 endef

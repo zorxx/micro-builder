@@ -18,8 +18,7 @@ LIBDIRS += $(foreach lib,$(ESP32_SDK_LIBS),$(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)
 LIBDIRS += $(ESP32_SDK_DIR)/components/esp32/lib
 LIBDIRS += $(ESP32_SDK_DIR)/components/newlib/newlib/lib
 
-LIBS += gcc stdc++ gcov
-LIBS += m
+LIBS += gcc stdc++ gcov m
 LIBS += $(ESP32_SDK_LIBS) $(ESP32_CORE_LIBS) 
 
 # ---------------------------------------------------------------------------
@@ -43,6 +42,5 @@ APP_LD_DIR = $(ESP32_SDK_DIR)/..
 APP_LD_SCRIPT = esp32.rom.ld $(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/esp32/esp32_out.ld
 
 CDEFS += MEMLEAK_DEBUG __ESP_FILE__=__FILE__
-#LDFLAGS += -ecall_user_start_zboot
 
 # vim: syntax=make tabstop=4 noexpandtab
