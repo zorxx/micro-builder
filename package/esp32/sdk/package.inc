@@ -8,17 +8,18 @@ ESP32_SDK_PROJDIR = examples/protocols/http_request
 # ---------------------------------------------------------------------------
 # Libraries
 
-ESP32_SDK_LIBS = lwip bootloader_support esp_http_server wear_levelling esp32 heap aws_iot \
+ESP32_SDK_LIBS = soc esp32 lwip bootloader_support esp_http_server wear_levelling heap \
                  spiffs wpa_supplicant mqtt spi_flash log newlib smartconfig_ack tcpip_adapter \
                  json app_update freertos nvs_flash openssl fatfs mdns json coap vfs ethernet \
-                 libsodium ulp 
-ESP32_CORE_LIBS = core net80211 gcc pp espnow phy wps smartconfig wpa
+                 libsodium ulp pthread mbedtls coexist net80211 rtc mesh driver esp_ringbuf \
+                 wpa2 aws_iot xtensa-debug-module
+ESP32_CORE_LIBS = core net80211 gcc pp espnow phy wps smartconfig wpa hal
 
 LIBDIRS += $(foreach lib,$(ESP32_SDK_LIBS),$(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/$(lib))
-LIBDIRS += $(ESP32_SDK_DIR)/components/esp32/lib
-LIBDIRS += $(ESP32_SDK_DIR)/components/newlib/newlib/lib
+LIBDIRS += $(ESP32_SDK_DIR)/components/esp32 $(ESP32_SDK_DIR)/components/esp32/lib
+LIBDIRS += $(ESP32_SDK_DIR)/components/newlib/lib
 
-LIBS += gcc stdc++ gcov m
+LIBS += gcc stdc++ gcov m c g
 LIBS += $(ESP32_SDK_LIBS) $(ESP32_CORE_LIBS) 
 
 # ---------------------------------------------------------------------------
@@ -38,8 +39,10 @@ INCDIR += $(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/include
 # ---------------------------------------------------------------------------
 # Linker 
  
-APP_LD_DIR = $(ESP32_SDK_DIR)/..
-APP_LD_SCRIPT = esp32.rom.ld $(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/esp32/esp32_out.ld
+APP_LD_DIR = $(ESP32_SDK_DIR)/components/esp32/ld $(ESP32_SDK_DIR)/$(ESP32_SDK_PROJDIR)/build/esp32
+APP_LD_DIR += $(ESP32_SDK_DIR)/..
+APP_LD_SCRIPT = esp32_out.ld esp32.common.ld esp32.rom.ld esp32.peripherals.ld
+APP_LD_SCRIPT += esp32.rom_extra.ld
 
 CDEFS += MEMLEAK_DEBUG __ESP_FILE__=__FILE__
 

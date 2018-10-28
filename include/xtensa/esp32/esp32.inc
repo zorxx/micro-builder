@@ -9,7 +9,7 @@ APP_LD_DIR ?= $(ARCH_INCLUDE_DIR)
 
 ESP32_APP_FLASH_ADDRESS ?= 0x100000
 
-LDFLAGS += -L $(APP_LD_DIR) $(foreach ld,$(APP_LD_SCRIPT),$(addprefix -T ,$(ld))) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static -Wl,-EL
+LDFLAGS += $(foreach ld,$(APP_LD_DIR),-L $(ld)) $(foreach ld,$(APP_LD_SCRIPT),$(addprefix -T ,$(ld))) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static -Wl,-EL
 
 CFLAGS += -Os -g -Wpointer-arith -mlongcalls -fno-inline-functions -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections
 CPPFLAGS += -Os -g -mlongcalls -mtext-section-literals -fno-exceptions -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections
@@ -36,7 +36,7 @@ endif
 
 # esp32_post_app(app_out_file)
 define $(MB_TARGET)_post_app
-	$(ZTOOL) $(ZTOOL_OPTIONS) -e $1 -o $(basename $1).bin -r".irom0.text .irom0.other" -s".text .data .rodata"
+	$(ZTOOL) $(ZTOOL_OPTIONS) -e $1 -o $(basename $1).bin -r".flash.text .flash.other .flash.rodata" -s".iram0.text .dram0.data"
 endef
 
 # esp32_app_info(app_file,app_dir)
@@ -47,7 +47,7 @@ endef
 # esp32_app_flash(app_file,app_dir)
 define $(MB_TARGET)_app_flash
 	$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
-	$(ESPTOOL) --chip auto write_flash $(ESP8266_APP_FLASH_ADDRESS) $2/$(basename $1).bin
+	$(ESPTOOL) --chip auto write_flash $(ESP32_APP_FLASH_ADDRESS) $2/$(basename $1).bin
 endef
 
 # ----------------------------------------------------------------------------------------
