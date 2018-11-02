@@ -48,8 +48,9 @@ INCDIR += $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR)/build/include
 # ---------------------------------------------------------------------------
 # Linker 
  
-APP_LD_DIR = $(ESP8266_SDK_DIR)/..
-APP_LD_SCRIPT = esp8266.rom.ld esp8266.app.ld $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR)/build/esp8266/esp8266_common_out.ld esp8266.extra.ld
+APP_LD_DIR = $(ESP8266_SDK_DIR)/.. $(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR)/build/esp8266 \
+             $(ESP8266_SDK_DIR)/components/esp8266/ld
+APP_LD_SCRIPT = esp8266.rom.ld esp8266.app.ld esp8266.peripherals.ld esp8266_common_out.ld esp8266.extra.ld
 
 CDEFS += MEMLEAK_DEBUG __ESP_FILE__=__FILE__
 LDFLAGS += -ecall_user_start_zboot
