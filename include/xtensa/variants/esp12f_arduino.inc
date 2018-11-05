@@ -12,8 +12,7 @@ TARGET_FLASH_SPEED := 40
 TARGET_CPU_SPEED := 80000000
 TARGET_BOARD := generic
 
-APP_LD_SCRIPT ?= $(ARCH_INCLUDE_DIR)/esp8266/ld/eagle.flash.1m.ld
-LIBDIRS += $(ARCH_INCLUDE_DIR)/esp8266/ld
+APP_LD_SCRIPT ?= eagle.flash.1m.ld
 
 # This must be last
 include $(INCLUDE_DIR)/xtensa/esp8266/esp8266.inc 

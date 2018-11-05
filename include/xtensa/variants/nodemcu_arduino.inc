@@ -12,8 +12,7 @@ TARGET_FLASH_SPEED := 80
 TARGET_CPU_SPEED := 80000000
 TARGET_BOARD := nodemcu
 
-APP_LD_SCRIPT ?= $(ARCH_INCLUDE_DIR)/esp8266/ld/eagle.flash.1m.ld
-LIBDIRS += $(ARCH_INCLUDE_DIR)/esp8266/ld
+APP_LD_SCRIPT ?= eagle.flash.1m.ld
 CDEFS += ARDUINO_ESP8266_NODEMCU
 
 # This must be last

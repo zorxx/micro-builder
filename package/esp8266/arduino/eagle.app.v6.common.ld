@@ -12,12 +12,13 @@ PHDRS
 
 
 /*  Default entry point:  */
-ENTRY(call_user_start)
+ENTRY(app_entry)
 EXTERN(_DebugExceptionVector)
 EXTERN(_DoubleExceptionVector)
 EXTERN(_KernelExceptionVector)
 EXTERN(_NMIExceptionVector)
 EXTERN(_UserExceptionVector)
+EXTERN(core_version)
 PROVIDE(_memmap_vecbase_reset = 0x40000000);
 /* Various memory-map dependent cache attribute settings: */
 _memmap_cacheattr_wb_base = 0x00000110;
@@ -78,6 +79,8 @@ SECTIONS
     *(.sdata2.*)
     *(.gnu.linkonce.s2.*)
     *(.jcr)
+    . = ALIGN(4);
+    _Pri_3_HandlerAddress = ABSOLUTE(.);
     _data_end = ABSOLUTE(.);
   } >dram0_0_seg :dram0_0_phdr
 
@@ -246,4 +249,4 @@ SECTIONS
 }
 
 /* get ROM code address */
-INCLUDE "../ld/eagle.rom.addr.v6.ld"
+INCLUDE "eagle.rom.ld"

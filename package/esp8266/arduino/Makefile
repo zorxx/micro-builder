@@ -9,7 +9,7 @@ PACKAGE_NAME := arduino
 # External package download information
 $(PACKAGE_NAME)_SOURCE := "https://github.com/esp8266/Arduino.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
-$(PACKAGE_NAME)_VERSION := 2.4.1
+$(PACKAGE_NAME)_VERSION := 2.4.2
 
 SRCDIR := $(PACKAGE_NAME)_source
 

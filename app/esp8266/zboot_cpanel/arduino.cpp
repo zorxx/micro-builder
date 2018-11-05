@@ -18,7 +18,7 @@ void setup()
    String message;
 
    Serial.begin(SERIAL_BAUD_RATE);
-   SerialDebug("Start\r\n");
+   SerialDebug("zboot cpanel demo application");
 
    WiFi.macAddress(mac_address);
    for(uint32_t idx = 0; idx < WL_MAC_ADDR_LENGTH; ++idx)
@@ -29,19 +29,19 @@ void setup()
    }
    message = "Local MAC Address: ";
    message += local_mac_string;
-   message += "\r\n";
    SerialDebug(message);
   
+   SerialDebug("Waiting for connection");
    WiFi.mode(WIFI_STA);
    WiFi.begin(STR(AP_SSID), STR(AP_PASSWORD));
    if(WiFi.status() != WL_CONNECTED)
    {
       delay(500);
-      SerialDebug(".");
+      Serial.print(".");
    }
-   SerialDebug("Waiting for connection...\r\n");
 
    zboot_cpanel_init();
+   SerialDebug("Initialization complete");
 }
 
 void loop()
@@ -62,7 +62,6 @@ void loop()
          message += ((uint8_t *) &ip)[2];
          message += ".";
          message += ((uint8_t *) &ip)[3];
-         message += "\r\n";
          SerialDebug(message);
       }
    }
