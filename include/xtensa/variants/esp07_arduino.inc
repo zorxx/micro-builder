@@ -15,10 +15,9 @@ TARGET_BOARD := nodemcu
 ESP8266_APP_FLASH_ADDRESS ?= 0x3000
 
 APP_VARIANTS := app1of2 app2of2
-app1of2_LDFLAGS := -T$(ARCH_INCLUDE_DIR)/esp8266/ld/eagle.flash.1of2.ld
-app2of2_LDFLAGS := -T$(ARCH_INCLUDE_DIR)/esp8266/ld/eagle.flash.2of2.ld
+app1of2_LDFLAGS := -Teagle.flash.1of2.ld
+app2of2_LDFLAGS := -Teagle.flash.2of2.ld
 
-LIBDIRS += $(ARCH_INCLUDE_DIR)/esp8266/ld
 CDEFS += ARDUINO_ESP8266_NODEMCU
 
 # This must be last
