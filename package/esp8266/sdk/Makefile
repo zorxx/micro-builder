@@ -4,7 +4,7 @@
 
 include ../../../include/mb.inc
 
-PACKAGE_NAME := esp8266_sdk
+PACKAGE_NAME := sdk
 
 # Download information
 $(PACKAGE_NAME)_SOURCE := "https://github.com/espressif/ESP8266_RTOS_SDK.git"

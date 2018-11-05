@@ -2,7 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Build environment for ESP8266 SDK package
 
-ESP8266_SDK_DIR = $(PACKAGE_DIR)/esp8266/esp8266_sdk/esp8266_sdk_source
+ESP8266_SDK_DIR = $(PACKAGE_DIR)/esp8266/sdk/sdk_source
 ESP8266_SDK_PROJDIR = examples/protocols/http_request
 
 # ---------------------------------------------------------------------------

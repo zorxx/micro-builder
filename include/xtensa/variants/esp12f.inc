@@ -3,7 +3,7 @@
 # \brief ESP12F Variant
 
 PREREQS := package/esp8266/esp_toolchain package/xtensa/ztool package/xtensa/zboot \
-           package/xtensa/esptool_py package/esp8266/esp8266_sdk
+           package/xtensa/esptool_py package/esp8266/sdk
 
 TARGET_FLASH_SIZE := 4M
 TARGET_FLASH_MODE := qio

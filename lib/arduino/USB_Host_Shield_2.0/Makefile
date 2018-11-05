@@ -1,4 +1,4 @@
-# \copyright 2016-2017 Zorxx Software, All Rights Reserved
+# \copyright 2016-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for USB Host Shield 2.0 library package
 
@@ -22,6 +22,5 @@ LIBRARY_SUBMAKE := true # Call "make" recursively when building the library to g
 
 include $(INCLUDE_DIR)/ext.inc
 include $(INCLUDE_DIR)/lib.inc
-include $(INCLUDE_DIR)/dir.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

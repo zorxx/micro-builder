@@ -25,6 +25,5 @@ LIBRARY_SUBMAKE := true # Call "make" recursively when building the library to g
 
 include $(INCLUDE_DIR)/ext.inc
 include $(INCLUDE_DIR)/lib.inc
-include $(INCLUDE_DIR)/dir.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

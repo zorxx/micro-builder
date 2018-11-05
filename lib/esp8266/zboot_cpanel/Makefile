@@ -42,6 +42,5 @@ $(LIB_NAME)_obj += $(foreach file, \
 LIBRARY_TARGETS += $(LIB_NAME)
 
 include $(INCLUDE_DIR)/lib.inc
-include $(INCLUDE_DIR)/dir.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

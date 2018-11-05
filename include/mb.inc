@@ -158,7 +158,6 @@ DEPENDENCY_DIRS = $(foreach dep,$(PREREQS) $(dependencies),$(abspath $(TOPDIR)/$
 %/.done_$(MB_TARGET) :
 	@$(ECHO) "Building dependency: $*"
 	@$(MAKE) --no-print-directory -C $*
-	@$(TOUCH) $@
 .PHONY: %/.done_$(MB_TARGET)
 
 all:: config_info
