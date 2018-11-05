@@ -47,7 +47,7 @@ endef
 # esp8266_app_flash(app_file,app_dir)
 define $(MB_TARGET)_app_flash
 	$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
-	$(ESPTOOL) --chip auto write_flash $(ESP8266_APP_FLASH_ADDRESS) $2/$(basename $1).bin
+	$(ESPTOOL) --chip esp8266 write_flash $(ESP8266_APP_FLASH_ADDRESS) $2/$(basename $1).bin
 endef
 
 # ----------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ endef
 
 define xtensa_flash_erase
 	$(ECHO) "Erasing flash..."
-	$(ESPTOOL) -cp $(TARGET_PORT) -cd $(TARGET_BOARD) -cb $(TARGET_BAUD) -ce -cr
+	$(ESPTOOL) --chip eps8266 erase_flash
 endef
 
 # vim: syntax=make tabstop=4 noexpandtab

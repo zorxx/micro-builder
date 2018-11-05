@@ -1,4 +1,4 @@
-# \copyright 2016 Zorxx Software, All Rights Reserved
+# \copyright 2016-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Rules for building applications
 
@@ -22,10 +22,7 @@ flash: $(firstword $(APP_TARGETS))_flash
 info: $(firstword $(APP_TARGETS))_app_info
 
 else
-
-all::
-	$(info Missing prerequisite(s): $(MISSING_PREREQS))
-
+$(error Missing prerequisite(s): $(MISSING_PREREQS))
 endif
 
 # vim: syntax=make tabstop=4 noexpandtab

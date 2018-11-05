@@ -1,4 +1,4 @@
-# \copyright 2016 Zorxx Software, All Rights Reserved
+# \copyright 2016-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Rules for building libraries
 
@@ -54,8 +54,7 @@ lib_clean: $(foreach lib,$(LIBRARY_TARGETS),$(lib).library_clean)
 ifeq ($(MISSING_PREREQS),)
 all:: lib 
 else
-all::
-	$(info Missing prerequisite(s): $(MISSING_PREREQS))
+$(error Missing prerequisite(s): $(MISSING_PREREQS))
 endif
 
 clean:: lib_clean 

@@ -1,4 +1,4 @@
-# \copyright 2017 Zorxx Software, All Rights Reserved
+# \copyright 2017-2018 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Rules for generic targets 
 
@@ -22,10 +22,7 @@ all:: $(foreach gen,$(GENERIC_TARGETS),.$(gen).generic)
 clean:: $(foreach gen,$(GENERIC_TARGETS),.$(gen).generic_clean)
 
 else
-
-all::
-	$(info Missing prerequisite(s): $(MISSING_PREREQS))
-
+$(error Missing prerequisite(s): $(MISSING_PREREQS))
 endif
 
 # vim: syntax=make tabstop=4 noexpandtab
