@@ -2,8 +2,7 @@
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Top make include file for STM32F1 architectures
 
-APP_LD_DIR ?= $(INCLUDE_DIR)/arm/stm32/stm32f1
-APP_LD_SCRIPT ?= $(TARGET_VARIANT).ld
+include $(INCLUDE_DIR)/arm/stm32/stm32.inc
 
 CFLAGS += -march=armv7-m
 CPPFLAGS += -march=armv7-m

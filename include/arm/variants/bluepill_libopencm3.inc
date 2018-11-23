@@ -7,6 +7,7 @@ PREREQS ?= package/arm/toolchain package/arm/libopencm3 package/stm32/stlink
 DEVICE := stm32f103c6
 
 # This must be last
-include $(INCLUDE_DIR)/arm/libopencm3.inc 
+include $(INCLUDE_DIR)/arm/stm32/stm32f1/stm32f1.inc
+include $(PACKAGE_DIR)/arm/libopencm3/libopencm3.inc
 
 # vim: syntax=make tabstop=4 noexpandtab

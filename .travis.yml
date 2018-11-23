@@ -21,9 +21,11 @@ matrix:
         - env: MB_TARGET=xtensa_esp32;TEST_APP=app/esp8266/zboot_cpanel
         - env: MB_TARGET=avr_nano_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=arm_bluepill_arduino;TEST_APP=app/arduino/blink
-        - env: MB_TARGET=arm_bluepill_libopencm3
+        - env: MB_TARGET=arm_bluepill_libopencm3;TEST_APP=app/common/hello_world
         - env: MB_TARGET=arm_stm32f103c_arduino;TEST_APP=app/arduino/blink
+        - env: MB_TARGET=arm_stm32f030f4_libopencm3;TEST_APP=app/common/hello_world
         - env: MB_TARGET=arm_stm32f4_arduino;TEST_APP=app/arduino/blink
+        - env: MB_TARGET=arm_stm32f4_libopencm3;TEST_APP=app/common/hello_world
 script:
     - unset CC;make all
     - sh -c "if [ '${TEST_APP}' != '' ]; then make -C ${TEST_APP}; fi"
