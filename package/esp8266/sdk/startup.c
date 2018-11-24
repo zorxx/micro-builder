@@ -25,9 +25,9 @@
 #include "esp_heap_caps_init.h"
 #include "esp_partition.h"
 
-extern void chip_boot();
 extern void user_init_entry(void *param);
 extern void ets_printf(char *, ...);
+extern void esp_spi_flash_init(uint32_t spi_speed, uint32_t spi_mode);
 
 extern int _bss_start, _bss_end;
 
@@ -76,10 +76,17 @@ static void partition_init(void)
 void call_user_start_zboot(void)
 {
     int *p;
+    uint8_t speed = 15, mode = 2;
 
-    ets_printf("Test1\r\n");
     partition_init();
-    ets_printf("Test2\r\n");
+
+    zboot_api_init();
+    if(!zboot_get_flash_speed(&speed)
+    || !zboot_get_flash_mode(&mode))
+    {
+       ets_printf("Failed to get flash configuration\n");
+    }
+    esp_spi_flash_init(speed, mode);
 
     /* clear bss data */
     for (p = &_bss_start; p < &_bss_end; p++)
@@ -90,7 +97,6 @@ void call_user_start_zboot(void)
         "movi       a1, _chip_interrupt_tmp\n"
         : : :"memory");
 
-    zboot_api_init();
     heap_caps_init();
     wifi_os_init();
     assert(wifi_task_create(user_init_entry, "uiT", CONFIG_MAIN_TASK_STACK_SIZE, NULL, wifi_task_get_max_priority()) != NULL);

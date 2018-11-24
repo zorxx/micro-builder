@@ -63,7 +63,7 @@ endef
 
 define xtensa_flash_erase
 	$(ECHO) "Erasing flash..."
-	$(ESPTOOL) --chip eps8266 erase_flash
+	$(ESPTOOL) --chip esp8266 erase_flash
 endef
 
 # vim: syntax=make tabstop=4 noexpandtab
