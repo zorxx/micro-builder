@@ -19,11 +19,11 @@ VARIANT_FLAGS := -DVECT_TAB_ADDR=0x8000000 -DMCU_STM32F103C8 -DBOARD_generic_stm
 CFLAGS += $(VARIANT_FLAGS)
 CPPFLAGS += $(VARIANT_FLAGS) 
 ASMFLAGS += $(VARIANT_FLAGS) 
+LDFLAGS += -specs=nano.specs -specs=nosys.specs
 
 APP_LD_SCRIPT = $(APP_LD_DIR)/jtag_c8.ld
 
 # This must be last
 include $(INCLUDE_DIR)/arm/stm32/stm32.inc 
-include $(INCLUDE_DIR)/arm/stm32/stm32f1/stm32f1.inc
 
 # vim: syntax=make tabstop=4 noexpandtab
