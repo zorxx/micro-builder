@@ -8,6 +8,7 @@
 APP_LD_DIR ?= $(ARCH_INCLUDE_DIR)
 
 ESP32_APP_FLASH_ADDRESS ?= 0x100000
+ZBOOT_FLASH_ADDRESS = 0x1000
 
 LDFLAGS += $(foreach ld,$(APP_LD_DIR),-L $(ld)) $(foreach ld,$(APP_LD_SCRIPT),$(addprefix -T ,$(ld))) -g -Os -nostdlib -Wl,--no-check-sections -Wl,--gc-sections -Wl,-static -Wl,-EL
 

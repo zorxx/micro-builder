@@ -65,7 +65,7 @@ zboot_clean:
 
 flash: all
 	@$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
-	$(ESPTOOL) write_flash 0x0 zboot_source/firmware/zboot.bin
+	$(ESPTOOL) write_flash $(ZBOOT_FLASH_ADDRESS) zboot_source/firmware/zboot.bin
 
 # ----------------------------------------------------------
 # Application API Library

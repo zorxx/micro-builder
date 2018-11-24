@@ -25,7 +25,7 @@
 #include "esp_heap_caps_init.h"
 #include "esp_partition.h"
 
-extern void chip_boot(size_t start_addr);
+extern void chip_boot();
 extern void user_init_entry(void *param);
 extern void ets_printf(char *, ...);
 
@@ -77,8 +77,9 @@ void call_user_start_zboot(void)
 {
     int *p;
 
+    ets_printf("Test1\r\n");
     partition_init();
-    chip_boot(0x00000000);  // zboot is always at the start of flash
+    ets_printf("Test2\r\n");
 
     /* clear bss data */
     for (p = &_bss_start; p < &_bss_end; p++)
