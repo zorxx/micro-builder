@@ -27,7 +27,7 @@
 
 extern void user_init_entry(void *param);
 extern void ets_printf(char *, ...);
-extern void esp_spi_flash_init(uint32_t spi_speed, uint32_t spi_mode);
+extern void chip_boot(size_t start_addr);
 
 extern int _bss_start, _bss_end;
 
@@ -76,17 +76,10 @@ static void partition_init(void)
 void call_user_start_zboot(void)
 {
     int *p;
-    uint8_t speed = 15, mode = 2;
 
     partition_init();
-
     zboot_api_init();
-    if(!zboot_get_flash_speed(&speed)
-    || !zboot_get_flash_mode(&mode))
-    {
-       ets_printf("Failed to get flash configuration\n");
-    }
-    esp_spi_flash_init(speed, mode);
+    chip_boot(0);  // Use zboot image header
 
     /* clear bss data */
     for (p = &_bss_start; p < &_bss_end; p++)

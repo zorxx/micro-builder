@@ -10,6 +10,10 @@ PACKAGE_NAME := sdk
 $(PACKAGE_NAME)_SOURCE := "https://github.com/espressif/ESP8266_RTOS_SDK.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
 
+# Pin the version just prior to the migration to gcc 5.2.0 libraries
+# For some reason, this causes bad things to happen with spi_flash and wifi
+$(PACKAGE_NAME)_VERSION := c38467c5f12d577129a46f71588a6a4714bcab46
+
 # Remove the Cache_Read_Enable_New function from libmain.a. We need to
 #  use the function defined in rboot in order to make use of flash
 #  larger than 1 MiB
