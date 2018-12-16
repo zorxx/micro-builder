@@ -6,7 +6,7 @@ include ../../../include/mb.inc
 
 PACKAGE_NAME := freertos
 $(PACKAGE_NAME)_SOURCE_METHOD := svn
-$(PACKAGE_NAME)_SOURCE := "https://svn.code.sf.net/p/freertos/code/trunk"
+$(PACKAGE_NAME)_SOURCE := "https://svn.code.sf.net/p/freertos/code/tags/V$(FREERTOS_VERSION)"
 
 # ----------------------------------------------------------------------------------------
 

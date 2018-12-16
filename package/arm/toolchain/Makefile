@@ -6,9 +6,9 @@ include ../../../include/mb.inc
 
 PACKAGE_NAME := toolchain
 $(PACKAGE_NAME)_SOURCE_METHOD := wget
-TOOLCHAIN_YEAR := 2017
-TOOLCHAIN_QUARTER := q4
-TOOLCHAIN_RELEASE := major
+TOOLCHAIN_YEAR := 2018
+TOOLCHAIN_QUARTER := q2
+TOOLCHAIN_RELEASE := update
 
 TOOLCHAIN_SUFFIX := $(strip \
 	$(if $(findstring Linux_64,$(HOST_ARCH)),linux.tar.bz2, \

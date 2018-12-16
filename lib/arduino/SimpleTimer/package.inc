@@ -4,5 +4,6 @@
 
 SIMPLETIMER_LIB_DIR := $(LIBRARIES_DIR)/arduino/SimpleTimer/SimpleTimer_source
 INCDIR += $(SIMPLETIMER_LIB_DIR)
+LIBS += SimpleTimer
 
 # vim: syntax=make tabstop=4 noexpandtab

@@ -4,5 +4,6 @@
 
 DEBOUNCED_INPUT_LIB_DIR := $(LIBRARIES_DIR)/arduino/DebouncedInput/DebouncedInput_source/src
 INCDIR += $(DEBOUNCED_INPUT_LIB_DIR)
+LIBS += DebouncedInput
 
 # vim: syntax=make tabstop=4 noexpandtab
