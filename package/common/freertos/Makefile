@@ -5,8 +5,9 @@
 include ../../../include/mb.inc
 
 PACKAGE_NAME := freertos
-$(PACKAGE_NAME)_SOURCE_METHOD := svn
-$(PACKAGE_NAME)_SOURCE := "https://svn.code.sf.net/p/freertos/code/tags/V$(FREERTOS_VERSION)"
+$(PACKAGE_NAME)_FILENAME := FreeRTOSv$(FREERTOS_VERSION).zip
+$(PACKAGE_NAME)_SOURCE := https://sourceforge.net/projects/freertos/files/FreeRTOS/V$(FREERTOS_VERSION)/$($(PACKAGE_NAME)_FILENAME)
+$(PACKAGE_NAME)_SOURCE_METHOD := wget
 
 # ----------------------------------------------------------------------------------------
 

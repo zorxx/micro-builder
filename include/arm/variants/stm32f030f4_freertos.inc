@@ -15,6 +15,7 @@ FREERTOS_HEAP_TYPE = 2
 INCDIR += $(INCLUDE_DIR)/arm/stm32/stm32f0
 
 # This must be last
+include $(INCLUDE_DIR)/arm/stm32/stm32.inc
 include $(PACKAGE_DIR)/arm/libopencm3/libopencm3.inc
 
 # vim: syntax=make tabstop=4 noexpandtab
