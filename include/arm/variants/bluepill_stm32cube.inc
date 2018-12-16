@@ -19,6 +19,5 @@ ASMFLAGS += $(VARIANT_FLAGS)
 
 # This must be last
 include $(INCLUDE_DIR)/arm/stm32/stm32f1/stm32f1.inc 
-include $(INCLUDE_DIR)/arm/stm32/stm32.inc 
 
 # vim: syntax=make tabstop=4 noexpandtab
