@@ -26,7 +26,6 @@ matrix:
         - env: MB_TARGET=arm_bluepill_freertos;TEST_APP=app/freertos/hello_world
         - env: MB_TARGET=arm_stm32f103c_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=arm_stm32f030f4_libopencm3;TEST_APP=app/common/hello_world
-        - env: MB_TARGET=arm_stm32f030f4_freertos;TEST_APP=app/freertos/hello_world
         - env: MB_TARGET=arm_stm32f4_arduino;TEST_APP=app/arduino/blink
         - env: MB_TARGET=arm_stm32f4_libopencm3;TEST_APP=app/common/hello_world
 script:
