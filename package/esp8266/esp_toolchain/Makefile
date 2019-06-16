@@ -14,7 +14,7 @@ $(PACKAGE_NAME)_ARCH := $(strip \
 				$(if $(findstring OSX,$(HOST_ARCH)),osx, \
 					unknown)))))
 
-$(PACKAGE_NAME)_FILENAME := xtensa-lx106-elf-$($(PACKAGE_NAME)_ARCH)-1.22.0-88-gde0bdc1-4.8.5.tar.gz
+$(PACKAGE_NAME)_FILENAME := xtensa-lx106-elf-$($(PACKAGE_NAME)_ARCH)-1.22.0-92-g8facf4c-5.2.0.tar.gz
 
 $(PACKAGE_NAME)_SOURCE := https://dl.espressif.com/dl/$($(PACKAGE_NAME)_FILENAME)
 

@@ -8,7 +8,7 @@ ESP8266_SDK_PROJDIR = examples/protocols/http_request
 # ---------------------------------------------------------------------------
 # Libraries
 
-ESP8266_SDK_LIBS = lwip bootloader_support aws_iot spiffs wpa_supplicant ssl mqtt util spi_flash log newlib smartconfig_ack tcpip_adapter cjson jsmn app_update freertos esp8266 nvs_flash espos heap
+ESP8266_SDK_LIBS = lwip bootloader_support aws_iot spiffs wpa_supplicant ssl mqtt util spi_flash log newlib smartconfig_ack tcpip_adapter cjson jsmn app_update freertos esp8266 nvs_flash heap
 ESP8266_CORE_LIBS = hal core net80211 gcc pp espnow phy wps ssc smartconfig wpa
 
 LIBDIRS += $(foreach lib,$(ESP8266_SDK_LIBS),$(ESP8266_SDK_DIR)/$(ESP8266_SDK_PROJDIR)/build/$(lib))
