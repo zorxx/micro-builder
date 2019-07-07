@@ -48,7 +48,7 @@ endef
 # esp8266_app_flash(app_file,app_dir)
 define $(MB_TARGET)_app_flash
 	$(ECHO) "Flashing on port $(TARGET_PORT) @ $(TARGET_BAUD)"
-	$(ESPTOOL) --chip esp8266 write_flash $(ESP8266_APP_FLASH_ADDRESS) $2/$(basename $1).bin
+	$(ESPTOOL) --port ${TARGET_PORT} --baud ${TARGET_BAUD} --chip esp8266 write_flash $(ESP8266_APP_FLASH_ADDRESS) $2/$(basename $1).bin
 endef
 
 # ----------------------------------------------------------------------------------------
