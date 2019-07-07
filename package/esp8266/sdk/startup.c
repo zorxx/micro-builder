@@ -21,14 +21,13 @@
 #include "zboot-api.h"
 #include "nvs_flash.h"
 #include "esp_image_format.h"
-#include "esp_newlib.h"
+#include "esp_wifi_osi.h"
 #include "esp_heap_caps_init.h"
 #include "esp_partition.h"
 
-#include "FreeRTOS.h"
-#include "task.h"
-
 extern void user_init_entry(void *param);
+extern void ets_printf(char *, ...);
+extern void chip_boot(size_t start_addr);
 
 extern int _bss_start, _bss_end;
 
@@ -74,14 +73,13 @@ static void partition_init(void)
    }
 }
 
-extern void call_user_start(void);
-
 void call_user_start_zboot(void)
 {
     int *p;
 
     partition_init();
     zboot_api_init();
+    chip_boot(0);  // Use zboot image header
 
     /* clear bss data */
     for (p = &_bss_start; p < &_bss_end; p++)
@@ -93,11 +91,9 @@ void call_user_start_zboot(void)
         : : :"memory");
 
     heap_caps_init();
-
-    esp_newlib_init();
-    assert(xTaskCreate(user_init_entry, "uiT", CONFIG_MAIN_TASK_STACK_SIZE, NULL, configMAX_PRIORITIES, NULL) == pdPASS);
-
-    vTaskStartScheduler();
+    wifi_os_init();
+    assert(wifi_task_create(user_init_entry, "uiT", CONFIG_MAIN_TASK_STACK_SIZE, NULL, wifi_task_get_max_priority()) != NULL);
+    wifi_os_start();
 }
 
 extern void lwip_fcntl(int s, int cmd, int val);
