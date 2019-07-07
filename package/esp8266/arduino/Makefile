@@ -1,4 +1,4 @@
-# \copyright 2015-2018 Zorxx Software, All Rights Reserved
+# \copyright 2015-2019 Zorxx Software, All Rights Reserved
 # \license This file is released under the MIT License. See the LICENSE file for details.
 # \brief Recipe for ESP8266 Arduino SDK package
 
@@ -9,25 +9,24 @@ PACKAGE_NAME := arduino
 # External package download information
 $(PACKAGE_NAME)_SOURCE := "https://github.com/esp8266/Arduino.git"
 $(PACKAGE_NAME)_SOURCE_METHOD := git
-$(PACKAGE_NAME)_VERSION := 2.4.1
+$(PACKAGE_NAME)_VERSION := 2.5.2
 
 SRCDIR := $(PACKAGE_NAME)_source
 
 # Remove the Cache_Read_Enable_New function from libmain.a. We need to
-#  use the function defined in rboot in order to make use of flash
+#  use the function defined in zboot in order to make use of flash
 #  larger than 1 MiB
 define $(PACKAGE_NAME)_POSTACTION
-$(OBJCOPY) -W Cache_Read_Enable_New $(SRCDIR)/tools/sdk/lib/libmain.a
+$(OBJCOPY) -W Cache_Read_Enable_New $(SRCDIR)/tools/sdk/lib/NONOSDK221/libmain.a
 endef
 
 # Core Library
 LIB_NAME_CORE := lib$(PACKAGE_NAME)_core
 $(LIB_NAME_CORE)_obj := $(foreach file, \
 		$(SRCDIR)/tests/host/common/noniso.c \
-		$(wildcard $(SRCDIR)/cores/esp8266/*.c) \
-		$(wildcard $(SRCDIR)/cores/esp8266/umm_malloc/*.c) \
-		$(wildcard $(SRCDIR)/cores/esp8266/spiffs/*.c) \
 		$(wildcard $(SRCDIR)/cores/esp8266/*.cpp) \
+		$(wildcard $(SRCDIR)/cores/esp8266/spiffs/*.cpp) \
+		$(wildcard $(SRCDIR)/cores/esp8266/umm_malloc/*.cpp) \
 		$(wildcard $(SRCDIR)/cores/esp8266/*.S), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
@@ -122,7 +121,7 @@ $(LIB_NAME_WIFI_MESH)_obj := $(foreach file, \
 # mDNS Library
 LIB_NAME_MDNS := lib$(PACKAGE_NAME)_mDNS
 $(LIB_NAME_MDNS)_obj := $(foreach file, \
-		$(wildcard $(SRCDIR)/libraries/ESP8266mDNS/*.cpp), \
+		$(wildcard $(SRCDIR)/libraries/ESP8266mDNS/src/*.cpp), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 # SD Library
@@ -130,6 +129,20 @@ LIB_NAME_SD := lib$(PACKAGE_NAME)_SD
 $(LIB_NAME_SD)_obj := $(foreach file, \
 		$(wildcard $(SRCDIR)/libraries/SD/src/*.cpp) \
 		$(wildcard $(SRCDIR)/libraries/SD/src/utility/*.cpp), \
+		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
+
+# SDFS Library
+LIB_NAME_SDFS := lib$(PACKAGE_NAME)_SDFS
+$(LIB_NAME_SDFS)_obj := $(foreach file, \
+		$(wildcard $(SRCDIR)/libraries/SDFS/src/*.cpp) \
+		$(wildcard $(SRCDIR)/libraries/SDFS/src/utility/*.cpp), \
+		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
+
+# SdFat Library
+LIB_NAME_SDFST := lib$(PACKAGE_NAME)_ESP8266SdFat
+$(LIB_NAME_SDFST)_obj := $(foreach file, \
+		$(wildcard $(SRCDIR)/libraries/ESP8266SdFat/src/*.cpp) \
+		$(wildcard $(SRCDIR)/libraries/ESP8266SdFat/src/utility/*.cpp), \
 		$(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 # SPI Library
@@ -168,7 +181,7 @@ EXTERNAL_TARGETS += $(PACKAGE_NAME)
 LIBRARY_TARGETS += $(LIB_NAME_CORE) $(LIB_NAME_AVRISP) \
   $(LIB_NAME_DNS_SERVER) $(LIB_NAME_EEPROM) $(LIB_NAME_ETHERNET) $(LIB_NAME_GDBSTUB) \
   $(LIB_NAME_HASH) $(LIB_NAME_HTTP_CLIENT) $(LIB_NAME_HTTP_UPDATE) $(LIB_NAME_HTTP_UPDATE_SERVER) \
-  $(LIB_NAME_ONEWIRE) $(LIB_NAME_SD) $(LIB_NAME_SPI) \
+  $(LIB_NAME_ONEWIRE) $(LIB_NAME_SD) $(LIB_NAME_SDFS) $(LIB_NAME_SDFAT) $(LIB_NAME_SPI) \
   $(LIB_NAME_TICKER) $(LIB_NAME_TFT) $(LIB_NAME_WIFI) $(LIB_NAME_WIFI_MESH) $(LIB_NAME_WIRE) \
   $(LIB_NAME_ARDUINO_OTA) $(LIB_NAME_MDNS) $(LIB_NAME_SSDP) $(LIB_NAME_ESP8266_WEBSERVER)
 LIBRARY_SUBMAKE := true

@@ -8,12 +8,11 @@ PACKAGE_NAME := arduino_toolchain
 $(PACKAGE_NAME)_SOURCE_METHOD := wget
 
 $(PACKAGE_NAME)_FILENAME := $(strip \
-	$(if $(findstring Linux_64,$(HOST_ARCH)),linux64-xtensa-lx106-elf-gb404fb9.tgz, \
-		$(if $(findstring Linux_32,$(HOST_ARCH)),linux32-xtensa-lx106-elf.tar.gz, \
-			$(if $(findstring WIN,$(HOST_ARCH)),win32-xtensa-lx106-elf-gb404fb9-2.tar.gz, \
-				$(if $(findstring OSX,$(HOST_ARCH)),osx-xtensa-lx106-elf-gb404fb9-2.tar.gz, \
-					unknown)))))
-$(PACKAGE_NAME)_SOURCE := https://github.com/esp8266/Arduino/releases/download/2.3.0/$($(PACKAGE_NAME)_FILENAME)
+	$(if $(findstring Linux_64,$(HOST_ARCH)),x86_64-linux-gnu.xtensa-lx106-elf-20ed2b9c.tar.gz, \
+	  	$(if $(findstring WIN,$(HOST_ARCH)),x86_64-w64-mingw32.xtensa-lx106-elf-20ed2b9c.zip, \
+	   		$(if $(findstring OSX,$(HOST_ARCH)),x86_64-apple-darwin14.xtensa-lx106-elf-20ed2b9c.tar.gz, \
+	   			unknown))))
+$(PACKAGE_NAME)_SOURCE := "https://github.com/earlephilhower/esp-quick-toolchain/releases/download/2.5.0-3/$($(PACKAGE_NAME)_FILENAME)"
 
 EXTERNAL_TARGETS += $(PACKAGE_NAME)
 

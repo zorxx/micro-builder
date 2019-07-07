@@ -12,7 +12,7 @@ PHDRS
 
 
 /*  Default entry point:  */
-ENTRY(call_user_start)
+ENTRY(app_entry)
 EXTERN(_DebugExceptionVector)
 EXTERN(_DoubleExceptionVector)
 EXTERN(_KernelExceptionVector)
@@ -96,9 +96,7 @@ SECTIONS
     *(.xt_except_table)
     *(.gcc_except_table)
     *(.gnu.linkonce.e.*)
-    *(.gnu.version_r)
-    *(.eh_frame)
-    . = (. + 3) & ~ 3;
+
     /*  C++ constructor and destructor tables, properly ordered:  */
     __init_array_start = ABSOLUTE(.);
     KEEP (*crtbegin.o(.ctors))
@@ -118,6 +116,12 @@ SECTIONS
     *(.xt_except_desc_end)
     *(.dynamic)
     *(.gnu.version_d)
+
+    . = ALIGN(4);
+    __eh_frame = ABSOLUTE(.);
+    KEEP(*(.eh_frame))
+    . = (. + 7) & ~ 3;  /* Add a 0 entry to terminate the list */
+
     . = ALIGN(4);		/* this table MUST be 4-byte aligned */
     _bss_table_start = ABSOLUTE(.);
     LONG(_bss_start)
@@ -128,9 +132,9 @@ SECTIONS
 
   .UserExceptionVector.literal : AT(LOADADDR(.rodata) + (ADDR(.UserExceptionVector.literal) - ADDR(.rodata))) ALIGN(4)
   {
-  	_UserExceptionVector_literal_start = ABSOLUTE(.);
-  	*(.UserExceptionVector.literal)
-  	_UserExceptionVector_literal_end = ABSOLUTE(.);
+     _UserExceptionVector_literal_start = ABSOLUTE(.);
+     *(.UserExceptionVector.literal)
+     _UserExceptionVector_literal_end = ABSOLUTE(.);
   } >dram0_0_seg :dram0_0_phdr
 
   .bss ALIGN(8) (NOLOAD) : ALIGN(4)
@@ -150,6 +154,7 @@ SECTIONS
     *(.bss.*)
     *(.gnu.linkonce.b.*)
     *(COMMON)
+
     . = ALIGN (8);
     _bss_end = ABSOLUTE(.);
     _heap_start = ABSOLUTE(.);
@@ -195,21 +200,23 @@ SECTIONS
     /* These must be located in internal RAM to prevent far accesses to literal data.
      *  All of the following libraries are distributed in binary form, so we cannot
      *  change the compilation options to allow for far accesses to data. */
-    *libgcc.a:(.literal .text .literal.* .text.*)
+    *libgcc.a:_*.o(.literal .text .literal.* .text.*)
     *libmain.a:(.literal .text .literal.* .text.*)
     *libphy.a:(.literal .text .literal.* .text.*)
     *libpp.a:(.literal .text .literal.* .text.*)
-    *libhal.a:int_asm--set_intclear.o(.literal .text .literal.* .text.*)
-    *libnet80211.a:wl_chm.o(.literal .text .literal.* .text.*)
+    *libnet80211.a:wl_chm.o(.text)
 
     /* Arduino necessities */
-    *libarduino_core.a:*umm_malloc.o(.literal* .text*)
     *libarduino_core.a:*cont.o(.literal* .text*)
 
     *(.gnu.linkonce.literal.* .gnu.linkonce.t.*.literal .gnu.linkonce.t.*)
 
+    /* all functional callers are placed in IRAM (including SPI/IRQ callbacks/etc) here */
+    *(.text._ZNKSt8functionIF*EE*) /* std::function<any(...)>::operator()() const */
+
     /* Any compilation units that request to be located in interal RAM */
-    *.o(.iram.text)
+    *(.iram.literal)
+    *(.iram.text .iram.text.*)
 
     _text_end = ABSOLUTE(.);
     _etext = .;
@@ -232,7 +239,24 @@ SECTIONS
     *.a(.text*)
     *.o(.text*)
     *(.literal .text .literal.* .text.* .stub .gnu.warning)
-    *(.irom0.literal .irom.literal .irom.text.literal .irom0.text .irom.text .irom.text.*)
+    *(.irom0.literal .irom.literal .irom.text.literal .irom0.text .irom0.text* .irom.text .irom.text.*)
+
+    /* __FUNCTION__ locals */
+    *(.rodata._ZZ*__FUNCTION__)
+    *(.rodata._ZZ*__PRETTY_FUNCTION__)
+    *(.rodata._ZZ*__func__)
+
+    /* std::* exception strings, in their own section to allow string coalescing */
+    *(.irom.exceptiontext)
+
+    /* c++ typeof IDs, etc. */
+    *(.rodata._ZTIN* .rodata._ZTSN10* .rodata._ZTISt* .rodata._ZTSSt*)
+
+    /* Fundamental type info */
+    *(.rodata._ZTIPKc .rodata._ZTIc .rodata._ZTIv .rodata._ZTSv .rodata._ZTSc .rodata._ZTSPKc .rodata._ZTSi .rodata._ZTIi)
+
+    . = ALIGN(4);
+    *(.gcc_except_table .gcc_except_table.*)
 
     . = ALIGN (4);
     _irom0_text_end = ABSOLUTE(.);
