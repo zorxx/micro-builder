@@ -40,7 +40,6 @@ PROVIDE(_memmap_cacheattr_reset = _memmap_cacheattr_wb_trapnull);
 
 SECTIONS
 {
-
   .dport0.rodata : ALIGN(4)
   {
     _dport0_rodata_start = ABSOLUTE(.);
@@ -84,6 +83,11 @@ SECTIONS
     _data_end = ABSOLUTE(.);
   } >dram0_0_seg :dram0_0_phdr
 
+  .noinit : ALIGN(4)
+  {
+    *(.noinit)
+  } >dram0_0_seg :dram0_0_phdr
+
   .rodata : ALIGN(4)
   {
     _rodata_start = ABSOLUTE(.);
@@ -96,7 +100,9 @@ SECTIONS
     *(.xt_except_table)
     *(.gcc_except_table)
     *(.gnu.linkonce.e.*)
-
+    *(.gnu.version_r)
+    *(.eh_frame)
+    . = (. + 3) & ~ 3;
     /*  C++ constructor and destructor tables, properly ordered:  */
     __init_array_start = ABSOLUTE(.);
     KEEP (*crtbegin.o(.ctors))
@@ -116,25 +122,12 @@ SECTIONS
     *(.xt_except_desc_end)
     *(.dynamic)
     *(.gnu.version_d)
-
-    . = ALIGN(4);
-    __eh_frame = ABSOLUTE(.);
-    KEEP(*(.eh_frame))
-    . = (. + 7) & ~ 3;  /* Add a 0 entry to terminate the list */
-
-    . = ALIGN(4);		/* this table MUST be 4-byte aligned */
+    . = ALIGN(4); /* this table MUST be 4-byte aligned */
     _bss_table_start = ABSOLUTE(.);
     LONG(_bss_start)
     LONG(_bss_end)
     _bss_table_end = ABSOLUTE(.);
     _rodata_end = ABSOLUTE(.);
-  } >dram0_0_seg :dram0_0_phdr
-
-  .UserExceptionVector.literal : AT(LOADADDR(.rodata) + (ADDR(.UserExceptionVector.literal) - ADDR(.rodata))) ALIGN(4)
-  {
-     _UserExceptionVector_literal_start = ABSOLUTE(.);
-     *(.UserExceptionVector.literal)
-     _UserExceptionVector_literal_end = ABSOLUTE(.);
   } >dram0_0_seg :dram0_0_phdr
 
   .bss ALIGN(8) (NOLOAD) : ALIGN(4)
@@ -158,9 +151,7 @@ SECTIONS
     . = ALIGN (8);
     _bss_end = ABSOLUTE(.);
     _heap_start = ABSOLUTE(.);
-/*    _stack_sentry = ALIGN(0x8); */
   } >dram0_0_seg :dram0_0_bss_phdr
-/* __stack = 0x3ffc8000; */
 
   .text : ALIGN(4)
   {
@@ -193,9 +184,9 @@ SECTIONS
     *(.entry.text)
     *(.init.literal)
     *(.init)
-    *(.fini.literal)
-    *(.fini)
-    *(.gnu.version)
+
+    /* all functional callers are placed in IRAM (including SPI/IRQ callbacks/etc) here */
+    *(.text._ZNKSt8functionIF*EE*) /* std::function<any(...)>::operator()() const */
 
     /* These must be located in internal RAM to prevent far accesses to literal data.
      *  All of the following libraries are distributed in binary form, so we cannot
@@ -211,12 +202,13 @@ SECTIONS
 
     *(.gnu.linkonce.literal.* .gnu.linkonce.t.*.literal .gnu.linkonce.t.*)
 
-    /* all functional callers are placed in IRAM (including SPI/IRQ callbacks/etc) here */
-    *(.text._ZNKSt8functionIF*EE*) /* std::function<any(...)>::operator()() const */
-
     /* Any compilation units that request to be located in interal RAM */
     *(.iram.literal)
     *(.iram.text .iram.text.*)
+
+    *(.fini.literal)
+    *(.fini)
+    *(.gnu.version)
 
     _text_end = ABSOLUTE(.);
     _etext = .;
@@ -234,12 +226,14 @@ SECTIONS
   .irom0.text : ALIGN(4)
   {
     _irom0_text_start = ABSOLUTE(.);
+    *(.ver_number)
     *.a(.literal*)
     *.o(.literal*)
     *.a(.text*)
     *.o(.text*)
     *(.literal .text .literal.* .text.* .stub .gnu.warning)
     *(.irom0.literal .irom.literal .irom.text.literal .irom0.text .irom0.text* .irom.text .irom.text.*)
+    *libarduino_core.a:*umm_malloc.o(.literal* .text*)
 
     /* __FUNCTION__ locals */
     *(.rodata._ZZ*__FUNCTION__)
@@ -257,14 +251,19 @@ SECTIONS
 
     . = ALIGN(4);
     *(.gcc_except_table .gcc_except_table.*)
+    . = ALIGN(4);
+    __eh_frame = ABSOLUTE(.);
+    KEEP(*(.eh_frame))
+    . = (. + 7) & ~ 3;  /* Add a 0 entry to terminate the list */
 
-    . = ALIGN (4);
     _irom0_text_end = ABSOLUTE(.);
+    _flash_code_end = ABSOLUTE(.);
   } >irom0_0_seg :irom0_0_phdr
 
   .irom0.other : ALIGN(4) SUBALIGN(4)
   {
     _irom0_other_start = ABSOLUTE(.);
+    . = ALIGN (4);
     *.bin.o(*)
     . = ALIGN (4);
     _irom0_other_end = ABSOLUTE(.);
