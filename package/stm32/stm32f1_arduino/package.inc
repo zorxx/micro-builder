@@ -23,6 +23,7 @@ LDFLAGS += -Wl,--undefined=end
 
 INCDIR += $(ARDUINO_TARGET_CPU_DIR)/cores/maple
 INCDIR += $(ARDUINO_TARGET_CPU_DIR)/system/libmaple
+INCDIR += $(ARDUINO_TARGET_CPU_DIR)/system/libmaple/stm32f1/include
 INCDIR += $(ARDUINO_TARGET_CPU_DIR)/system/libmaple/include
 INCDIR += $(ARDUINO_TARGET_CPU_DIR)/system/libmaple/usb/stm32f1
 INCDIR += $(ARDUINO_TARGET_CPU_DIR)/system/libmaple/usb/usb_lib
