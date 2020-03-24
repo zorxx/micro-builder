@@ -14,6 +14,7 @@ APP_LD_DIR := $(ARDUINO_TARGET_CPU_DIR)/variants/$(STM32_VARIANT)/ld
 
 STM32_CFLAGS += $($(STM32_BOARD).build.cpu_flags)
 STM32_CFLAGS += $($(STM32_BOARD).build.extra_flags)
+STM32_CFLAGS += -DVARIANT_$(STM32_BOARD) 
 ifneq ($($(STM32_VARIANT).build.vect_flags),)
 STM32_CFLAGS += "$($(STM32_VARIANT).build.vect_flags)"
 endif

@@ -47,8 +47,7 @@ LIBRARY_TARGETS += $(LIB_NAME_CORE)
 # uip Library
 LIB_NAME_UIP := lib$(PACKAGE_NAME)_uip
 $(LIB_NAME_UIP)_obj := $(foreach file, \
-                $(wildcard $(ARDUINO_LIB_DIR)/arduino_uip/*.cpp) \
-                $(wildcard $(ARDUINO_LIB_DIR)/arduino_uip/utility/*.cpp), \
+                $(wildcard $(ARDUINO_LIB_DIR)/arduino_uip/*.cpp), \
                 $(addsuffix .o, $(basename $(BUILD_TEMP_DIR)/$(file))))
 
 # RTClock Library
